@@ -8,7 +8,9 @@ import styled from 'styled-components';
 export default class MessageListPage extends PureComponent {
   constructor(props) {
     super();
+
     const initialParams = qs.parse(props.location.search);
+
     this.state = {
       loading: false,
       messages: [],
@@ -25,17 +27,24 @@ export default class MessageListPage extends PureComponent {
 
   fetchItems() {
     this.setState({ loading: true });
+
     const params = {
       page: this.state.page,
       limit: this.state.limit
     };
+
     axios
       .get('/api/messages', { params })
       .then(({ data }) => {
-        this.setState({ loading: false, ...data });
+        this.setState({
+          loading: false,
+          ...data
+        });
       })
       .catch(() => {
-        this.setState({ loading: false });
+        this.setState({
+          loading: false
+        });
       });
   }
 
@@ -52,7 +61,8 @@ export default class MessageListPage extends PureComponent {
 
   renderMessages() {
     const { messages } = this.state;
-    if (!messages.length) {
+
+    if (!messages) {
       return <div> No Messages Found </div>;
     }
 

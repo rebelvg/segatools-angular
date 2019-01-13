@@ -6,34 +6,86 @@ import TextArea from '../../components/forms/TextArea';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
+import * as _ from 'lodash';
 
 export default class MessageSingle extends PureComponent {
+  constructor() {
+    super();
+
+    this.state = {
+      loading: false,
+      loaded: false,
+      message: {
+        lines: [],
+        names: []
+      },
+      errorMessage: null
+    };
+  }
+
   componentDidMount() {
     this.fetchItem();
   }
 
-  state = {
-    loading: false,
-    loaded: false,
-    message: {
-      lines: [],
-      names: []
-    }
-  };
-
   fetchItem = () => {
     this.setState({ loading: true });
+
     axios
       .get(`/api/messages/${this.props.id}`)
       .then(({ data }) => {
-        this.setState({ message: { ...data }, loading: false, loaded: true });
+        this.setState({
+          message: { ...data },
+          loading: false,
+          loaded: true
+        });
       })
       .catch(() => {
-        this.setState({ loading: false });
+        this.setState({
+          loading: false
+        });
       });
   };
 
-  onSubmit = values => {};
+  onSubmit = values => {
+    this.setState({ loading: true });
+
+    const data = {
+      chapterName: undefined,
+      updatedLines: [],
+      updateMany: true
+    };
+
+    if (this.state.message.chapterName !== values.chapterName) {
+      data.chapterName = values.chapterName;
+    }
+
+    _.forEach(this.state.message.lines, (line, index) => {
+      if (_.get(values.lines, [index, 'text', 'english']) !== line.text.english) {
+        data.updatedLines.push({
+          japanese: line.text.japanese,
+          english: _.get(values.lines, [index, 'text', 'english'])
+        });
+      }
+    });
+
+    axios
+      .post(`/api/messages/${this.props.id}`, data, {
+        headers: {
+          token: window.localStorage.getItem('token')
+        }
+      })
+      .then(() => {
+        this.setState({
+          message: values,
+          errorMessage: null
+        });
+      })
+      .catch(error => {
+        this.setState({
+          errorMessage: error.response.data || error.message
+        });
+      });
+  };
 
   renderNavigation = () => {
     return (
@@ -63,10 +115,12 @@ export default class MessageSingle extends PureComponent {
   };
 
   render() {
-    const { message, loaded } = this.state;
+    const { message, loaded, errorMessage } = this.state;
+
     if (!loaded) {
       return null;
     }
+
     return (
       <Form
         onSubmit={this.onSubmit}
@@ -78,6 +132,9 @@ export default class MessageSingle extends PureComponent {
         render={({ handleSubmit, pristine, invalid }) => (
           <SemanticForm onSubmit={handleSubmit}>
             {this.renderNavigation()}
+
+            <div>{errorMessage}</div>
+
             <Segment>
               <Header>
                 <Header.Content>
@@ -108,6 +165,9 @@ export default class MessageSingle extends PureComponent {
                 </div>
               )}
             </FieldArray>
+
+            <div>{errorMessage}</div>
+
             {this.renderNavigation(true)}
           </SemanticForm>
         )}
