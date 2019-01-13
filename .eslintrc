@@ -1,12 +1,6 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "prettier",
-    "prettier/react"
-  ],
-  "plugins": [
-    "react"
-  ],
+  "extends": ["eslint:recommended", "prettier", "prettier/react"],
+  "plugins": ["react"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -23,10 +17,7 @@
     "es6": true
   },
   "rules": {
-    "quotes": [
-      "warn",
-      "single"
-    ],
+    "quotes": ["warn", "single"],
     "no-unused-vars": [
       "error",
       {
@@ -34,13 +25,8 @@
         "args": "none"
       }
     ],
-    "strict": [
-      "error",
-      "never"
-    ],
-    "no-console": [
-      "warn"
-    ],
+    "strict": ["error", "never"],
+    "no-console": ["warn"],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "no-tabs": "error",
@@ -63,10 +49,7 @@
     "array-bracket-spacing": 2,
     "no-undef": 2,
     "no-multi-spaces": 2,
-    "comma-style": [
-      2,
-      "last"
-    ],
+    "comma-style": [2, "last"],
     "semi-spacing": [
       2,
       {
@@ -74,11 +57,7 @@
         "after": true
       }
     ],
-    "curly": [
-      2,
-      "multi-line",
-      "consistent"
-    ],
+    "curly": [2, "multi-line", "consistent"],
     "valid-typeof": 2,
     "no-extra-bind": 2,
     "no-with": 2
