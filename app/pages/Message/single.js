@@ -60,7 +60,7 @@ export default class MessageSingle extends PureComponent {
     }
 
     _.forEach(this.state.message.lines, (line, index) => {
-      if (_.get(values.lines, [index, 'text', 'english']) !== line.text.english) {
+      if (line.text.japanese !== null && _.get(values.lines, [index, 'text', 'english']) !== line.text.english) {
         data.updatedLines.push({
           japanese: line.text.japanese,
           english: _.get(values.lines, [index, 'text', 'english'])
@@ -158,6 +158,7 @@ export default class MessageSingle extends PureComponent {
                 <div>
                   {fields.map((name, index) => (
                     <Segment>
+                      <div> Count: {message.lines[index].count} </div>
                       <div> {message.lines[index].text.japanese} </div>
                       <Field component={TextArea} name={`${name}.text.english`} />
                     </Segment>
