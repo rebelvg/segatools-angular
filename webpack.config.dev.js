@@ -1,14 +1,14 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const config = require('./config')
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('./config');
 module.exports = {
   mode: 'development',
   entry: [
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://${config.app.host}:${config.app.port}`,
     'webpack/hot/only-dev-server',
-    'app/index.js',
+    'app/index.js'
   ],
 
   module: {
@@ -16,12 +16,12 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
       },
 
       {
         test: /\.(jpe?g|gif|png|wav|mp3|svg)$/,
-        loader: 'url-loader?limit=10000',
+        loader: 'url-loader?limit=10000'
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
@@ -30,21 +30,21 @@ module.exports = {
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
-      },
-    ],
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('dev'),
+        NODE_ENV: JSON.stringify('dev')
       }
     }),
     new HtmlWebpackPlugin({
-      title: 'KLPQ 2018 React Seed',
+      title: 'KLPQ 2018 React Seed'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
 
   stats: 'errors-only',
@@ -60,6 +60,9 @@ module.exports = {
         target: config.api.host,
         changeOrigin: true,
         secure: false,
+        pathRewrite: {
+          '^/api': ''
+        }
       }
     }
   },
@@ -67,7 +70,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       app: path.resolve(__dirname, './app'),
-      static: path.resolve(__dirname, './static'),
+      static: path.resolve(__dirname, './static')
     }
   },
   node: {
@@ -78,4 +81,4 @@ module.exports = {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist')
   }
-}
+};

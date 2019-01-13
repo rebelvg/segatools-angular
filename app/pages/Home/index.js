@@ -1,11 +1,7 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent } from 'react';
 
 export default class Home extends PureComponent {
   render() {
-    return (
-      <div>
-        Index
-      </div>
-    )
+    return <div>Index</div>;
   }
 }

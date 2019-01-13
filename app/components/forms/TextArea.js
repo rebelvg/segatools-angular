@@ -1,6 +1,6 @@
-import React from 'react'
-import { TextArea } from 'semantic-ui-react'
+import React from 'react';
+import { TextArea } from 'semantic-ui-react';
 
-const TextAreaRaw = ({input}) => <TextArea {...input}> {input.value} </TextArea>
+const TextAreaRaw = ({ input }) => <TextArea {...input}> {input.value} </TextArea>;
 
-export default TextAreaRaw
+export default TextAreaRaw;

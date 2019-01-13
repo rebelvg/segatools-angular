@@ -1,14 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-const Person = ({person}) => (
+const Person = ({ person }) => (
   <Wrap key={person.id}>
-    <img src={person.avatar}/>
-    <div> {person.first_name} {person.last_name} </div>
+    <img src={person.avatar} />
+    <div>
+      {' '}
+      {person.first_name} {person.last_name}{' '}
+    </div>
   </Wrap>
-)
+);
 
-export default Person
+export default Person;
 
 const Wrap = styled.div`
   display: flex;
@@ -19,4 +22,4 @@ const Wrap = styled.div`
     border-radius: 50px;
     margin-right: 20px;
   }
-`
+`;

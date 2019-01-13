@@ -1,70 +1,69 @@
-import React, { PureComponent } from 'react'
-import { Dimmer, Loader, Segment, Header, Label, Divider, Progress, Pagination } from 'semantic-ui-react'
-import qs from 'query-string'
-import { Link } from '@reach/router'
-import axios from 'axios'
-import styled from 'styled-components'
+import React, { PureComponent } from 'react';
+import { Dimmer, Loader, Segment, Header, Label, Divider, Progress, Pagination } from 'semantic-ui-react';
+import qs from 'query-string';
+import { Link } from '@reach/router';
+import axios from 'axios';
+import styled from 'styled-components';
 
 export default class MessageListPage extends PureComponent {
   constructor(props) {
-    super()
-    const initialParams = qs.parse(props.location.search)
+    super();
+    const initialParams = qs.parse(props.location.search);
     this.state = {
       loading: false,
       messages: [],
       page: initialParams.page || 1,
       limit: initialParams.limit || null,
       pages: 0,
-      total: null,
-    }
+      total: null
+    };
   }
 
   componentDidMount() {
-    this.fetchItems()
+    this.fetchItems();
   }
 
   fetchItems() {
-    this.setState({loading: true})
+    this.setState({ loading: true });
     const params = {
       page: this.state.page,
       limit: this.state.limit
-    }
-    axios.get('/api/messages', {params})
-      .then(({data}) => {
-        this.setState({loading: false, ...data})
+    };
+    axios
+      .get('/api/messages', { params })
+      .then(({ data }) => {
+        this.setState({ loading: false, ...data });
       })
       .catch(() => {
-        this.setState({loading: false})
-      })
+        this.setState({ loading: false });
+      });
   }
 
   getColorByPercent(percent) {
     switch (true) {
-      case (percent <= 25):
-        return 'red'
-      case (percent <= 60):
-        return 'yellow'
+      case percent <= 25:
+        return 'red';
+      case percent <= 60:
+        return 'yellow';
       default:
-        return 'green'
+        return 'green';
     }
   }
 
   renderMessages() {
-    const {messages} = this.state
+    const { messages } = this.state;
     if (!messages.length) {
-      return <div> No Messages Found </div>
+      return <div> No Messages Found </div>;
     }
 
-    return messages.map((message => (
+    return messages.map(message => (
       <Segment key={message._id}>
         <Link to={`/messages/${message._id}`}>
-          <Header as='h5'>
+          <Header as="h5">
             <Grid>
               <div>
                 {message.fileName}
-                <Label color="blue">
-                  {message.lines.length} lines
-                </Label>
+                <Label color="blue">{message.lines.length} lines</Label>
 
                 <Label> {message.chapterName}</Label>
               </div>
@@ -78,22 +77,25 @@ export default class MessageListPage extends PureComponent {
               </div>
             </Grid>
           </Header>
-          <Divider/>
+          <Divider />
           {message.names.map(name => (
-            <Label tag key={name._id}> {name.japanese}{name.english && `(${name.english})`} </Label>
+            <Label tag key={name._id}>
+              {' '}
+              {name.japanese}
+              {name.english && `(${name.english})`}{' '}
+            </Label>
           ))}
-
         </Link>
       </Segment>
-    )))
+    ));
   }
 
-  onPageChange = (e, {activePage}) => {
-    this.setState({page: activePage}, () => this.fetchItems())
-  }
+  onPageChange = (e, { activePage }) => {
+    this.setState({ page: activePage }, () => this.fetchItems());
+  };
 
   renderPagination() {
-    const {page, pages} = this.state
+    const { page, pages } = this.state;
     return (
       <TextCenter>
         <Pagination
@@ -106,11 +108,11 @@ export default class MessageListPage extends PureComponent {
           prevItem={'Previous'}
         />
       </TextCenter>
-    )
+    );
   }
 
   render() {
-    const {loading} = this.state
+    const { loading } = this.state;
     return (
       <div>
         <Dimmer active={loading}>
@@ -120,7 +122,7 @@ export default class MessageListPage extends PureComponent {
         {this.renderMessages()}
         {this.renderPagination()}
       </div>
-    )
+    );
   }
 }
 
@@ -130,10 +132,9 @@ const Grid = styled.div`
   .progress {
     margin-bottom: 0 !important;
   }
-`
+`;
 
 const TextCenter = styled.div`
   display: flex;
   justify-content: center;
-`
-
+`;

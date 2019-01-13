@@ -1,14 +1,12 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
 
-  entry: [
-    './app/index.js'
-  ],
+  entry: ['./app/index.js'],
 
   module: {
     rules: [
@@ -21,7 +19,7 @@ module.exports = {
         test: /\.(jpe?g|gif|png|wav|mp3|svg)$/,
         loader: 'url-loader',
         options: {
-          outputPath: 'static/fonts/',
+          outputPath: 'static/fonts/'
         }
       },
       {
@@ -36,12 +34,12 @@ module.exports = {
         test: /\.(svg)$/,
         loader: 'file-loader?name=static/icons/[name].[ext]'
       }
-    ],
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production')
       }
     }),
 
@@ -57,20 +55,18 @@ module.exports = {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true,
-      },
+        minifyURLs: true
+      }
     }),
 
-    new CopyWebpackPlugin([
-      {from: './static', to: './static'}
-    ], {}),
+    new CopyWebpackPlugin([{ from: './static', to: './static' }], {})
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
       app: path.resolve(__dirname, './app'),
-      static: path.resolve(__dirname, './static'),
-    },
+      static: path.resolve(__dirname, './static')
+    }
   },
 
   output: {
@@ -78,4 +74,4 @@ module.exports = {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist')
   }
-}
+};

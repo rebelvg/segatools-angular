@@ -1,15 +1,15 @@
-import React, { PureComponent } from 'react'
-import axios from 'axios'
-import styled from 'styled-components'
-import { Label, Button, Segment, Icon, Header, Form as SemanticForm } from 'semantic-ui-react'
-import TextArea from '../../components/forms/TextArea'
-import { Form, Field } from 'react-final-form'
-import arrayMutators from 'final-form-arrays'
-import { FieldArray } from 'react-final-form-arrays'
+import React, { PureComponent } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { Label, Button, Segment, Icon, Header, Form as SemanticForm } from 'semantic-ui-react';
+import TextArea from '../../components/forms/TextArea';
+import { Form, Field } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 
 export default class MessageSingle extends PureComponent {
   componentDidMount() {
-    this.fetchItem()
+    this.fetchItem();
   }
 
   state = {
@@ -19,22 +19,21 @@ export default class MessageSingle extends PureComponent {
       lines: [],
       names: []
     }
-  }
+  };
 
   fetchItem = () => {
-    this.setState({loading: true})
-    axios.get(`/api/messages/${this.props.id}`)
-      .then(({data}) => {
-        this.setState({message: {...data}, loading: false, loaded: true})
+    this.setState({ loading: true });
+    axios
+      .get(`/api/messages/${this.props.id}`)
+      .then(({ data }) => {
+        this.setState({ message: { ...data }, loading: false, loaded: true });
       })
       .catch(() => {
-        this.setState({loading: false})
-      })
-  }
+        this.setState({ loading: false });
+      });
+  };
 
-  onSubmit = (values) => {
-
-  }
+  onSubmit = values => {};
 
   renderNavigation = () => {
     return (
@@ -42,31 +41,31 @@ export default class MessageSingle extends PureComponent {
         <Grid>
           <div>
             <Button basic color="blue" size="large">
-              <Icon name="arrow alternate circle left outline" className="navigation-icon"/>
+              <Icon name="arrow alternate circle left outline" className="navigation-icon" />
               Previous
             </Button>
           </div>
           <div>
             <Button basic color="blue" size="large">
-              <Icon name="save outline" className="navigation-icon"/>
+              <Icon name="save outline" className="navigation-icon" />
               Save
             </Button>
           </div>
           <div>
             <Button basic color="blue" size="large">
               Next
-              <Icon name="arrow alternate circle right outline" className="navigation-icon"/>
+              <Icon name="arrow alternate circle right outline" className="navigation-icon" />
             </Button>
           </div>
         </Grid>
       </Segment>
-    )
-  }
+    );
+  };
 
   render() {
-    const {message, loaded} = this.state
+    const { message, loaded } = this.state;
     if (!loaded) {
-      return null
+      return null;
     }
     return (
       <Form
@@ -75,8 +74,8 @@ export default class MessageSingle extends PureComponent {
           // potentially other mutators could be merged here
           ...arrayMutators
         }}
-        initialValues={{...message}}
-        render={({handleSubmit, pristine, invalid}) => (
+        initialValues={{ ...message }}
+        render={({ handleSubmit, pristine, invalid }) => (
           <SemanticForm onSubmit={handleSubmit}>
             {this.renderNavigation()}
             <Segment>
@@ -88,18 +87,22 @@ export default class MessageSingle extends PureComponent {
               </Header>
               <div>
                 {message.names.map(name => (
-                  <Label tag key={name._id}> {name.japanese}{name.english && `(${name.english})`} </Label>
+                  <Label tag key={name._id}>
+                    {' '}
+                    {name.japanese}
+                    {name.english && `(${name.english})`}{' '}
+                  </Label>
                 ))}
               </div>
             </Segment>
 
             <FieldArray name={'lines'}>
-              {({fields}) => (
+              {({ fields }) => (
                 <div>
                   {fields.map((name, index) => (
                     <Segment>
                       <div> {message.lines[index].text.japanese} </div>
-                      <Field component={TextArea} name={`${name}.text.english`}/>
+                      <Field component={TextArea} name={`${name}.text.english`} />
                     </Segment>
                   ))}
                 </div>
@@ -109,7 +112,7 @@ export default class MessageSingle extends PureComponent {
           </SemanticForm>
         )}
       />
-    )
+    );
   }
 }
 
@@ -117,4 +120,4 @@ const Grid = styled.div`
   display: grid;
   grid: 1fr / repeat(3, 1fr);
   text-align: center;
-  `
+`;
