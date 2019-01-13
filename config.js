@@ -5,9 +5,9 @@ const config = {
     port: 3001
   },
   api: {
-    host: 'http://localhost:3000',
+    host: 'http://localhost:3000'
   },
   vendor: {}
-}
+};
 
-module.exports = config
+module.exports = config;
