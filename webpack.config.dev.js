@@ -59,7 +59,10 @@ module.exports = {
       '/api': {
         target: config.api.host,
         changeOrigin: true,
-        secure: false
+        secure: false,
+        pathRewrite: {
+          '^/api': ''
+        }
       }
     }
   },
