@@ -5,7 +5,7 @@ const config = {
     port: 3001
   },
   api: {
-    host: 'http://localhost:3000'
+    host: 'http://localhost:8001'
   },
   vendor: {}
 };
