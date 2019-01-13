@@ -8,8 +8,8 @@
   "license": "MIT",
   "scripts": {
     "prepush": "yarn run lint",
-    "lint": "prettier --list-different \"**/*.{ts,js,json,css,md}\"",
-    "lint:fix": "prettier --write \"**/*.{ts,js,json,css,md}\"",
+    "lint": "eslint . && prettier --list-different \"**/*.{ts,js,json,css,md}\"",
+    "lint:fix": "eslint . --fix && prettier --write \"**/*.{ts,js,json,css,md}\"",
     "start": "./node_modules/.bin/webpack-dev-server --config webpack.config.dev",
     "build": "./node_modules/.bin/webpack"
   },
