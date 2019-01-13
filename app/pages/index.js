@@ -25,9 +25,6 @@ class App_raw extends Component {
             <NavLink to={'/messages'}>
               <Icon name="comment" /> Messages{' '}
             </NavLink>
-            <NavLink to={'/message_encounter'}>
-              <Icon name="exclamation" /> Messages Encounter{' '}
-            </NavLink>
             <NavLink to={'/names'}>
               <Icon name="group" /> Names{' '}
             </NavLink>
