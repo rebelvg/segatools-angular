@@ -1,17 +1,15 @@
 {
-  "name": "react-seed",
+  "name": "segatools-react",
   "version": "1.0.0",
-  "description": "React Seed",
+  "description": "Segatool React",
   "main": "index.js",
-  "repository": "https://git.klpq.men/klpq/react-seed.git",
-  "author": "Pyro <pyrolovesbuns@gmail.com>",
   "license": "MIT",
   "scripts": {
     "prepush": "yarn run lint",
     "lint": "eslint . && prettier --list-different \"**/*.{ts,js,json,css,md}\"",
     "lint:fix": "eslint . --fix && prettier --write \"**/*.{ts,js,json,css,md}\"",
-    "start": "./node_modules/.bin/webpack-dev-server --config webpack.config.dev",
-    "build": "./node_modules/.bin/webpack"
+    "start": "webpack-dev-server --config webpack.config.dev",
+    "build": "webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
