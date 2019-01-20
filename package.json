@@ -1,9 +1,8 @@
 {
   "name": "segatools-react",
   "version": "1.0.0",
-  "description": "Segatool React",
+  "description": "Segatools React",
   "main": "index.js",
-  "license": "MIT",
   "scripts": {
     "prepush": "yarn run lint",
     "lint": "eslint . && prettier --list-different \"**/*.{ts,js,json,css,md}\"",
