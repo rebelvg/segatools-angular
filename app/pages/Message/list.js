@@ -6,23 +6,24 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 export default class MessageListPage extends PureComponent {
-  constructor(props) {
-    super();
-
-    const initialParams = qs.parse(props.location.search);
-
-    this.state = {
-      loading: false,
-      messages: [],
-      page: initialParams.page || 1,
-      limit: initialParams.limit || null,
-      pages: 0,
-      total: null
-    };
-  }
+  state = {
+    loading: false,
+    messages: [],
+    page: 1,
+    limit: null,
+    pages: 0,
+    total: null
+  };
 
   componentDidMount() {
-    this.fetchItems();
+    const initialParams = qs.parse(this.props.location.search);
+    this.setState(
+      {
+        page: initialParams.page || this.state.page,
+        limit: initialParams.limit || this.state.limit
+      },
+      () => this.fetchItems()
+    );
   }
 
   fetchItems() {
@@ -67,13 +68,13 @@ export default class MessageListPage extends PureComponent {
     }
 
     return messages.map(message => (
-      <Segment key={message._id}>
+      <Segment raised key={message._id}>
         <Link to={`/messages/${message._id}`}>
-          <Header as="h5">
+          <Header as='h5'>
             <Grid>
               <div>
                 {message.fileName}
-                <Label color="blue">{message.lines.length} lines</Label>
+                <Label color='blue'>{message.lines.length} lines</Label>
 
                 <Label> {message.chapterName}</Label>
               </div>

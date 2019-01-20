@@ -1,45 +1,49 @@
 import React, { Component } from 'react';
 import { Router, Link } from '@reach/router';
-import { Segment, Icon, Divider } from 'semantic-ui-react';
-import styled from 'styled-components';
-import Home from '../pages/Home';
-import MessageList from '../pages/Message/list';
-import MessageSingle from '../pages/Message/single';
+import { Segment, Icon, Divider, Label } from 'semantic-ui-react';
+import styled, { createGlobalStyle } from 'styled-components';
+import Home from '../pages/home';
+import MessageList from '../pages/message/list';
+import MessageSingle from '../pages/message/single';
 
 class App_raw extends Component {
   render() {
     return (
       <Wrapper>
-        <Segment inverted className="st-sidebar">
+        <GlobalStyle />
+        <Segment inverted className='st-sidebar'>
+          <Label color='blue' size='big'>
+            Sega Tools (Kenzan)
+          </Label>
           <Navigation>
             <NavLink to={'/'}>
-              <Icon name="home" /> Home{' '}
+              <Icon name='home' /> Home
             </NavLink>
             <NavLink to={'/login'}>
-              <Icon name="lock" /> Login{' '}
+              <Icon name='lock' /> Login
             </NavLink>
             <NavLink to={'/search'}>
-              <Icon name="search" /> Search{' '}
+              <Icon name='search' /> Search
             </NavLink>
             <Divider />
             <NavLink to={'/messages'}>
-              <Icon name="comment" /> Messages{' '}
+              <Icon name='comment' /> Messages
             </NavLink>
             <NavLink to={'/names'}>
-              <Icon name="group" /> Names{' '}
+              <Icon name='group' /> Names
             </NavLink>
             <Divider />
             <NavLink to={'/unique'}>
-              <Icon name="pencil" /> Unique{' '}
+              <Icon name='pencil' /> Unique
             </NavLink>
           </Navigation>
         </Segment>
         <Container>
-          <Router>
-            <Home path="/" />
-            <MessageList path="/messages" />
-            <MessageSingle path="/messages/:id" />
-          </Router>
+          <ViewWrap>
+            <Home path='/' />
+            <MessageList path='/messages' />
+            <MessageSingle path='/messages/:id' />
+          </ViewWrap>
         </Container>
       </Wrapper>
     );
@@ -49,6 +53,10 @@ class App_raw extends Component {
 const Navigation = styled.div`
   position: sticky;
   top: 0px;
+`;
+
+const ViewWrap = styled(Router)`
+  height: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -76,6 +84,13 @@ const NavLink = styled(Link)`
   &[aria-current='page'] {
     border-bottom: 2px solid #4183c4;
   }
+`;
+
+const GlobalStyle = createGlobalStyle`
+#app {
+  height: 100%;
+  transform: translateZ(0);
+}
 `;
 
 export default App_raw;

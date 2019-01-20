@@ -2,10 +2,10 @@ const config = {
   env: 'dev',
   app: {
     host: 'localhost',
-    port: 3001
+    port: 3000
   },
   api: {
-    host: 'http://localhost:8001'
+    host: 'http://yakuzakenzan.segatools.klpq.men/api/'
   },
   vendor: {}
 };
