@@ -11,18 +11,13 @@ import { Subscription } from 'rxjs';
 export class MessagesComponent implements OnInit {
   private messageSubscription: Subscription;
   messages = [];
-  constructor(
-    private messageService: MessagesService,
-    private dataService: DataService
-  ) {}
+  constructor(private messageService: MessagesService, private dataService: DataService) {}
 
   ngOnInit() {
     this.dataService.fetchMessages(this.messageService.params);
-    this.messageSubscription = this.messageService.messagesUpdated.subscribe(
-      messages => {
-        this.messages = messages;
-      }
-    );
+    this.messageSubscription = this.messageService.messagesUpdated.subscribe(messages => {
+      this.messages = messages;
+    });
   }
 
   onPageChange(page) {
