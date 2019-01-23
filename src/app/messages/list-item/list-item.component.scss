@@ -1,0 +1,11 @@
+.st-grid {
+  display: grid;
+  grid: 1fr / 4fr 1fr;
+  .progress {
+    margin-bottom: 0 !important;
+  }
+}
+
+.message-item {
+  margin-bottom: 1em !important;
+}
