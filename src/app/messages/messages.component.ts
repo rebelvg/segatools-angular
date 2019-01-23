@@ -17,11 +17,16 @@ export class MessagesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataService.fetchMessages();
+    this.dataService.fetchMessages(this.messageService.params);
     this.messageSubscription = this.messageService.messagesUpdated.subscribe(
-      response => {
-        this.messages = response.messages;
+      messages => {
+        this.messages = messages;
       }
     );
+  }
+
+  onPageChange(page) {
+    this.messageService.setPage(page);
+    this.dataService.fetchMessages(this.messageService.params);
   }
 }
