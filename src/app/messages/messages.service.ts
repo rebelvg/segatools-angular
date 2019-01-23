@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MessagesService {
-  messagesUpdated = new Subject<{}>();
+  messagesUpdated = new Subject<{ messages: [] }>();
   private messages: [];
   params: {
     page: 1;
@@ -17,7 +17,6 @@ export class MessagesService {
   constructor() {}
 
   setMessages(messages: []) {
-    console.log(messages);
     this.messages = messages;
     this.messagesUpdated.next(this.messages);
   }
