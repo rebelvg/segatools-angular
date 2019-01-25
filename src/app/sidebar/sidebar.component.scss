@@ -1,0 +1,38 @@
+.st-sidebar {
+  border-radius: 0px !important;
+  padding-bottom: 0px;
+  margin-bottom: 0px !important;
+  height: 100%;
+  .header-st {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .hamburger {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 720px) {
+    display: none;
+  }
+}
+.navlink {
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  &.active {
+    border-bottom: 2px solid #4183c4;
+  }
+}
+
+.navigation {
+  position: sticky;
+  top: 0px;
+}
+
+.mobile-open {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+}

@@ -1,3 +1,30 @@
-<p>
-  names works!
-</p>
+<ng-container *ngIf="!loading; else loader">
+  <div class="ui segment raised" *ngFor="let name of names">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <input hidden name="nameId" [(ngModel)]="name.nameId" />
+      <input hidden name="_id" [(ngModel)]="name._id" />
+      <input hidden name="japanese" [(ngModel)]="name.japanese" />
+
+      <div class="ui three column stackable grid ">
+        <div class="four wide column game-text name-japanese ">{{ name.japanese }}</div>
+        <div class="ten wide column">
+          <div class="ui input">
+            <input name="english" class="name-input" [(ngModel)]="name.english" type="text" placeholder="Enter Name" />
+          </div>
+        </div>
+        <div class="two wide column">
+          <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+
+<ng-template #loader>
+  <div class="ui segment loading">
+    <p></p>
+    <div class="ui active inverted dimmer">
+      <div class="ui loader"></div>
+    </div>
+  </div>
+</ng-template>

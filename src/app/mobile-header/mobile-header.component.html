@@ -1,0 +1,32 @@
+<div class="mobile-header">
+  <div class="ui segment inverted header-st">
+    <div class="hamburger" (click)="onToggleOpen()">
+      <i class="ui icon" [ngClass]="{ bars: !isOpen, close: isOpen }"></i>
+    </div>
+    <div class="logo">
+      <div class="ui label blue big">Sega Tools (Kenzan)</div>
+    </div>
+  </div>
+  <div class="menu-st" [ngClass]="{ open: isOpen }">
+    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/"><i class="ui icon home"></i> Home</a>
+    </div>
+    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active">
+      <a routerLink="/login"><i class="ui icon lock"></i> Login</a>
+    </div>
+    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active">
+      <a routerLink="/search"><i class="ui icon search"></i> Search</a>
+    </div>
+    <div class="ui divider"></div>
+    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active">
+      <a routerLink="/messages"><i class="ui icon comment"></i> Messages</a>
+    </div>
+    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active">
+      <a routerLink="/names"><i class="ui icon group"></i> Names</a>
+    </div>
+    <div class="ui divider"></div>
+    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active">
+      <a routerLink="/unique"><i class="ui icon pencil"></i> Unique</a>
+    </div>
+  </div>
+</div>

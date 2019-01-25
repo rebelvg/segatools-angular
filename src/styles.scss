@@ -3,3 +3,77 @@ body {
   transform: translateZ(0);
   background-color: #f7f7f7 !important;
 }
+.message-pagination {
+  #server {
+    width: 100%;
+  }
+}
+.st-pagination {
+  .bar {
+    height: 100% !important;
+  }
+  .label {
+    top: 0 !important;
+    z-index: 2;
+    text-align: left !important;
+    padding-left: 5px;
+  }
+}
+
+.game-text {
+  white-space: pre-line;
+  font-family: monospace;
+  background-color: #f7f7f7 !important;
+  padding: 1em;
+}
+
+.ngx-pagination {
+  @media only screen and (max-width: 720px) {
+    display: flex !important;
+    padding: 0px !important;
+    li:not(.pagination-next):not(.pagination-previous) {
+      display: none;
+    }
+    .pagination-next,
+    .pagination-previous {
+      width: 120px;
+      text-align: center;
+    }
+    .small-screen {
+      display: flex !important;
+      flex-grow: 1;
+      background-color: white;
+      align-items: center;
+      width: 60px;
+      justify-content: center;
+      margin: 0px !important;
+    }
+  }
+  .pagination-previous.disabled {
+    background-color: whitesmoke !important;
+    padding: 1em 1.625em !important;
+    cursor: not-allowed;
+  }
+
+  li {
+    a {
+      background-color: white;
+    }
+    a,
+    &.current {
+      padding: 1em 1.625em !important;
+    }
+  }
+}
+
+.nsm-dialog {
+  max-width: 100% !important;
+}
+
+.nsm-content {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding-top: 15em !important;
+  display: flex;
+  align-items: center;
+}

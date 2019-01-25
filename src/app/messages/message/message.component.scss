@@ -1,0 +1,17 @@
+.edit-grid {
+  display: grid;
+  grid: 160px 75px 1fr 75px / 1fr;
+  height: 100%;
+}
+
+.header-segment {
+  margin-bottom: 0em;
+}
+.chapter-select {
+  margin: 1em 0px;
+}
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

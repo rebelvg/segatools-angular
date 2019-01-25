@@ -1,5 +1,7 @@
+import { Message } from './message.model';
+
 export class MessagesResponse {
-  messages: [];
+  messages: Message[];
   page: number;
   pages: number;
   total: number;

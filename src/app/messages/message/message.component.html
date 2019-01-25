@@ -1,3 +1,36 @@
-<p>
-  message works!
-</p>
+<form [formGroup]="messageForm" (ngSubmit)="onSubmit()" class="ui form">
+  <div class="edit-grid" *ngIf="isLoaded">
+    <div class=" ui segment header-segment">
+      <div class="ui header">
+        {{ message.fileName }}
+        <div class="ui sub header">{{ message.lines.length }} lines</div>
+      </div>
+      <select class="chapter-select" formControlName="chapterName">
+        <option *ngFor="let item of chapters" [ngValue]="item">{{ item }}</option>
+      </select>
+      <div class="ui label" *ngFor="let name of message.names">
+        {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
+      </div>
+    </div>
+    <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
+    <div class="edit-form" formArrayName="lines">
+      <div class="ui segment" *ngFor="let line of getControls(); let i = index" [formGroupName]="i">
+        <div class="ui two column stackable grid">
+          <div class="column">
+            <h4>Japanese</h4>
+            <pre class="game-text">
+              {{ message.lines[i].text.japanese }}
+            </pre>
+          </div>
+          <div class="column field">
+            <div>
+              <h4>English <span (click)="onPreview(i)">Preview </span></h4>
+            </div>
+            <textarea formControlName="english" rows="4"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
+  </div>
+</form>

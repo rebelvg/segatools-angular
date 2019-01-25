@@ -23,7 +23,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss", "node_modules/semantic-ui-css/semantic.min.css"],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/semantic-ui-css/semantic.min.css",
+              "node_modules/ngx-smart-modal/ngx-smart-modal.scss"
+            ],
             "scripts": []
           },
           "configurations": {

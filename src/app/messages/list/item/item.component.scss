@@ -1,0 +1,21 @@
+.st-grid {
+  display: grid;
+  grid: 1fr / 4fr 1fr;
+  align-items: center;
+  @media only screen and (max-width: 720px) {
+    grid: 1fr /1fr;
+  }
+  .progress {
+    display: none;
+    margin: 0 !important;
+    margin-top: 1em;
+    height: 100%;
+  }
+  .progress .bar {
+    height: 100% !important;
+  }
+}
+
+.message-item {
+  margin-bottom: 1em !important;
+}

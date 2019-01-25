@@ -4,13 +4,14 @@ import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageComponent } from './messages/message/message.component';
 import { NamesComponent } from './names/names.component';
+import { ListComponent } from './messages/list/list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   {
     path: 'messages',
     component: MessagesComponent,
-    children: [{ path: ':id', component: MessageComponent }]
+    children: [{ path: '', component: ListComponent }, { path: ':id', component: MessageComponent }]
   },
 
   { path: 'names', component: NamesComponent }

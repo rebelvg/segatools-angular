@@ -1,0 +1,37 @@
+<ng-container *ngIf="init">
+  <div class="messages-pagination">
+    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading; else loader">
+  <app-item
+    *ngFor="
+      let message of (messages
+        | paginate
+          : {
+              id: 'server',
+              itemsPerPage: pagination.limit,
+              currentPage: pagination.page,
+              totalItems: pagination.total
+            })
+    "
+    [message]="message"
+  >
+  </app-item>
+</ng-container>
+
+<ng-container *ngIf="init">
+  <div class="messages-pagination">
+    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</ng-container>
+
+<ng-template #loader>
+  <div class="ui segment loading">
+    <p></p>
+    <div class="ui active inverted dimmer">
+      <div class="ui loader"></div>
+    </div>
+  </div>
+</ng-template>

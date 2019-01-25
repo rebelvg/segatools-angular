@@ -1,35 +1,31 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '../shared/data.service';
 import { Subject } from 'rxjs';
 import { MessagesResponse } from '../shared/models/messagesResponse.model';
+import { Message } from '../shared/models/message.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
-  messagesUpdated = new Subject<[]>();
-  private messages: [];
-  params = {
-    page: 1,
-    limit: null
-  };
-  pagination = {
-    total: null,
-    pages: null
-  };
-  total: null;
+  listUpdated = new Subject<MessagesResponse>();
+  singleMessageUpdated = new Subject<Message>();
+  private list: MessagesResponse;
+  private single: Message;
 
   constructor() {}
 
   setPage(page: number) {
-    this.params.page = page;
+    this.list.page = page;
+    this.listUpdated.next(this.list);
   }
 
   setMessages(response: MessagesResponse) {
-    const { messages, page, pages, limit, total } = response;
-    this.messages = messages;
-    this.params = { page, limit };
-    this.pagination = { total, pages };
-    this.messagesUpdated.next(this.messages);
+    this.list = response;
+    this.listUpdated.next(this.list);
+  }
+
+  setMessage(response) {
+    this.single = response;
+    this.singleMessageUpdated.next(response);
   }
 }

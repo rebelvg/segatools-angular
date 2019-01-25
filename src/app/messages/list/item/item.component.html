@@ -1,0 +1,27 @@
+<div class="ui segment message-item">
+  <a [routerLink]="['/messages', message._id]">
+    <h5 class="ui header">
+      <div class="st-grid">
+        <div>
+          {{ message.fileName }}
+          <div class="ui label blue">{{ message.lines.length }} lines</div>
+          <div class="ui label">{{ message.chapterName }}</div>
+        </div>
+        <sui-progress
+          class="active st-pagination"
+          [precision]="2"
+          [showProgress]="false"
+          [value]="message.percentDone"
+          maximum="100"
+          >{{ message.percentDone.toFixed(2) }}%</sui-progress
+        >
+      </div>
+    </h5>
+    <div class="ui divider"></div>
+    <div>
+      <div class="ui label" *ngFor="let name of message.names">
+        {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
+      </div>
+    </div>
+  </a>
+</div>
