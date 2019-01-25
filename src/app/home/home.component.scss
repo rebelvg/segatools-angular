@@ -1,0 +1,32 @@
+.home-image {
+  @media only screen and (max-width: 720px) {
+    width: 100%;
+  }
+}
+
+.st-grid {
+  display: grid;
+  justify-items: center;
+  grid: 1fr 200px / 1fr 2fr;
+  grid-gap: 1em;
+  width: 100%;
+  .data-block {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.text {
+  text-align: center;
+  padding-top: 1em;
+}
+
+.progress-block {
+  width: 100%;
+  grid-column: 1 / 3;
+}

@@ -1,11 +1,4 @@
-<ngx-smart-modal
-  [customClass]="'nsm-centered'"
-  [closable]="false"
-  #myModal
-  identifier="myModal"
-  (onOpen)="initCanvas()"
->
+<ngx-smart-modal [closable]="false" #myModal identifier="myModal" (onOpen)="initCanvas()">
   <canvas id="preview" #canvas></canvas>
-  <div *ngIf="myModal.hasData()">{{ myModal.getData() }}</div>
-  <button (click)="myModal.close()">Close</button>
+  <button class="button ui primary mt" (click)="myModal.close()">Close</button>
 </ngx-smart-modal>

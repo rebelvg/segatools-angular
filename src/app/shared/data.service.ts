@@ -4,12 +4,19 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { MessagesResponse } from './models/messagesResponse.model';
 import {} from 'lodash';
 import { NamesService } from '../names/names.service';
+import { HomeService } from '../home/home.service';
+import { StatsResponse } from './models/statsResponse.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private messagesService: MessagesService, private http: HttpClient, private nameService: NamesService) {}
+  constructor(
+    private messagesService: MessagesService,
+    private http: HttpClient,
+    private nameService: NamesService,
+    private homeService: HomeService
+  ) {}
 
   public fetchMessages(data: {}) {
     const params = new HttpParams({
@@ -58,6 +65,17 @@ export class DataService {
       .subscribe(response => {
         console.log(response);
         this.nameService.setNames(response);
+      });
+  }
+
+  public fetchStats() {
+    this.http
+      .get('/api/stats', {
+        observe: 'body',
+        responseType: 'json'
+      })
+      .subscribe((response: StatsResponse) => {
+        this.homeService.setStats(response);
       });
   }
 

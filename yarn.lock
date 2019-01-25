@@ -283,6 +283,13 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@browninglogic/ng-modal@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@browninglogic/ng-modal/-/ng-modal-4.0.2.tgz#bcb77f2b8bf0afbfbcecdd23c4cb69968f51da66"
+  integrity sha512-mo5iydCMAN9CdL337pbYTmSy+s2+LgA4bjoAUYj/woWGsK+9KVQs7TwZy1DXceoabPr3AyJdAsce3xgYF5Bqpw==
+  dependencies:
+    tslib "^1.9.0"
+
 "@ngtools/webpack@7.2.2":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-7.2.2.tgz#361d877f01feae800a58901b066b46539e1fe0e3"
@@ -637,6 +644,11 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
+
+angular-custom-modal@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/angular-custom-modal/-/angular-custom-modal-1.2.0.tgz#31bbc20f20fb16a628c07b6107fb3df48d6de210"
+  integrity sha512-EraMEdMV6OSSc5ds7IxWTRgw/pQo4tHKvnuPk9N1LuLN5S8jIhIQXj7IOuwKZ1GVtGqWtcJHznL1G/SIRWFI4g==
 
 ansi-colors@^3.0.0:
   version "3.2.3"

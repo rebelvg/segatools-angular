@@ -73,7 +73,37 @@ body {
 .nsm-content {
   background-color: transparent !important;
   box-shadow: none !important;
-  padding-top: 15em !important;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.nsm-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nsm-overlay-open {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.mt {
+  margin-top: 1em !important;
+}
+
+.mb {
+  margin-bottom: 1em !important;
+}
+
+.ml {
+  margin-left: 1em !important;
+}
+
+.mr {
+  margin-right: 1em !important;
 }

@@ -37,12 +37,12 @@ export class PreviewComponent implements OnInit {
     this.canvas.nativeElement.width = canvasWidth;
     this.canvas.nativeElement.height = canvasHeight;
     canvasContext.lineWidth = 5;
-    canvasContext.font = 'normal normal 23.3px monospace';
+
     canvasContext.fillStyle = 'white';
     canvasContext.textAlign = 'left';
     canvasContext.lineJoin = 'round';
     canvasContext.lineJoin = 'round';
-    console.log(canvasContext.font);
+    canvasContext.font = '23.3px "Courier New"';
     const startX = 68;
     const startY = 75;
     const lines = message.replace(/<(?:.|\n)*?>/gm, '').split('\n');

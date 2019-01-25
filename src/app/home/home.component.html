@@ -1,3 +1,24 @@
-<p>
-  home works!
-</p>
+<div class="st-grid">
+  <div><img class="home-image" src="/assets/home.jpg" /></div>
+  <div class="ui segment data-block">
+    <h4 class="ui center aligned icon header">
+      <i class="circular question icon"></i>
+      <div class="mt">WHAT IS THIS?</div>
+    </h4>
+    <div class="text">A <strong>non-profit</strong> fan translation patch for Yakuza Kenzan.</div>
+    <div class="text">Translation by: KHHSubs</div>
+    <div class="text">
+      <i class="envelope outline icon"></i>Contact email:
+      <a href="mailto:yakuzapatcher(at)gmail.com">yakuzapatcher(at)gmail.com</a>
+    </div>
+  </div>
+  <div class="ui segment progress-block" *ngIf="init">
+    <h4>Progress</h4>
+    <sui-progress class="active" [precision]="2" [value]="stats.messagesDonePercent" maximum="100"
+      >Messages Translated</sui-progress
+    >
+    <sui-progress class="active" [precision]="2" [value]="stats.namesDonePercent" maximum="100"
+      >Names Translated</sui-progress
+    >
+  </div>
+</div>

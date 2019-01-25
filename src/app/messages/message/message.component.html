@@ -23,8 +23,9 @@
             </pre>
           </div>
           <div class="column field">
-            <div>
-              <h4>English <span (click)="onPreview(i)">Preview </span></h4>
+            <div class="english-name-title">
+              <h4>English</h4>
+              <span class="mini ui button primary icon" (click)="onPreview(i)"><i class="ui icon eye"> </i> </span>
             </div>
             <textarea formControlName="english" rows="4"></textarea>
           </div>
@@ -34,3 +35,4 @@
     <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
   </div>
 </form>
+<app-preview></app-preview>

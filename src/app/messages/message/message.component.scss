@@ -15,3 +15,13 @@
   align-items: center;
   justify-content: center;
 }
+
+.english-name-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    margin-bottom: 1rem;
+    margin-left: 20px;
+  }
+}

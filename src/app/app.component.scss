@@ -2,6 +2,7 @@
   display: grid;
   grid: 1fr / 250px 1fr;
   height: 100%;
+  overflow: auto;
   @media only screen and (max-width: 720px) {
     display: block;
   }
