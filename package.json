@@ -4,8 +4,8 @@
   "description": "Segatools React",
   "scripts": {
     "prepush": "yarn run prettier",
-    "prettier": "prettier --list-different \"**/*.{ts,js,json,css,md}\"",
-    "prettier:fix": "prettier --write \"**/*.{ts,js,json,css,md}\"",
+    "prettier": "prettier --list-different \"**/*.{ts,js,json,html,css,scss,md}\"",
+    "prettier:fix": "prettier --write \"**/*.{ts,js,json,html,css,scss,md}\"",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
