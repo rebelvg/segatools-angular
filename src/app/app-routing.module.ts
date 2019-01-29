@@ -5,6 +5,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageComponent } from './messages/message/message.component';
 import { NamesComponent } from './names/names.component';
 import { ListComponent } from './messages/list/list.component';
+import { SearchComponent } from './search/search.component';
+import { UniqueComponent } from './unique/unique.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -14,7 +16,9 @@ const routes: Routes = [
     children: [{ path: '', component: ListComponent }, { path: ':id', component: MessageComponent }]
   },
 
-  { path: 'names', component: NamesComponent }
+  { path: 'names', component: NamesComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'unique', component: UniqueComponent }
 ];
 
 @NgModule({

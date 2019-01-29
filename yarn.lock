@@ -650,6 +650,11 @@ angular-custom-modal@^1.2.0:
   resolved "https://registry.yarnpkg.com/angular-custom-modal/-/angular-custom-modal-1.2.0.tgz#31bbc20f20fb16a628c07b6107fb3df48d6de210"
   integrity sha512-EraMEdMV6OSSc5ds7IxWTRgw/pQo4tHKvnuPk9N1LuLN5S8jIhIQXj7IOuwKZ1GVtGqWtcJHznL1G/SIRWFI4g==
 
+angular-notifier@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/angular-notifier/-/angular-notifier-4.1.1.tgz#127e6c50acab9fe70e784d0e7f4996860f8f93a0"
+  integrity sha512-QrL5cW3GDjONy6Ack+HIgd3tUf93ztkPT6C551/pqOaE69Ad2YDem+JyBLnlLKBnCFUxhKkSVnv/Ak2HsOrBxQ==
+
 ansi-colors@^3.0.0:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.3.tgz#57d35b8686e851e2cc04c403f1c00203976a1813"

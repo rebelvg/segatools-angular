@@ -25,3 +25,13 @@
     margin-left: 20px;
   }
 }
+
+.japanese-msg-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  .header {
+    margin: 0px !important;
+  }
+}

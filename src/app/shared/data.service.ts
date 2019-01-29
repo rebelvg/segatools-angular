@@ -6,6 +6,8 @@ import {} from 'lodash';
 import { NamesService } from '../names/names.service';
 import { HomeService } from '../home/home.service';
 import { StatsResponse } from './models/statsResponse.model';
+import { NotifierService } from 'angular-notifier';
+import { Name } from './models/name.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +17,19 @@ export class DataService {
     private messagesService: MessagesService,
     private http: HttpClient,
     private nameService: NamesService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private notifier: NotifierService
   ) {}
+
+  private handleErrorResponse(response) {
+    if (!response.error) {
+      this.notifier.notify('error', `Failed (${response.status}). Error occured`);
+      return;
+    }
+
+    this.notifier.notify('error', `Failed (${response.status}). Error: ${response.error}`);
+    return;
+  }
 
   public fetchMessages(data: {}) {
     const params = new HttpParams({
@@ -29,9 +42,8 @@ export class DataService {
         params
       })
       .subscribe((response: MessagesResponse) => {
-        console.log(response);
         this.messagesService.setMessages(response);
-      });
+      }, this.handleErrorResponse);
   }
 
   public fetchMessage(id) {
@@ -40,10 +52,10 @@ export class DataService {
     }
     this.http.get(`/api/messages/${id}`).subscribe(response => {
       this.messagesService.setMessage(response);
-    });
+    }, this.handleErrorResponse);
   }
 
-  public updateMessage(id, data) {
+  public updateMessage(id: string, data: {}) {
     const token = window.localStorage.getItem('token');
 
     if (!id || !token) {
@@ -51,21 +63,24 @@ export class DataService {
     }
 
     const headers = new HttpHeaders().set('token', token);
-    this.http.post(`/api/messages/${id}`, data, { headers }).subscribe(response => {
-      console.log(response);
-    });
+    this.http.post(`/api/messages/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
+      this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
+    }, this.handleErrorResponse);
   }
 
-  public fetchNames() {
+  public fetchNames(data: {}) {
+    const params = new HttpParams({
+      fromObject: { ...data }
+    });
     this.http
       .get('/api/names', {
         observe: 'body',
-        responseType: 'json'
+        responseType: 'json',
+        params
       })
       .subscribe(response => {
-        console.log(response);
         this.nameService.setNames(response);
-      });
+      }, this.handleErrorResponse);
   }
 
   public fetchStats() {
@@ -76,8 +91,22 @@ export class DataService {
       })
       .subscribe((response: StatsResponse) => {
         this.homeService.setStats(response);
-      });
+      }, this.handleErrorResponse);
   }
 
-  public updateName(id) {}
+  public updateName(id: string, data: { english: string }) {
+    const token = window.localStorage.getItem('token');
+
+    if (!id || !token) {
+      return;
+    }
+
+    const headers = new HttpHeaders().set('token', token);
+    this.http.post(`/api/names/${id}`, data, { headers }).subscribe((response: { name: Name }) => {
+      this.notifier.notify(
+        'success',
+        `Name #${response.name.nameId} updated successfully! ${response.name.japanese}(${response.name.english})`
+      );
+    }, this.handleErrorResponse);
+  }
 }

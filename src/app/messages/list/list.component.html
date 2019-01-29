@@ -11,9 +11,9 @@
         | paginate
           : {
               id: 'server',
-              itemsPerPage: pagination.limit,
-              currentPage: pagination.page,
-              totalItems: pagination.total
+              itemsPerPage: paginator.limit,
+              currentPage: paginator.page,
+              totalItems: paginator.total
             })
     "
     [message]="message"

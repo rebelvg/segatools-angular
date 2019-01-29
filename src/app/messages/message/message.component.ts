@@ -8,7 +8,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { forEach, get } from 'lodash';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { PreviewService } from './preview/preview.service';
-import { chapters } from './chapters';
+import { MetaService } from 'src/app/shared/meta.service';
 
 @Component({
   selector: 'app-message',
@@ -17,7 +17,7 @@ import { chapters } from './chapters';
 })
 export class MessageComponent implements OnInit, OnDestroy {
   message: Message;
-  chapters = chapters;
+  chapters = [];
 
   previewMessage: string;
   messageSubscription: Subscription;
@@ -28,7 +28,8 @@ export class MessageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private dataService: DataService,
     public modalService: NgxSmartModalService,
-    private previewService: PreviewService
+    private previewService: PreviewService,
+    private meta: MetaService
   ) {}
 
   ngOnInit() {
@@ -37,13 +38,28 @@ export class MessageComponent implements OnInit, OnDestroy {
         this.dataService.fetchMessage(params.id);
       }
     });
+    this.chapters = this.meta.getChapters();
+    this.meta.chaptersUpdated.subscribe(chapters => {
+      this.chapters = chapters;
+    });
     this.messageSubscription = this.msgService.singleMessageUpdated.subscribe(message => {
       this.isLoaded = true;
       this.message = message;
-      console.log(message);
       this.initForm();
     });
-    console.log('cool');
+  }
+
+  getName(nameId) {
+    if (!nameId) {
+      return 'SYSTEM MESSAGE';
+    }
+
+    const name = this.message.names.find(nameItem => nameItem.nameId === nameId);
+    if (name) {
+      return `${name.japanese} (${name.english})`;
+    }
+
+    return '';
   }
 
   onSubmit() {

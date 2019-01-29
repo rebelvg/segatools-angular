@@ -1,22 +1,54 @@
-<ng-container *ngIf="!loading; else loader">
-  <div class="ui segment raised" *ngFor="let name of names">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <input hidden name="nameId" [(ngModel)]="name.nameId" />
-      <input hidden name="_id" [(ngModel)]="name._id" />
-      <input hidden name="japanese" [(ngModel)]="name.japanese" />
+<div class="ui segment">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="ui form">
+    <div class="field">
+      <label>FILTER</label>
+      <input name="search" formControlName="search" />
+    </div>
+    <div class="options-filter">
+      <div class="ui checkbox options-checkbox">
+        <input type="checkbox" formControlName="hideCompleted" />
+        <label>Hide completed</label>
+      </div>
+      <div class="options-length">{{ names.length }} found</div>
+      <div class="options-submit">
+        <button class="ui button primary">Filter</button>
+      </div>
+    </div>
+  </form>
+</div>
 
-      <div class="ui three column stackable grid ">
-        <div class="four wide column game-text name-japanese ">{{ name.japanese }}</div>
-        <div class="ten wide column">
-          <div class="ui input">
-            <input name="english" class="name-input" [(ngModel)]="name.english" type="text" placeholder="Enter Name" />
+<ng-container *ngIf="!loading; else loader">
+  <div>
+    <div class="names-pagination">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+    <div class="ui segment raised" *ngFor="let name of (names | paginate: { itemsPerPage: 10, currentPage: page })">
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <input hidden name="nameId" [(ngModel)]="name.nameId" />
+        <input hidden name="_id" [(ngModel)]="name._id" />
+        <input hidden name="japanese" [(ngModel)]="name.japanese" />
+
+        <div class="ui three column stackable grid ">
+          <div class="four wide column game-text name-japanese ">{{ name.japanese }}</div>
+          <div class="ten wide column">
+            <div class="ui input">
+              <input
+                name="english"
+                class="name-input"
+                [(ngModel)]="name.english"
+                type="text"
+                placeholder="Enter Name"
+              />
+            </div>
+          </div>
+          <div class="two wide column">
+            <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
           </div>
         </div>
-        <div class="two wide column">
-          <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
+
+    <span class="names-pagination"> <pagination-controls (pageChange)="page = $event"></pagination-controls> </span>
   </div>
 </ng-container>
 

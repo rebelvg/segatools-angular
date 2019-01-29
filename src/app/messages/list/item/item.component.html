@@ -17,11 +17,16 @@
         >
       </div>
     </h5>
-    <div class="ui divider"></div>
-    <div>
-      <div class="ui label" *ngFor="let name of message.names">
-        {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
-      </div>
-    </div>
   </a>
+  <div class="ui divider"></div>
+  <div>
+    <a
+      class="ui label"
+      [routerLink]="['/names']"
+      [queryParams]="{ search: name.japanese }"
+      *ngFor="let name of message.names"
+    >
+      {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
+    </a>
+  </div>
 </div>

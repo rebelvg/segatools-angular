@@ -17,9 +17,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.fetchStats();
-    console.log(this.homeService);
     this.subscription = this.homeService.statsUpdated.subscribe(stats => {
-      console.log(stats);
       this.stats = stats;
       this.init = true;
     });

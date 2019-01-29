@@ -1,0 +1,115 @@
+<form class="ui form small" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="ui column st-grid two">
+    <div class="segment ui column">
+      <h4 class="ui header">Search Options</h4>
+      <div class="field">
+        <input name="fileName" placeholder="Filename" formControlName="fileName" />
+      </div>
+      <div class="field">
+        <select class="ui fluid dropdown" formControlName="chapterName" name="chapterName">
+          <option value="">No chapter selected</option>
+          <option value="Chapter 1"> Chapter 1 </option>
+        </select>
+      </div>
+      <div class="field">
+        <input type="number" name="speakerCount" placeholder="Number of Speakers" formControlName="speakerCount" />
+      </div>
+      <!-- <div class="field">
+        <input
+          type="number"
+          name="percentDone"
+          placeholder="Percent Done"
+          formControlName="percentDone"
+          min="0"
+          max="100"
+        />
+        <div class="error-message" *ngIf="isError('percentDone')">
+          Please enter number in range from 0 to 100
+        </div>
+      </div> -->
+      <div class="field">
+        <div class="ui checkbox ">
+          <input type="checkbox" formControlName="hideChanged" />
+          <label>Hide changed</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="ui checkbox ">
+          <input type="checkbox" formControlName="hideCompleted" />
+          <label>Hide completed</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui checkbox ">
+          <input type="checkbox" formControlName="hideNotCompleted" />
+          <label>Hide not completed</label>
+        </div>
+      </div>
+
+      <div class="mt">
+        <button class="button ui primary" [ngClass]="{ disabled: this.searchForm.invalid }">
+          Search
+        </button>
+      </div>
+    </div>
+    <div class="segment ui column">
+      <h4 class="ui header">Search by filter</h4>
+      <div class="ui button fluid primary icon" (click)="onAddFilterObject('search')">
+        Add Filter <i class="ui icon plus"></i>
+      </div>
+      <div class="item-array-container" formArrayName="search">
+        <div
+          class="mt mb item-array"
+          *ngFor="let searchControl of getControls('search'); let searchIndex = index"
+          [formGroupName]="searchIndex"
+        >
+          <div class="field-array ui small fluid input">
+            <input type="text" formControlName="value" />
+          </div>
+          <div class="error-message" *ngIf="searchControl.invalid">
+            This field can't be empty
+          </div>
+          <div class="additional-options mt">
+            <div class="ui checkbox ">
+              <input type="checkbox" formControlName="strict" />
+              <label>Strict</label>
+            </div>
+            <div class="delete-item" (click)="onRemoveFilterObject('search', searchIndex)">
+              Delete <i class="ui icon trash alternative"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="segment ui column">
+      <h4 class="ui header">Names</h4>
+      <div class="ui button fluid primary icon" (click)="onAddFilterObject('names')">
+        Add Name <i class="ui icon plus"></i>
+      </div>
+      <div class="item-array-container" formArrayName="names">
+        <div
+          class="mt mb item-array"
+          *ngFor="let nameControl of getControls('names'); let nameIndex = index"
+          [formGroupName]="nameIndex"
+        >
+          <div class="field-array ui small fluid input">
+            <input type="text" formControlName="value" />
+          </div>
+          <div class="error-message" *ngIf="nameControl.invalid">
+            This field can't be empty
+          </div>
+          <div class="additional-options mt">
+            <div class="ui checkbox ">
+              <input type="checkbox" formControlName="strict" />
+              <label>Strict</label>
+            </div>
+            <div class="delete-item" (click)="onRemoveFilterObject('names', nameIndex)">
+              Delete <i class="ui icon trash alternative"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

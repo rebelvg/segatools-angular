@@ -3,28 +3,73 @@ import { NamesService } from './names.service';
 import { DataService } from '../shared/data.service';
 import { Subscription } from 'rxjs';
 import { Name } from '../shared/models/name.model';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
+import { NamesQuery } from '../shared/models/namesQuery.model';
+import { isNil, omitBy } from 'lodash';
 @Component({
   selector: 'app-names',
   templateUrl: './names.component.html',
   styleUrls: ['./names.component.scss']
 })
 export class NamesComponent implements OnInit, OnDestroy {
-  names: Name[];
+  names = <Name[]>[];
   subscription: Subscription;
+  page = 1;
+  searchForm = new FormGroup({});
   loading: false;
 
-  constructor(private nameService: NamesService, private dataService: DataService) {}
+  constructor(
+    private nameService: NamesService,
+    private dataService: DataService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.dataService.fetchNames();
+    this.route.queryParams.subscribe(({ search = null, hideCompleted = true }) => {
+      this.fetchData({ search, hideCompleted });
+    });
+
     this.subscription = this.nameService.listUpdated.subscribe(response => {
       this.names = response.names;
     });
   }
 
+  fetchData(params: NamesQuery) {
+    const formattedParams = omitBy(params, isNil);
+    this.dataService.fetchNames(formattedParams);
+    this.initForm(formattedParams);
+  }
+
+  initForm(params) {
+    const hideCompletedParam = !isNil(params.hideCompleted) && params.hideCompleted === 'false' ? false : true;
+    const isSearchSet = params.search ? hideCompletedParam : true;
+    const hideCompleted = !isNil(params.hideCompleted) ? hideCompletedParam : isSearchSet;
+
+    this.searchForm = new FormGroup({
+      search: new FormControl(params.search || ''),
+      hideCompleted: new FormControl(hideCompleted)
+    });
+  }
+
+  onSearch() {
+    const queryParams = omitBy(this.searchForm.value, isNil);
+    if (!queryParams.search) {
+      queryParams.search = null;
+    }
+
+    this.router.navigate(['/names'], { queryParams });
+  }
+
   onSubmit(form) {
-    console.log(form.value);
+    const values = form.value;
+    const data = { english: values.english };
+    this.dataService.updateName(values._id, data);
+  }
+
+  onPageChange(page) {
+    this.page = page;
   }
 
   ngOnDestroy() {

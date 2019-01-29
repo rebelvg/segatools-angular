@@ -18,6 +18,9 @@ import { NavigationComponent } from './messages/message/navigation/navigation.co
 import { PreviewComponent } from './messages/message/preview/preview.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MobileHeaderComponent } from './mobile-header/mobile-header.component';
+import { UniqueComponent } from './unique/unique.component';
+import { SearchComponent } from './search/search.component';
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,9 @@ import { MobileHeaderComponent } from './mobile-header/mobile-header.component';
     NavigationComponent,
     PreviewComponent,
     SidebarComponent,
-    MobileHeaderComponent
+    MobileHeaderComponent,
+    UniqueComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,7 @@ import { MobileHeaderComponent } from './mobile-header/mobile-header.component';
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
+    NotifierModule,
     NgxSmartModalModule.forRoot()
   ],
   providers: [],

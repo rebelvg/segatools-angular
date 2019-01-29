@@ -17,14 +17,12 @@ export class PreviewComponent implements OnInit {
 
   ngOnInit() {
     this.messageListener = this.previewService.messageSet.subscribe(message => {
-      console.log(message);
       this.message = message;
     });
   }
 
   initCanvas() {
     const message = this.message || '';
-    console.log(this.message);
     const image = new Image(1044, 220);
     image.src = '/assets/preview.png';
 

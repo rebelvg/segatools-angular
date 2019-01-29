@@ -17,7 +17,6 @@ export class NavigationComponent implements OnInit {
     if (!this.next) {
       return;
     }
-    console.log('what');
     this.router.navigate(['messages', this.next]);
   }
   onPrev() {

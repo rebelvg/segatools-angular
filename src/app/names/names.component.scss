@@ -12,3 +12,34 @@
   background-color: #636363 !important;
   color: white !important;
 }
+
+.names-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.options {
+  &-filter {
+    display: grid;
+    grid: 1fr / 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    @media only screen and (max-width: 720px) {
+      grid: 1fr 1fr 1fr / 1fr;
+      grid-gap: 10px;
+    }
+  }
+  &-checkbox {
+    justify-self: start;
+    @media only screen and (max-width: 720px) {
+      justify-self: center;
+    }
+  }
+  &-submit {
+    justify-self: end;
+    @media only screen and (max-width: 720px) {
+      justify-self: center;
+    }
+  }
+}

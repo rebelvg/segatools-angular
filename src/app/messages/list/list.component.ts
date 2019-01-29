@@ -6,6 +6,7 @@ import { MessagesService } from '../messages.service';
 import { DataService } from '../../shared/data.service';
 import { Pagination } from '../../shared/models/pagination.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessagesQuery } from 'src/app/shared/models/messagesQuery.models';
 
 @Component({
   selector: 'app-list',
@@ -18,7 +19,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   init = false;
   loading = false;
   messages = [];
-  pagination = new Pagination(1, 20);
+  query = new MessagesQuery();
+  paginator = new Pagination(1, 20);
 
   constructor(
     private msgService: MessagesService,
@@ -30,8 +32,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.pagination.page = params.page ? +params.page : this.pagination.page;
-      this.pagination.limit = params.limit ? +params.page : this.pagination.limit;
+      this.query = new MessagesQuery(params);
+      this.paginator.setPagination(params);
       this.fetchMessages();
     });
     this.messageSubscription = this.msgService.listUpdated.subscribe(response => {
@@ -39,7 +41,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.init = true;
         this.messages = response.messages;
         this.loading = false;
-        this.pagination = omit(response, 'messages');
+        this.paginator.setPagination(omit(response, 'messages'));
       }, 0);
     });
   }
@@ -52,14 +54,17 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.messageSubscription.unsubscribe();
   }
 
+  getParams = () => ({ ...this.paginator.getQuery(), ...this.query.params });
+
   fetchMessages() {
-    this.dataService.fetchMessages({ page: this.pagination.page, limit: this.pagination.limit });
+    const params = this.getParams();
+    this.dataService.fetchMessages(params);
   }
 
   onPageChange(page) {
     this.loading = true;
     this.router.navigate(['/messages'], {
-      queryParams: { page: page }
+      queryParams: { ...this.getParams(), page: page }
     });
   }
 }

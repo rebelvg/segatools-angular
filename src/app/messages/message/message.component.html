@@ -8,16 +8,27 @@
       <select class="chapter-select" formControlName="chapterName">
         <option *ngFor="let item of chapters" [ngValue]="item">{{ item }}</option>
       </select>
-      <div class="ui label" *ngFor="let name of message.names">
+      <a
+        class="ui label"
+        [routerLink]="['/names']"
+        [queryParams]="{ search: name.japanese }"
+        *ngFor="let name of message.names"
+      >
         {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
-      </div>
+      </a>
     </div>
     <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
     <div class="edit-form" formArrayName="lines">
       <div class="ui segment" *ngFor="let line of getControls(); let i = index" [formGroupName]="i">
-        <div class="ui two column stackable grid">
+        <div class="ui two column stackable grid" *ngIf="message.lines[i].text.japanese">
           <div class="column">
-            <h4>Japanese</h4>
+            <div class="japanese-msg-header">
+              <h4 class="header">Japanese</h4>
+              <div>
+                <div class="ui label blue">{{ message.lines[i].count }}</div>
+                <div class="ui label"><i class="comment icon"></i> {{ getName(message.lines[i].speakerId) }}</div>
+              </div>
+            </div>
             <pre class="game-text">
               {{ message.lines[i].text.japanese }}
             </pre>
