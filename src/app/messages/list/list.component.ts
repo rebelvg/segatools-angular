@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { omit } from 'lodash';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessagesService } from '../messages.service';
 import { DataService } from '../../shared/data.service';
 import { Pagination } from '../../shared/models/pagination.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesQuery } from 'src/app/shared/models/messagesQuery.models';
 
 @Component({
@@ -15,7 +15,6 @@ import { MessagesQuery } from 'src/app/shared/models/messagesQuery.models';
 })
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   private messageSubscription: Subscription;
-  private paginationSubscription: Subscription;
   init = false;
   loading = false;
   messages = [];

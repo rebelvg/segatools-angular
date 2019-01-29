@@ -8,6 +8,8 @@ import { HomeService } from '../home/home.service';
 import { StatsResponse } from './models/statsResponse.model';
 import { NotifierService } from 'angular-notifier';
 import { Name } from './models/name.model';
+import { UniqueService } from '../unique/unique.service';
+import { LinesResponse } from './models/linesResponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ import { Name } from './models/name.model';
 export class DataService {
   constructor(
     private messagesService: MessagesService,
+    private uniqueService: UniqueService,
     private http: HttpClient,
     private nameService: NamesService,
     private homeService: HomeService,
@@ -46,15 +49,6 @@ export class DataService {
       }, this.handleErrorResponse);
   }
 
-  public fetchMessage(id) {
-    if (!id) {
-      return;
-    }
-    this.http.get(`/api/messages/${id}`).subscribe(response => {
-      this.messagesService.setMessage(response);
-    }, this.handleErrorResponse);
-  }
-
   public updateMessage(id: string, data: {}) {
     const token = window.localStorage.getItem('token');
 
@@ -65,6 +59,15 @@ export class DataService {
     const headers = new HttpHeaders().set('token', token);
     this.http.post(`/api/messages/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
       this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
+    }, this.handleErrorResponse);
+  }
+
+  public fetchMessage(id) {
+    if (!id) {
+      return;
+    }
+    this.http.get(`/api/messages/${id}`).subscribe(response => {
+      this.messagesService.setMessage(response);
     }, this.handleErrorResponse);
   }
 
@@ -107,6 +110,34 @@ export class DataService {
         'success',
         `Name #${response.name.nameId} updated successfully! ${response.name.japanese}(${response.name.english})`
       );
+    }, this.handleErrorResponse);
+  }
+
+  public fetchUniqueLines(data: {}) {
+    const params = new HttpParams({
+      fromObject: { ...data }
+    });
+    this.http
+      .get('/api/lines', {
+        observe: 'body',
+        responseType: 'json',
+        params
+      })
+      .subscribe((response: LinesResponse) => {
+        this.uniqueService.setMessages(response);
+      }, this.handleErrorResponse);
+  }
+
+  public updateUniqueLine(id: string, data: {}) {
+    const token = window.localStorage.getItem('token');
+
+    if (!id || !token) {
+      return;
+    }
+
+    const headers = new HttpHeaders().set('token', token);
+    this.http.post(`/api/lines/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
+      this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
     }, this.handleErrorResponse);
   }
 }

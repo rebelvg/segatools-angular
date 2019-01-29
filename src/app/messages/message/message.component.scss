@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-.english-name-title {
+.english-msg-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,7 +28,6 @@
 
 .japanese-msg-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   .header {

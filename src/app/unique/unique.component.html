@@ -1,3 +1,64 @@
-<p>
-  unique works!
-</p>
+<ng-container *ngIf="init">
+  <div class="messages-pagination">
+    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</ng-container>
+
+<div
+  class="ui segment"
+  *ngFor="
+    let line of (lines
+      | paginate
+        : {
+            id: 'server',
+            itemsPerPage: paginator.limit,
+            currentPage: paginator.page,
+            totalItems: paginator.total
+          });
+    let i = index
+  "
+>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ui form">
+    <input hidden name="japanese" [(ngModel)]="line.text.japanese" />
+
+    <div class="ui three column stackable grid ">
+      <div class="seven wide column ">
+        <div class="msg-header">
+          <h4 class="header">Japanese</h4>
+          <div>
+            <div class="ui label blue">{{ line.count }}</div>
+          </div>
+        </div>
+        <div class="game-text line-japanese ">
+          {{ line.text.japanese }}
+        </div>
+      </div>
+
+      <div class="seven wide column field">
+        <div class="msg-header">
+          <h4 class="header">English</h4>
+          <span class="mini ui button primary icon" (click)="onPreview(f)"><i class="ui icon eye"> </i> </span>
+        </div>
+        <textarea rows="4" name="english" [(ngModel)]="line.text.english"></textarea>
+      </div>
+      <div class="two wide column">
+        <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-container *ngIf="init">
+  <div class="messages-pagination">
+    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</ng-container>
+
+<ng-template #loader>
+  <div class="ui segment loading">
+    <p></p>
+    <div class="ui active inverted dimmer">
+      <div class="ui loader"></div>
+    </div>
+  </div>
+</ng-template>

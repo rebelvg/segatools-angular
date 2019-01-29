@@ -1,0 +1,10 @@
+.msg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  margin-bottom: 1em;
+  .header {
+    margin: 0px !important;
+  }
+}
