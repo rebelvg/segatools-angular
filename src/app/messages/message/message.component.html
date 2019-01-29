@@ -19,31 +19,38 @@
     </div>
     <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
     <div class="edit-form" formArrayName="lines">
-      <div class="ui segment" *ngFor="let line of getControls(); let i = index" [formGroupName]="i">
-        <div class="ui two column stackable grid" *ngIf="message.lines[i].text.japanese">
-          <div class="column">
-            <div class="japanese-msg-header">
-              <h4 class="header">Japanese</h4>
-              <div>
-                <div class="ui label blue">{{ message.lines[i].count }}</div>
-                <div class="ui label"><i class="comment icon"></i> {{ getName(message.lines[i].speakerId) }}</div>
+      <ng-container *ngFor="let line of getControls(); let i = index" [formGroupName]="i">
+        <div class="ui segment" *ngIf="message.lines[i].text.japanese; else divider">
+          <div class="ui two column stackable grid">
+            <div class="column">
+              <div class="japanese-msg-header">
+                <h4 class="header">Japanese</h4>
+                <div>
+                  <div class="ui label blue">{{ message.lines[i].count }}</div>
+                  <div class="ui label"><i class="comment icon"></i> {{ getName(message.lines[i].speakerId) }}</div>
+                </div>
               </div>
-            </div>
-            <pre class="game-text">
+              <pre class="game-text">
               {{ message.lines[i].text.japanese }}
-            </pre>
-          </div>
-          <div class="column field">
-            <div class="english-msg-header">
-              <h4>English</h4>
-              <span class="mini ui button primary icon" (click)="onPreview(i)"><i class="ui icon eye"> </i> </span>
+            </pre
+              >
             </div>
-            <textarea formControlName="english" rows="4"></textarea>
+            <div class="column field">
+              <div class="english-msg-header">
+                <h4>English</h4>
+                <span class="mini ui button primary icon" (click)="onPreview(i)"><i class="ui icon eye"> </i> </span>
+              </div>
+              <textarea formControlName="english" rows="4"></textarea>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </div>
     <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
   </div>
 </form>
 <app-preview></app-preview>
+
+<ng-template #divider>
+  <div class="ui divider"></div>
+</ng-template>
