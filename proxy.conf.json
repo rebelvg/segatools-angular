@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://yakuzakenzan.segatools.klpq.men/api/",
+    "target": "https://yakuzakenzan.klpq.men/api/",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": { "^/api": "" }

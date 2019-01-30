@@ -27,7 +27,7 @@ export class NamesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(({ search = null, hideCompleted = true }) => {
+    this.route.queryParams.subscribe(({ search = null, hideCompleted = false }) => {
       this.fetchData({ search, hideCompleted });
     });
 
@@ -44,8 +44,8 @@ export class NamesComponent implements OnInit, OnDestroy {
   }
 
   initForm(params) {
-    const hideCompletedParam = !isNil(params.hideCompleted) && params.hideCompleted === 'false' ? false : true;
-    const isSearchSet = params.search ? hideCompletedParam : true;
+    const hideCompletedParam = !isNil(params.hideCompleted) && params.hideCompleted === 'true' ? true : false;
+    const isSearchSet = params.search ? hideCompletedParam : false;
     const hideCompleted = !isNil(params.hideCompleted) ? hideCompletedParam : isSearchSet;
 
     this.searchForm = new FormGroup({
