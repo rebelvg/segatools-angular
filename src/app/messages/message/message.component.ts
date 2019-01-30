@@ -50,16 +50,19 @@ export class MessageComponent implements OnInit, OnDestroy {
   }
 
   getName(nameId) {
-    if (isNull(nameId)) {
+    if (nameId === null) {
       return 'SYSTEM MESSAGE';
     }
 
-    const name = this.message.names.find(nameItem => nameItem.nameId === nameId);
-    if (name) {
-      return `${name.japanese} (${name.english})`;
+    const { names } = this.message;
+
+    const name = names.find(nameItem => nameItem.nameId === nameId);
+
+    if (!name) {
+      return 'EMPTY NAME';
     }
 
-    return '';
+    return `${name.japanese} (${name.english})`;
   }
 
   onSubmit() {
