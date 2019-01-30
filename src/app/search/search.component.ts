@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { omitBy, isNil, forOwn, isArray } from 'lodash';
+import { MessagesQuery } from '../shared/models/messagesQuery.models';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -9,10 +10,14 @@ import { omitBy, isNil, forOwn, isArray } from 'lodash';
 })
 export class SearchComponent implements OnInit {
   searchForm = new FormGroup({});
-  constructor(private router: Router) {}
+  formInit = false;
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.initForm();
+    this.route.queryParams.subscribe(params => {
+      const formattedParams = new MessagesQuery(params);
+      this.initForm(formattedParams.getFormParams());
+    });
   }
 
   getControls(type: string) {
@@ -36,18 +41,35 @@ export class SearchComponent implements OnInit {
     return !this.searchForm.get(type).valid && this.searchForm.get(type).touched;
   }
 
-  initForm() {
+  initForm(params) {
+    const search = params.search.map(
+      item =>
+        new FormGroup({
+          value: new FormControl(item.value, Validators.required),
+          strict: new FormControl(item.strict)
+        })
+    );
+
+    const names = params.names.map(
+      item =>
+        new FormGroup({
+          value: new FormControl(item.value, Validators.required),
+          strict: new FormControl(item.strict)
+        })
+    );
+
     this.searchForm = new FormGroup({
-      fileName: new FormControl(null),
-      chapterName: new FormControl(''),
-      speakerCount: new FormControl(null),
-      hideChanged: new FormControl(false),
-      hideCompleted: new FormControl(false),
-      hideNotCompleted: new FormControl(false),
-      // percentDone: new FormControl(null, [Validators.max(100), Validators.min(0)]),
-      search: new FormArray([]),
-      names: new FormArray([])
+      fileName: new FormControl(params.fileName),
+      chapterName: new FormControl(params.chapterName),
+      speakersCount: new FormControl(params.speakersCount),
+      hideChanged: new FormControl(params.hideChanged),
+      hideCompleted: new FormControl(params.hideCompleted),
+      hideNotCompleted: new FormControl(params.hideNotCompleted),
+      search: new FormArray(search),
+      names: new FormArray(names)
     });
+
+    this.formInit = true;
   }
 
   onSubmit() {

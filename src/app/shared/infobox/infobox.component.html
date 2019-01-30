@@ -1,0 +1,17 @@
+<div class="infobox-container ui placeholder">
+  <div class="infobox-content" [ngClass]="{ center: !showLabel }">
+    <div class="infobox-label" *ngIf="label">{{ label }}</div>
+    <div class="infobox-value" *ngIf="showLabel">
+      {{ value }} <span *ngIf="maxValue"> / {{ maxValue }} </span>
+    </div>
+    <div class="infobox-progress" *ngIf="maxValue">
+      <sui-progress
+        class="info-bar"
+        [precision]="2"
+        [showProgress]="true"
+        [value]="value"
+        [maximum]="maxValue"
+      ></sui-progress>
+    </div>
+  </div>
+</div>

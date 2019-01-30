@@ -5,19 +5,47 @@
       <i class="circular question icon"></i>
       <div class="mt">WHAT IS THIS?</div>
     </h4>
-    <div class="text">A <strong>non-profit</strong> fan translation patch for Yakuza Kenzan.</div>
-    <div class="text">
+    <div class="mt">A <strong>non-profit</strong> fan translation patch for Yakuza Kenzan.</div>
+    <div class="mt">
       <i class="envelope outline icon"></i>Contact email:
       <a href="mailto:yakuzapatcher(at)gmail.com">yakuzapatcher(at)gmail.com</a>
     </div>
   </div>
   <div class="ui segment progress-block" *ngIf="init">
-    <h4>Progress</h4>
-    <sui-progress class="active" [precision]="2" [value]="stats.messagesDonePercent" maximum="100"
-      >Messages Translated</sui-progress
-    >
-    <sui-progress class="active" [precision]="2" [value]="stats.namesDonePercent" maximum="100"
-      >Names Translated</sui-progress
-    >
+    <div class="message-progress">
+      <div class="ui placeholder progress-header">Messages Progress ({{ stats.messages.percentDone.toFixed(2) }}%)</div>
+      <app-infobox
+        icon="question"
+        class="infobox"
+        number="1"
+        label="Messages Translated"
+        [value]="stats.messages.translated"
+        [maxValue]="stats.messages.total"
+      >
+      </app-infobox>
+      <app-infobox
+        icon="question"
+        class="infobox"
+        number="2"
+        label="Unique Messages Translated"
+        [value]="stats.messages.translatedUnique"
+        [maxValue]="stats.messages.totalUnique"
+      >
+      </app-infobox>
+      <app-infobox icon="question" number="3" class="infobox" label="Files Count" [value]="stats.messages.filesCount">
+      </app-infobox>
+    </div>
+    <div class="names-progress">
+      <div class="ui placeholder progress-header">Names Progress ({{ stats.names.percentDone.toFixed(2) }}%)</div>
+      <app-infobox
+        icon="question"
+        class="infobox"
+        label="Names Translated"
+        [value]="stats.names.translated"
+        [maxValue]="stats.names.total"
+      >
+      </app-infobox>
+      <app-infobox icon="question" class="infobox" label="Files Count" [value]="stats.names.filesCount"> </app-infobox>
+    </div>
   </div>
 </div>

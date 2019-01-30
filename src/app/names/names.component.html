@@ -19,36 +19,40 @@
 
 <ng-container *ngIf="!loading; else loader">
   <div>
-    <div class="names-pagination">
+    <div class="names-pagination" *ngIf="names.length">
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
-    <div class="ui segment raised" *ngFor="let name of (names | paginate: { itemsPerPage: 10, currentPage: page })">
-      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <input hidden name="nameId" [(ngModel)]="name.nameId" />
-        <input hidden name="_id" [(ngModel)]="name._id" />
-        <input hidden name="japanese" [(ngModel)]="name.japanese" />
+    <ng-container *ngIf="names.length; else nothing">
+      <div class="ui segment raised" *ngFor="let name of (names | paginate: { itemsPerPage: 10, currentPage: page })">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <input hidden name="nameId" [(ngModel)]="name.nameId" />
+          <input hidden name="_id" [(ngModel)]="name._id" />
+          <input hidden name="japanese" [(ngModel)]="name.japanese" />
 
-        <div class="ui three column stackable grid ">
-          <div class="four wide column game-text name-japanese ">{{ name.japanese }}</div>
-          <div class="ten wide column">
-            <div class="ui input">
-              <input
-                name="english"
-                class="name-input"
-                [(ngModel)]="name.english"
-                type="text"
-                placeholder="Enter Name"
-              />
+          <div class="ui three column stackable grid ">
+            <div class="four wide column game-text name-japanese ">{{ name.japanese }}</div>
+            <div class="ten wide column">
+              <div class="ui input">
+                <input
+                  name="english"
+                  class="name-input"
+                  [(ngModel)]="name.english"
+                  type="text"
+                  placeholder="Enter Name"
+                />
+              </div>
+            </div>
+            <div class="two wide column">
+              <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
             </div>
           </div>
-          <div class="two wide column">
-            <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </ng-container>
 
-    <span class="names-pagination"> <pagination-controls (pageChange)="page = $event"></pagination-controls> </span>
+    <span class="names-pagination" *ngIf="names.length">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </span>
   </div>
 </ng-container>
 
@@ -57,6 +61,15 @@
     <p></p>
     <div class="ui active inverted dimmer">
       <div class="ui loader"></div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #nothing>
+  <div class="ui placeholder segment">
+    <div class="ui icon header">
+      <i class="search icon"></i>
+      There are no names matching your query
     </div>
   </div>
 </ng-template>

@@ -1,0 +1,45 @@
+.infobox {
+  &-container {
+    background-color: #2185d0 !important;
+    animation: placeholderShimmer 2s linear;
+    animation-iteration-count: infinite;
+    display: grid;
+    grid: 1fr / 1fr;
+    width: 100%;
+    max-height: 90px;
+    height: 90px;
+    color: white;
+  }
+  &-content {
+    padding: 0.5em 1em;
+    height: 90px;
+    display: grid;
+    grid: 20px 30px 30px / 1fr;
+    align-items: center;
+    &.center {
+      .infobox-label {
+        font-size: 1.4em;
+      }
+      grid: 1fr 1fr / 1fr;
+    }
+  }
+  &-label {
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &-value {
+    font-size: 2em;
+    display: block;
+    line-height: 1em;
+  }
+  &-progress {
+    min-height: 2px;
+    .info-bar {
+      margin-bottom: 0em !important;
+    }
+    .bar {
+      background-color: white;
+    }
+  }
+}

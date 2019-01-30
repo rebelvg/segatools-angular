@@ -16,7 +16,7 @@ import { MessagesQuery } from 'src/app/shared/models/messagesQuery.models';
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   private messageSubscription: Subscription;
   init = false;
-  loading = false;
+  loading = true;
   messages = [];
   query = new MessagesQuery();
   paginator = new Pagination(1, 20);

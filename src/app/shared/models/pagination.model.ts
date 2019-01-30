@@ -1,3 +1,5 @@
+import { isNil } from 'lodash';
+
 export class Pagination {
   page: number;
   pages: number;
@@ -11,9 +13,10 @@ export class Pagination {
     return { page: this.page, limit: this.limit };
   }
   setPagination(params) {
-    this.page = params.page ? +params.page : this.page;
-    this.pages = params.pages ? +params.pages : this.pages;
-    this.total = params.total ? +params.total : this.total;
-    this.limit = params.limit ? +params.limit : this.limit;
+    console.log('pagination set');
+    this.page = !isNil(params.page) ? +params.page : this.page;
+    this.pages = !isNil(params.pages) ? +params.pages : this.pages;
+    this.total = !isNil(params.total) ? +params.total : this.total;
+    this.limit = !isNil(params.limit) ? +params.limit : this.limit;
   }
 }

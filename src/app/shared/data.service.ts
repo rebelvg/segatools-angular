@@ -93,6 +93,7 @@ export class DataService {
         responseType: 'json'
       })
       .subscribe((response: StatsResponse) => {
+        console.log(response);
         this.homeService.setStats(response);
       }, this.handleErrorResponse);
   }

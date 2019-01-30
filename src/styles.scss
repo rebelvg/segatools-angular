@@ -108,3 +108,19 @@ body {
 .mr {
   margin-right: 1em !important;
 }
+
+.info-bar {
+  .bar {
+    background-color: white !important;
+  }
+  .progress {
+    color: #313131 !important;
+    font-weight: bold;
+  }
+}
+
+.progress-block {
+  .placeholder {
+    max-width: 100% !important;
+  }
+}

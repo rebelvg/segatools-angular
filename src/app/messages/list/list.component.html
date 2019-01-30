@@ -1,10 +1,18 @@
-<ng-container *ngIf="init">
+<app-search></app-search>
+<div *ngIf="!loading" class="header ui">Found {{ paginator.total }} messages</div>
+<ng-container *ngIf="init && paginator.total">
   <div class="messages-pagination">
     <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
   </div>
 </ng-container>
 
 <ng-container *ngIf="!loading; else loader">
+  <div class="ui placeholder segment" *ngIf="!messages.length && !loading">
+    <div class="ui icon header">
+      <i class="search icon"></i>
+      There are no messages matching your query
+    </div>
+  </div>
   <app-item
     *ngFor="
       let message of (messages
@@ -21,7 +29,7 @@
   </app-item>
 </ng-container>
 
-<ng-container *ngIf="init">
+<ng-container *ngIf="init && paginator.total">
   <div class="messages-pagination">
     <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
   </div>

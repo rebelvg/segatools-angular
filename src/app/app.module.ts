@@ -21,6 +21,8 @@ import { MobileHeaderComponent } from './mobile-header/mobile-header.component';
 import { UniqueComponent } from './unique/unique.component';
 import { SearchComponent } from './search/search.component';
 import { NotifierModule } from 'angular-notifier';
+import { LoginComponent } from './login/login.component';
+import { InfoboxComponent } from './shared/infobox/infobox.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { NotifierModule } from 'angular-notifier';
     SidebarComponent,
     MobileHeaderComponent,
     UniqueComponent,
-    SearchComponent
+    SearchComponent,
+    LoginComponent,
+    InfoboxComponent
   ],
   imports: [
     BrowserModule,

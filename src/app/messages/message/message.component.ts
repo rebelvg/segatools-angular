@@ -5,7 +5,7 @@ import { Message } from 'src/app/shared/models/message.model';
 import { DataService } from 'src/app/shared/data.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
-import { forEach, get } from 'lodash';
+import { forEach, get, isNull } from 'lodash';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { PreviewService } from './preview/preview.service';
 import { MetaService } from 'src/app/shared/meta.service';
@@ -50,7 +50,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   }
 
   getName(nameId) {
-    if (!nameId) {
+    if (isNull(nameId)) {
       return 'SYSTEM MESSAGE';
     }
 

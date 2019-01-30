@@ -17,7 +17,7 @@ export class NamesComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   page = 1;
   searchForm = new FormGroup({});
-  loading: false;
+  loading = true;
 
   constructor(
     private nameService: NamesService,
@@ -32,6 +32,7 @@ export class NamesComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.nameService.listUpdated.subscribe(response => {
+      this.loading = false;
       this.names = response.names;
     });
   }

@@ -1,4 +1,16 @@
 export class StatsResponse {
-  messagesDonePercent: number;
-  namesDonePercent: number;
+  messages: {
+    filesCount: number;
+    percentDone: number;
+    total: number;
+    totalUnique: number;
+    translated: number;
+    translatedUnique: number;
+  };
+  names: {
+    filesCount: number;
+    percentDone: number;
+    total: number;
+    translated: number;
+  };
 }
