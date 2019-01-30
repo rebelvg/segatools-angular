@@ -58,7 +58,7 @@ export class MessagesQuery {
     if (isArray(value) && value.length) {
       this.params[key] = value.filter(item => !!item);
     }
-  }
+  };
 
   formatArrayData(data: string) {
     if (!data) {
