@@ -1,0 +1,31 @@
+<div class="ui segment mt raised" *ngIf="!!auth.hasUserData(); else loader">
+  <div class="ui placeholder segment">
+    <div class="ui two column stackable center aligned grid">
+      <div class="ui divider vertical">Profile</div>
+      <div class="middle aligned row">
+        <div class="column">
+          <div class="ui icon header">
+            <i class="icon id badge"></i>
+            <div class="mt">{{ user.name }}</div>
+            <div class="ui label mt red">{{ user._id }}</div>
+          </div>
+        </div>
+        <div class="column">
+          <div>
+            <div class="caps">Access</div>
+            <span class="ui label blue large" *ngFor="let access of user.personas"> {{ access }} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="ui segment">
+    <div class="ui active dimmer">
+      <div class="ui text loader">Loading</div>
+    </div>
+    <p></p>
+  </div>
+</ng-template>

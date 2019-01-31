@@ -1,0 +1,38 @@
+<div class="ui segment mt">
+  <h3 class="header ui">Users</h3>
+  <table class="ui celled table structured mt ">
+    <thead>
+      <tr>
+        <th rowspan="2" class="four wide">ID</th>
+        <th rowspan="2">Name</th>
+        <th rowspan="2">Created</th>
+        <th colspan="2">Access Level</th>
+        <th rowspan="2">Actions</th>
+      </tr>
+      <tr>
+        <th>Admin</th>
+        <th>Editor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
+        <td data-label="Id">
+          {{ user._id }}
+        </td>
+        <td data-label="Name">
+          {{ user.name }} <span class="label ui ml" *ngIf="!!auth.isCurrentUser(user._id)">You</span>
+        </td>
+        <td data-label="Created">{{ user.createdAt | date: 'dd/MM/yyyy hh:mm' }}</td>
+        <td data-label="Admin">
+          {{ user.personas.includes('admin') ? 'Yes' : 'No' }}
+        </td>
+        <td data-label="Editor">
+          {{ user.personas.includes('editor') ? 'Yes' : 'No' }}
+        </td>
+        <td data-label="Actions">
+          <button class="ui button primary fluid" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">Save</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

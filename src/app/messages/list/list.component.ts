@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessagesService } from '../messages.service';
-import { DataService } from '../../shared/data.service';
+import { DataService } from '../../shared/services/data.service';
 import { Pagination } from '../../shared/models/pagination.model';
 import { MessagesQuery } from 'src/app/shared/models/messagesQuery.models';
 
@@ -30,9 +30,9 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.query = new MessagesQuery(params);
-      this.paginator.setPagination(params);
+    this.route.queryParams.subscribe(() => {
+      this.query = new MessagesQuery();
+      this.paginator.setPagination();
       this.fetchMessages();
     });
     this.messageSubscription = this.msgService.listUpdated.subscribe(response => {
@@ -40,7 +40,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.init = true;
         this.messages = response.messages;
         this.loading = false;
-        this.paginator.setPagination(omit(response, 'messages'));
+        this.paginator.setPaginatorData(response);
       }, 0);
     });
   }
@@ -57,13 +57,15 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fetchMessages() {
     const params = this.getParams();
+    console.log(params);
     this.dataService.fetchMessages(params);
   }
 
   onPageChange(page) {
     this.loading = true;
-    this.router.navigate(['/messages'], {
-      queryParams: { ...this.getParams(), page: page }
-    });
+    const params = this.query.stringify({ ...this.paginator.getQuery(), ...this.query.params, page: page });
+
+    const url = `/messages?${params}`;
+    this.router.navigateByUrl(url);
   }
 }

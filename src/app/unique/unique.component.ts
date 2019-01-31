@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { omit } from 'lodash';
 
-import { DataService } from '../shared/data.service';
+import { DataService } from '../shared/services/data.service';
 import { UniqueService } from './unique.service';
 import { Pagination } from '../shared/models/pagination.model';
 import { NgxSmartModalService } from 'ngx-smart-modal';
@@ -34,7 +34,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.paginator.setPagination(params);
+      this.paginator.setPagination();
       this.fetchMessages();
     });
     this.linesSubscription = this.uniqueService.uniqueLinesUpdated.subscribe(response => {
@@ -42,7 +42,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
         this.init = true;
         this.lines = response.lines;
         this.loading = false;
-        this.paginator.setPagination(omit(response, 'messages'));
+        this.paginator.setPaginatorData(response);
       }, 0);
     });
   }

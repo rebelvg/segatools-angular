@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { omitBy, isNil, forOwn, isArray } from 'lodash';
 import { MessagesQuery } from '../shared/models/messagesQuery.models';
+import { convertField } from '../shared/helpers';
+import qs from 'query-string';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -14,8 +16,8 @@ export class SearchComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const formattedParams = new MessagesQuery(params);
+    this.route.queryParams.subscribe(() => {
+      const formattedParams = new MessagesQuery();
       this.initForm(formattedParams.getFormParams());
     });
   }
@@ -77,28 +79,20 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    const values = omitBy(this.searchForm.value, isNil);
+    const values = this.searchForm.value;
 
-    const queryParams = {};
+    const queryParams = omitBy(
+      {
+        ...values,
+        ...convertField('search', values.search),
+        ...convertField('names', values.names)
+      },
+      isNil
+    );
+    console.log(queryParams);
 
-    forOwn(values, (value, key) => {
-      if (isArray(value) && value.length) {
-        const strict = value.filter(item => !!item.strict).map(item => item.value);
-        if (strict.length) {
-          queryParams[`${key}Strict`] = JSON.stringify(strict);
-        }
-        const notStrict = value.filter(item => !item.strict).map(item => item.value);
+    const url = `/messages?${qs.stringify(queryParams, { arrayFormat: 'bracket' })}`;
 
-        if (notStrict.length) {
-          queryParams[`${key}`] = JSON.stringify(notStrict);
-        }
-      }
-
-      if (!!value && !isArray(value)) {
-        queryParams[key] = value;
-      }
-    });
-
-    this.router.navigate(['/messages'], { queryParams });
+    this.router.navigateByUrl(url);
   }
 }

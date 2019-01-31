@@ -1,5 +1,5 @@
 import { forOwn, isArray, toInteger, isNil, isString } from 'lodash';
-
+import qs from 'query-string';
 export interface IMessageQuery {
   sortBy: string;
   soryOrder: number;
@@ -34,42 +34,23 @@ export class MessagesQuery {
     hideNotCompleted: {}
   };
 
-  constructor(params = {}) {
+  constructor() {
+    const params = qs.parse(location.search, { arrayFormat: 'bracket' });
+    console.log(params);
     this.setParams(params);
   }
 
   setParams(params = {}) {
-    forOwn(params, this.validate);
+    this.params = params;
   }
 
   getQueryCount() {
     return Object.keys(this.params).length;
   }
 
-  validate = (value, key) => {
-    if (!this.fields[key]) {
-      return;
-    }
-
-    if (!!value && !isArray(value)) {
-      this.params[key] = this.fields[key].isNumber ? toInteger(value) : value;
-    }
-
-    if (isArray(value) && value.length) {
-      this.params[key] = value.filter(item => !!item);
-    }
-  };
-
-  formatArrayData(data: string) {
-    if (!data) {
-      return [];
-    }
-    return isString(data) ? JSON.parse('[' + data + ']') : data;
-  }
-
   flatStrictData(field: string) {
-    const fieldArrayStrict = this.formatArrayData(this.params[`${field}`]);
-    const fieldArray = this.formatArrayData(this.params[`${field}Strict`]);
+    const fieldArrayStrict = this.params[`${field}`] || [];
+    const fieldArray = this.params[`${field}Strict`] || [];
     console.log(fieldArray, fieldArrayStrict);
     return [
       ...fieldArrayStrict.map(item => ({
@@ -83,8 +64,12 @@ export class MessagesQuery {
     ];
   }
 
+  stringify = params => qs.stringify(params, { arrayFormat: 'bracket' });
+
   getFormParams() {
+    console.log(this.params);
     const params = <IMessageQuery>{ ...this.params };
+    console.log(params);
 
     const getField = field => (!isNil(params[field]) ? params[field] : null);
 

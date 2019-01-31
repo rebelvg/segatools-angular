@@ -9,9 +9,21 @@
       <div class="navlink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a routerLink="/"><i class="ui icon home"></i> Home</a>
       </div>
-      <div class="navlink" routerLinkActive="active">
-        <a routerLink="/login"><i class="ui icon lock"></i> Login</a>
-      </div>
+      <ng-template [ngIf]="!auth.isAuthenticated()">
+        <div class="navlink" routerLinkActive="active">
+          <a routerLink="/login"><i class="ui icon lock"></i> Login</a>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="!!auth.hasUserData()">
+        <div class="navlink" routerLinkActive="active">
+          <a routerLink="/profile"><i class="ui icon user"></i> Profile</a>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="!!auth.isRole('admin')">
+        <div class="navlink" routerLinkActive="active">
+          <a routerLink="/admin"><i class="ui icon cog"></i> Admin</a>
+        </div>
+      </ng-template>
       <div class="ui divider"></div>
       <div class="navlink" routerLinkActive="active">
         <a routerLink="/messages"><i class="ui icon comment"></i> Messages</a>

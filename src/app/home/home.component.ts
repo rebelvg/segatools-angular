@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
-import { DataService } from '../shared/data.service';
+import { DataService } from '../shared/services/data.service';
 import { StatsResponse } from '../shared/models/statsResponse.model';
 import { Subscription } from 'rxjs';
 

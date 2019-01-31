@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import { MessagesService } from '../messages/messages.service';
+import { MessagesService } from '../../messages/messages.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { MessagesResponse } from './models/messagesResponse.model';
-import {} from 'lodash';
-import { NamesService } from '../names/names.service';
-import { HomeService } from '../home/home.service';
-import { StatsResponse } from './models/statsResponse.model';
+import { MessagesResponse } from '../models/messagesResponse.model';
+import qs from 'query-string';
+import { NamesService } from '../../names/names.service';
+import { HomeService } from '../../home/home.service';
+import { StatsResponse } from '../models/statsResponse.model';
 import { NotifierService } from 'angular-notifier';
-import { Name } from './models/name.model';
-import { UniqueService } from '../unique/unique.service';
-import { LinesResponse } from './models/linesResponse.model';
+import { Name } from '../models/name.model';
+import { UniqueService } from '../../unique/unique.service';
+import { LinesResponse } from '../models/linesResponse.model';
+import { AuthService } from './auth.service';
+import { AdminService } from 'src/app/admin/admin.service';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +20,16 @@ import { LinesResponse } from './models/linesResponse.model';
 export class DataService {
   constructor(
     private messagesService: MessagesService,
+    private authService: AuthService,
     private uniqueService: UniqueService,
     private http: HttpClient,
+    private admin: AdminService,
     private nameService: NamesService,
     private homeService: HomeService,
     private notifier: NotifierService
   ) {}
 
-  private handleErrorResponse(response) {
+  private handleErrorResponse = response => {
     if (!response.error) {
       this.notifier.notify('error', `Failed (${response.status}). Error occured`);
       return;
@@ -32,11 +37,11 @@ export class DataService {
 
     this.notifier.notify('error', `Failed (${response.status}). Error: ${response.error}`);
     return;
-  }
+  };
 
   public fetchMessages(data: {}) {
     const params = new HttpParams({
-      fromObject: { ...data }
+      fromString: qs.stringify(data, { arrayFormat: 'bracket' })
     });
     this.http
       .get('/api/messages', {
@@ -50,9 +55,10 @@ export class DataService {
   }
 
   public updateMessage(id: string, data: {}) {
-    const token = window.localStorage.getItem('token');
+    const token = this.authService.getToken();
+    console.log(token);
 
-    if (!id || !token) {
+    if (!id) {
       return;
     }
 
@@ -99,7 +105,7 @@ export class DataService {
   }
 
   public updateName(id: string, data: { english: string }) {
-    const token = window.localStorage.getItem('token');
+    const token = this.authService.getToken();
 
     if (!id || !token) {
       return;
@@ -130,15 +136,41 @@ export class DataService {
   }
 
   public updateUniqueLine(id: string, data: {}) {
-    const token = window.localStorage.getItem('token');
+    const token = this.authService.getToken();
 
-    if (!id || !token) {
+    if (!id) {
       return;
     }
 
     const headers = new HttpHeaders().set('token', token);
     this.http.post(`/api/lines/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
       this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
+    }, this.handleErrorResponse);
+  }
+
+  public fetchUsers() {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('token', token);
+    this.http
+      .get('/api/admin/users', {
+        observe: 'body',
+        responseType: 'json',
+        headers
+      })
+      .subscribe((response: { users: User[] }) => {
+        this.admin.setUsers(response.users);
+      }, this.handleErrorResponse);
+  }
+
+  public updateUser(id: string, data: any) {
+    if (!id) {
+      return;
+    }
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('token', token);
+    this.http.post(`/api/admin/users/${id}`, data, { headers }).subscribe(response => {
+      console.log(response);
+      this.notifier.notify('success', `User updated}`);
     }, this.handleErrorResponse);
   }
 }

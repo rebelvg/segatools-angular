@@ -1,22 +1,36 @@
-import { isNil } from 'lodash';
+import { omit, pick, keys } from 'lodash';
+import qs from 'query-string';
 
-export class Pagination {
+interface Paginator {
   page: number;
   pages: number;
   total: number;
   limit: number;
-  constructor(page, limit) {
-    this.page = page;
-    this.limit = limit;
+}
+
+export class Pagination {
+  data = {
+    page: 1,
+    limit: 20,
+    pages: null,
+    total: null
+  };
+
+  constructor(page = 1, limit = 20) {
+    this.data.page = page;
+    this.data.limit = limit;
   }
   getQuery() {
-    return { page: this.page, limit: this.limit };
+    return omit(this.data, ['total', 'pages']);
   }
-  setPagination(params) {
-    console.log('pagination set');
-    this.page = !isNil(params.page) ? +params.page : this.page;
-    this.pages = !isNil(params.pages) ? +params.pages : this.pages;
-    this.total = !isNil(params.total) ? +params.total : this.total;
-    this.limit = !isNil(params.limit) ? +params.limit : this.limit;
+
+  setPagination() {
+    const params = qs.parse(location.search);
+    this.data.page = params.page ? +params.page : this.data.page;
+    this.data.pages = params.pages ? +params.pages : this.data.pages;
+  }
+
+  setPaginatorData(params: Paginator) {
+    this.data = <Paginator>pick(params, keys(this.data));
   }
 }

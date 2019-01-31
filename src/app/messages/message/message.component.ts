@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessagesService } from '../messages.service';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from 'src/app/shared/models/message.model';
-import { DataService } from 'src/app/shared/data.service';
+import { DataService } from 'src/app/shared/services/data.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { forEach, get, isNull } from 'lodash';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { PreviewService } from './preview/preview.service';
-import { MetaService } from 'src/app/shared/meta.service';
+import { MetaService } from 'src/app/shared/services/meta.service';
 
 @Component({
   selector: 'app-message',

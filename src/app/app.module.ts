@@ -23,6 +23,8 @@ import { SearchComponent } from './search/search.component';
 import { NotifierModule } from 'angular-notifier';
 import { LoginComponent } from './login/login.component';
 import { InfoboxComponent } from './shared/infobox/infobox.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { InfoboxComponent } from './shared/infobox/infobox.component';
     UniqueComponent,
     SearchComponent,
     LoginComponent,
-    InfoboxComponent
+    InfoboxComponent,
+    ProfileComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

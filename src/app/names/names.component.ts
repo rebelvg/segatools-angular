@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NamesService } from './names.service';
-import { DataService } from '../shared/data.service';
+import { DataService } from '../shared/services/data.service';
 import { Subscription } from 'rxjs';
 import { Name } from '../shared/models/name.model';
 import { ActivatedRoute, Router } from '@angular/router';
