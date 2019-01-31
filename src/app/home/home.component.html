@@ -8,17 +8,17 @@
     <div class="mt">A <strong>non-profit</strong> fan translation patch for Yakuza Kenzan.</div>
     <div class="mt">
       <i class="envelope outline icon"></i>Contact email:
-      <a href="mailto:yakuzapatcher(at)gmail.com">yakuzapatcher(at)gmail.com</a>
+      <a href="mailto:yakuzapatcher@gmail.com">yakuzapatcher(at)gmail.com</a>
     </div>
   </div>
   <div class="ui segment progress-block" *ngIf="init">
     <div class="message-progress">
-      <div class="ui placeholder progress-header">Messages Progress ({{ stats.messages.percentDone.toFixed(2) }}%)</div>
+      <div class="ui placeholder progress-header">Messages Progress</div>
       <app-infobox
         icon="question"
         class="infobox"
         number="1"
-        label="Messages Translated"
+        label="Lines Translated"
         [value]="stats.messages.translated"
         [maxValue]="stats.messages.total"
       >
@@ -27,7 +27,7 @@
         icon="question"
         class="infobox"
         number="2"
-        label="Unique Messages Translated"
+        label="Unique Lines Translated"
         [value]="stats.messages.translatedUnique"
         [maxValue]="stats.messages.totalUnique"
       >
@@ -36,7 +36,7 @@
       </app-infobox>
     </div>
     <div class="names-progress">
-      <div class="ui placeholder progress-header">Names Progress ({{ stats.names.percentDone.toFixed(2) }}%)</div>
+      <div class="ui placeholder progress-header">Names Progress</div>
       <app-infobox
         icon="question"
         class="infobox"
