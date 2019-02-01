@@ -89,6 +89,7 @@ export class SearchComponent implements OnInit {
       },
       isNil
     );
+
     console.log(queryParams);
 
     const url = `/messages?${qs.stringify(queryParams, { arrayFormat: 'bracket' })}`;

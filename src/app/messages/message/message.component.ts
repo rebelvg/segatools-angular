@@ -86,8 +86,6 @@ export class MessageComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log(data);
-
     this.dataService.updateMessage(this.message._id, data);
   }
 
