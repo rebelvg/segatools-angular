@@ -31,7 +31,7 @@
               name="admin"
               (change)="onChange(userIndex, $event)"
               [checked]="user.personas.includes('admin')"
-              disabled="!!auth.isCurrentUser(user._id)"
+              [disabled]="!!auth.isCurrentUser(user._id)"
             />
             <label></label>
           </div>
