@@ -31,11 +31,11 @@ export class DataService {
 
   private handleErrorResponse = response => {
     if (!response.error) {
-      this.notifier.notify('error', `Failed (${response.status}). Error occured`);
+      this.notifier.notify('error', `Error occurred.`);
       return;
     }
 
-    this.notifier.notify('error', `Failed (${response.status}). Error: ${response.error}`);
+    this.notifier.notify('error', `Error: ${response.error}`);
     return;
   };
 

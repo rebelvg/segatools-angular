@@ -16,7 +16,7 @@
     </thead>
 
     <tbody *ngFor="let user of users; let userIndex = index">
-      <tr [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
+      <tr [ngClass]="{ disabled: false }">
         <td data-label="Id">
           {{ user._id }}
         </td>
@@ -31,12 +31,13 @@
               name="admin"
               (change)="onChange(userIndex, $event)"
               [checked]="user.personas.includes('admin')"
+              [disabled]="!!auth.isCurrentUser(user._id)"
             />
             <label></label>
           </div>
         </td>
         <td data-label="Editor">
-          <div class="ui toggle checkbox" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
+          <div class="ui toggle checkbox" [ngClass]="{ disabled: false }">
             <input
               type="checkbox"
               name="editor"
