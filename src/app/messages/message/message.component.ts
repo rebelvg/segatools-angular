@@ -65,23 +65,23 @@ export class MessageComponent implements OnInit, OnDestroy {
     return `${name.japanese} (${name.english})`;
   }
 
-  onSubmit() {
-    const values = this.messageForm.value;
+  async onSubmit() {
+    const { value } = this.messageForm;
+
     const data = {
       chapterName: undefined,
-      updatedLines: [],
-      updateMany: true
+      updatedLines: []
     };
 
-    if (this.message.chapterName !== values.chapterName) {
-      data.chapterName = values.chapterName;
+    if (this.message.chapterName !== value.chapterName) {
+      data.chapterName = value.chapterName;
     }
 
     forEach(this.message.lines, (line, index) => {
-      if (line.text.japanese !== null && get(values.lines, [index, 'english']) !== line.text.english) {
+      if (line.text.japanese !== null && get(value.lines, [index, 'english']) !== line.text.english) {
         data.updatedLines.push({
           japanese: line.text.japanese,
-          english: get(values.lines, [index, 'english'])
+          english: get(value.lines, [index, 'english'])
         });
       }
     });

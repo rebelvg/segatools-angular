@@ -35,11 +35,13 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.paginator.setPagination();
       this.fetchMessages();
     });
+
     this.messageSubscription = this.msgService.listUpdated.subscribe(response => {
       setTimeout(() => {
         this.init = true;
         this.messages = response.messages;
         this.loading = false;
+
         this.paginator.setPaginatorData(response);
       }, 0);
     });
@@ -57,15 +59,17 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fetchMessages() {
     const params = this.getParams();
-    console.log(params);
+
     this.dataService.fetchMessages(params);
   }
 
   onPageChange(page) {
     this.loading = true;
+
     const params = this.query.stringify({ ...this.paginator.getQuery(), ...this.query.params, page: page });
 
     const url = `/messages?${params}`;
+
     this.router.navigateByUrl(url);
   }
 }

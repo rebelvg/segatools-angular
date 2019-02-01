@@ -37,11 +37,13 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
       this.paginator.setPagination();
       this.fetchMessages();
     });
+
     this.linesSubscription = this.uniqueService.uniqueLinesUpdated.subscribe(response => {
       setTimeout(() => {
         this.init = true;
         this.lines = response.lines;
         this.loading = false;
+
         this.paginator.setPaginatorData(response);
       }, 0);
     });
@@ -55,6 +57,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!form.value.english) {
       return;
     }
+
     this.previewMessage = form.value.english;
     this.previewService.setMessage(this.previewMessage);
     this.modalService.open('myModal');
@@ -62,6 +65,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fetchMessages() {
     const params = this.paginator.getQuery();
+
     this.dataService.fetchUniqueLines(params);
   }
 
@@ -75,6 +79,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onPageChange(page) {
     this.loading = true;
+
     this.router.navigate(['/unique'], {
       queryParams: { ...this.paginator.getQuery(), page: page }
     });

@@ -10,6 +10,7 @@ export class MetaService {
   chapters: [];
 
   constructor(private http: HttpClient) {}
+
   getChapters() {
     return this.chapters;
   }
