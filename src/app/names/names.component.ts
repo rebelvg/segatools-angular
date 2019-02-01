@@ -6,7 +6,8 @@ import { Name } from '../shared/models/name.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NamesQuery } from '../shared/models/namesQuery.model';
-import { isNil, omitBy } from 'lodash';
+import { isNil, pickBy, isEmpty } from 'lodash';
+import qs from 'query-string';
 @Component({
   selector: 'app-names',
   templateUrl: './names.component.html',
@@ -15,6 +16,7 @@ import { isNil, omitBy } from 'lodash';
 export class NamesComponent implements OnInit, OnDestroy {
   names = <Name[]>[];
   subscription: Subscription;
+  query = new NamesQuery();
   page = 1;
   searchForm = new FormGroup({});
   loading = true;
@@ -27,8 +29,9 @@ export class NamesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(({ search = null, hideCompleted = false }) => {
-      this.fetchData({ search, hideCompleted });
+    this.route.queryParams.subscribe(() => {
+      this.query = new NamesQuery();
+      this.fetchData();
     });
 
     this.subscription = this.nameService.listUpdated.subscribe(response => {
@@ -37,30 +40,25 @@ export class NamesComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchData(params: NamesQuery) {
-    const formattedParams = omitBy(params, isNil);
-    this.dataService.fetchNames(formattedParams);
-    this.initForm(formattedParams);
+  fetchData() {
+    this.dataService.fetchNames(this.query.params);
+    this.initForm(this.query.params);
   }
 
   initForm(params) {
-    const hideCompletedParam = !isNil(params.hideCompleted) && params.hideCompleted === 'true' ? true : false;
-    const isSearchSet = params.search ? hideCompletedParam : false;
-    const hideCompleted = !isNil(params.hideCompleted) ? hideCompletedParam : isSearchSet;
-
     this.searchForm = new FormGroup({
       search: new FormControl(params.search || ''),
-      hideCompleted: new FormControl(hideCompleted)
+      hideCompleted: new FormControl(params.hideCompleted || false),
+      hideNotCompleted: new FormControl(params.hideNotCompleted || false),
+      sortBy: new FormControl(params.sortBy || ''),
+      sortOrder: new FormControl(params.sortOrder || '')
     });
   }
 
   onSearch() {
-    const queryParams = omitBy(this.searchForm.value, isNil);
-    if (!queryParams.search) {
-      queryParams.search = null;
-    }
-
-    this.router.navigate(['/names'], { queryParams });
+    const { value } = this.searchForm;
+    const queryParams = qs.stringify(pickBy(value, data => Boolean(data)));
+    this.router.navigateByUrl(`/names?${queryParams}`);
   }
 
   onSubmit(form) {

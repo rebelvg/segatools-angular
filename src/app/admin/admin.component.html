@@ -14,8 +14,9 @@
         <th>Editor</th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let user of users" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
+
+    <tbody *ngFor="let user of users; let userIndex = index">
+      <tr [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
         <td data-label="Id">
           {{ user._id }}
         </td>
@@ -24,13 +25,29 @@
         </td>
         <td data-label="Created">{{ user.createdAt | date: 'dd/MM/yyyy hh:mm' }}</td>
         <td data-label="Admin">
-          {{ user.personas.includes('admin') ? 'Yes' : 'No' }}
+          <div class="ui toggle checkbox" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
+            <input
+              type="checkbox"
+              name="admin"
+              (change)="onChange(userIndex, $event)"
+              [checked]="user.personas.includes('admin')"
+            />
+            <label></label>
+          </div>
         </td>
         <td data-label="Editor">
-          {{ user.personas.includes('editor') ? 'Yes' : 'No' }}
+          <div class="ui toggle checkbox" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">
+            <input
+              type="checkbox"
+              name="editor"
+              (change)="onChange(userIndex, $event)"
+              [checked]="user.personas.includes('editor')"
+            />
+            <label></label>
+          </div>
         </td>
         <td data-label="Actions">
-          <button class="ui button primary fluid" [ngClass]="{ disabled: !!auth.isCurrentUser(user._id) }">Save</button>
+          <button type="button" class="ui button primary fluid" (click)="onSubmit(user)">Save</button>
         </td>
       </tr>
     </tbody>

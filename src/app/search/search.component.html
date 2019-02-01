@@ -6,9 +6,24 @@
         <input name="fileName" placeholder="Filename" formControlName="fileName" />
       </div>
       <div class="field">
-        <select class="ui fluid dropdown" formControlName="chapterName" name="chapterName">
-          <option value="">No chapter selected</option>
-          <option value="Chapter 1"> Chapter 1 </option>
+        <select class="chapter-select" formControlName="chapterName">
+          <option value="">Select Chapter</option>
+          <option *ngFor="let chapter of chapters" [ngValue]="chapter">{{ chapter }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <select class="sortBy" formControlName="sortBy">
+          <option value="">Sort By</option>
+          <option value="fileName">Filename</option>
+          <option value="percentDone">Percent Done</option>
+          <option value="timeUpdated">Last Updated</option>
+        </select>
+      </div>
+      <div class="field">
+        <select class="sortOrder" formControlName="sortOrder" placeholder="Sort Type">
+          <option value="">Sort Type</option>
+          <option value="1">Ascending</option>
+          <option value="-1">Descending</option>
         </select>
       </div>
       <div class="field">

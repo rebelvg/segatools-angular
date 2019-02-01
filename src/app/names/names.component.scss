@@ -18,13 +18,25 @@
   align-items: center;
   justify-content: center;
 }
-
+.filters {
+  display: grid;
+  grid: 1fr / 1fr 1fr 1fr 1fr;
+  @media only screen and (max-width: 720px) {
+    grid: 1fr 1fr 1fr 1fr / 1fr;
+  }
+  align-items: center;
+  grid-gap: 1em;
+  margin-bottom: 10px;
+  .field {
+    margin: 0 !important;
+  }
+}
 .options {
   &-filter {
     display: grid;
     grid: 1fr / 1fr 1fr 1fr;
-    align-items: center;
     justify-items: center;
+
     @media only screen and (max-width: 720px) {
       grid: 1fr 1fr 1fr / 1fr;
       grid-gap: 10px;

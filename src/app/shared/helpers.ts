@@ -1,4 +1,7 @@
 export const convertField = (field: string, arr: []) => {
+  if (!arr) {
+    return false;
+  }
   if (!arr.length) {
     return { [field]: null, [`${field}Strict`]: null };
   }

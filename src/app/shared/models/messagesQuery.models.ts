@@ -80,6 +80,8 @@ export class MessagesQuery {
     const formParams = {
       search: searchArray,
       chapterName: getField('chapterName'),
+      sortBy: getField('sortBy'),
+      sortOrder: getField('sortOrder'),
       fileName: getField('fileName'),
       speakersCount: getField('speakersCount'),
       names: nameArray,

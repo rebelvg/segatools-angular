@@ -21,4 +21,20 @@ export class AdminComponent implements OnInit {
       this.users = users;
     });
   }
+
+  onChange(index, event) {
+    const checked = event.target.checked;
+    const name = event.target.name;
+    const user = this.users[index];
+    if (!checked) {
+      this.users[index].personas = user.personas.filter(item => item !== name);
+    } else {
+      this.users[index].personas = [...user.personas, name];
+    }
+  }
+
+  onSubmit(user) {
+    const data = { personas: user.personas };
+    this.data.updateUser(user._id, data);
+  }
 }

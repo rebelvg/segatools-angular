@@ -4,11 +4,32 @@
       <label>FILTER</label>
       <input name="search" formControlName="search" />
     </div>
-    <div class="options-filter">
+    <div class="filters">
       <div class="ui checkbox options-checkbox">
         <input type="checkbox" formControlName="hideCompleted" />
         <label>Hide completed</label>
       </div>
+      <div class="ui checkbox options-checkbox">
+        <input type="checkbox" formControlName="hideNotCompleted" />
+        <label>Hide not completed</label>
+      </div>
+      <div class="field">
+        <select class="sortBy" formControlName="sortBy">
+          <option value="">Sort By</option>
+          <option value="nameId">Name ID</option>
+          <option value="timeUpdated">Last Updated</option>
+        </select>
+      </div>
+      <div class="field">
+        <select class="sortOrder" formControlName="sortOrder" placeholder="Sort Type">
+          <option value="">Sort Type</option>
+          <option value="1">Ascending</option>
+          <option value="-1">Descending</option>
+        </select>
+      </div>
+    </div>
+    <div class="options-filter">
+      <div></div>
       <div class="options-length">{{ names.length }} found</div>
       <div class="options-submit">
         <button class="ui button primary">Filter</button>

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { omitBy, isNil, forOwn, isArray } from 'lodash';
+import { omitBy, isNil, isEmpty } from 'lodash';
 import { MessagesQuery } from '../shared/models/messagesQuery.models';
 import { convertField } from '../shared/helpers';
 import qs from 'query-string';
+import { MetaService } from '../shared/services/meta.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -13,9 +14,12 @@ import qs from 'query-string';
 export class SearchComponent implements OnInit {
   searchForm = new FormGroup({});
   formInit = false;
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  chapters = [];
+  constructor(private router: Router, private route: ActivatedRoute, private meta: MetaService) {}
 
   ngOnInit() {
+    this.chapters = this.meta.getChapters();
+    this.meta.chaptersUpdated.subscribe(chapters => (this.chapters = chapters));
     this.route.queryParams.subscribe(() => {
       const formattedParams = new MessagesQuery();
       this.initForm(formattedParams.getFormParams());
@@ -60,9 +64,13 @@ export class SearchComponent implements OnInit {
         })
     );
 
+    console.log(params);
+
     this.searchForm = new FormGroup({
       fileName: new FormControl(params.fileName),
-      chapterName: new FormControl(params.chapterName),
+      chapterName: new FormControl(params.chapterName || ''),
+      sortBy: new FormControl(params.sortBy || ''),
+      sortOrder: new FormControl(params.sortOrder || ''),
       speakersCount: new FormControl(params.speakersCount),
       hideChanged: new FormControl(params.hideChanged),
       hideCompleted: new FormControl(params.hideCompleted),
@@ -79,7 +87,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    const values = this.searchForm.value;
+    const values = omitBy(this.searchForm.value, isEmpty);
 
     const queryParams = omitBy(
       {
