@@ -11,9 +11,9 @@
       | paginate
         : {
             id: 'server',
-            itemsPerPage: paginator.limit,
-            currentPage: paginator.page,
-            totalItems: paginator.total
+            itemsPerPage: paginator.data.limit,
+            currentPage: paginator.data.page,
+            totalItems: paginator.data.total
           });
     let i = index
   "

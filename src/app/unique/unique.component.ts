@@ -43,6 +43,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
         this.init = true;
         this.lines = response.lines;
         this.loading = false;
+
         this.paginator.setPaginatorData(response);
       }, 0);
     });

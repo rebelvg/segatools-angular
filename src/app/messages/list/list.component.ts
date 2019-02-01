@@ -41,6 +41,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.init = true;
         this.messages = response.messages;
         this.loading = false;
+
         this.paginator.setPaginatorData(response);
       }, 0);
     });
