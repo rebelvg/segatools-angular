@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   isRole(role) {
-    return !isEmpty(this.user) && !!get(this.user, 'personas') && get(this.user, 'personas').includes(role);
+    return get(this.user, 'personas', []).includes(role);
   }
 
   getToken() {

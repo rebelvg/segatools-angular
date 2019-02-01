@@ -43,6 +43,7 @@ export class DataService {
     const params = new HttpParams({
       fromString: qs.stringify(data, { arrayFormat: 'bracket' })
     });
+
     this.http
       .get('/api/messages', {
         observe: 'body',
@@ -54,24 +55,31 @@ export class DataService {
       }, this.handleErrorResponse);
   }
 
-  public updateMessage(id: string, data: {}) {
-    const token = this.authService.getToken();
-    console.log(token);
-
+  public updateMessage(id: string, data: {}, cb: Function = () => {}) {
     if (!id) {
       return;
     }
 
+    const token = this.authService.getToken();
+
     const headers = new HttpHeaders().set('token', token);
-    this.http.post(`/api/messages/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
-      this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
-    }, this.handleErrorResponse);
+
+    return this.http
+      .post(`/api/messages/${id}`, data, { headers })
+      .subscribe((response: { messagesUpdated: number }) => {
+        console.log(response.messagesUpdated);
+
+        this.notifier.notify('success', `Messages saved successfully. Messages updated: ${response.messagesUpdated}`);
+
+        cb();
+      }, this.handleErrorResponse);
   }
 
   public fetchMessage(id) {
     if (!id) {
       return;
     }
+
     this.http.get(`/api/messages/${id}`).subscribe(response => {
       this.messagesService.setMessage(response);
     }, this.handleErrorResponse);
@@ -81,6 +89,7 @@ export class DataService {
     const params = new HttpParams({
       fromObject: { ...data }
     });
+
     this.http
       .get('/api/names', {
         observe: 'body',
@@ -105,13 +114,14 @@ export class DataService {
   }
 
   public updateName(id: string, data: { english: string }) {
-    const token = this.authService.getToken();
-
-    if (!id || !token) {
+    if (!id) {
       return;
     }
 
+    const token = this.authService.getToken();
+
     const headers = new HttpHeaders().set('token', token);
+
     this.http.post(`/api/names/${id}`, data, { headers }).subscribe((response: { name: Name }) => {
       this.notifier.notify(
         'success',
@@ -124,6 +134,7 @@ export class DataService {
     const params = new HttpParams({
       fromObject: { ...data }
     });
+
     this.http
       .get('/api/lines', {
         observe: 'body',
@@ -136,13 +147,14 @@ export class DataService {
   }
 
   public updateUniqueLine(id: string, data: {}) {
-    const token = this.authService.getToken();
-
     if (!id) {
       return;
     }
 
+    const token = this.authService.getToken();
+
     const headers = new HttpHeaders().set('token', token);
+
     this.http.post(`/api/lines/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
       this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
     }, this.handleErrorResponse);
@@ -150,7 +162,9 @@ export class DataService {
 
   public fetchUsers() {
     const token = this.authService.getToken();
+
     const headers = new HttpHeaders().set('token', token);
+
     this.http
       .get('/api/admin/users', {
         observe: 'body',
@@ -166,11 +180,13 @@ export class DataService {
     if (!id) {
       return;
     }
+
     const token = this.authService.getToken();
+
     const headers = new HttpHeaders().set('token', token);
+
     this.http.post(`/api/admin/users/${id}`, data, { headers }).subscribe(response => {
-      console.log(response);
-      this.notifier.notify('success', `User updated}`);
+      this.notifier.notify('success', `User updated`);
     }, this.handleErrorResponse);
   }
 }

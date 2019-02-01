@@ -20,12 +20,14 @@ export class Pagination {
     this.data.page = page;
     this.data.limit = limit;
   }
+
   getQuery() {
     return omit(this.data, ['total', 'pages']);
   }
 
   setPagination() {
     const params = qs.parse(location.search);
+
     this.data.page = params.page ? +params.page : this.data.page;
     this.data.pages = params.pages ? +params.pages : this.data.pages;
   }
