@@ -16,6 +16,7 @@
           <option value="">Sort By</option>
           <option value="fileName">Filename</option>
           <option value="percentDone">Percent Done</option>
+          <option value="linesCount">Lines</option>
           <option value="timeUpdated">Last Updated</option>
         </select>
       </div>
@@ -45,20 +46,20 @@
       <div class="field">
         <div class="ui checkbox ">
           <input type="checkbox" formControlName="hideChanged" />
-          <label>Hide changed</label>
+          <label>Hide In-Progress or Completed</label>
         </div>
       </div>
 
       <div class="field">
         <div class="ui checkbox ">
           <input type="checkbox" formControlName="hideCompleted" />
-          <label>Hide completed</label>
+          <label>Hide Completed</label>
         </div>
       </div>
       <div class="field">
         <div class="ui checkbox ">
           <input type="checkbox" formControlName="hideNotCompleted" />
-          <label>Hide not completed</label>
+          <label>Hide 0% or In-Progress</label>
         </div>
       </div>
 

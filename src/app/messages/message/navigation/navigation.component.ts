@@ -13,6 +13,7 @@ export class NavigationComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {}
+
   onNext() {
     if (!this.next) {
       return;
