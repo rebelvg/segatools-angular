@@ -11,7 +11,7 @@
       <a
         class="ui label"
         [routerLink]="['/names']"
-        [queryParams]="{ search: name.japanese }"
+        [queryParams]="{ nameId: name.nameId }"
         *ngFor="let name of message.names"
       >
         {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
