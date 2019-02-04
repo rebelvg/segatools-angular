@@ -56,8 +56,8 @@
               {{ name.japanese }}
             </div>
             <div class="ten wide column">
-              <div class="ui top attached label">{{ name._id }}</div>
-              <div class="ui input">
+              <div class="ui labeled input">
+                <div class="ui label">{{ name.nameId }}</div>
                 <input
                   name="english"
                   class="name-input"
@@ -68,7 +68,6 @@
               </div>
             </div>
             <div class="two wide column">
-              <div class="ui top attached label hide-label"></div>
               <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
             </div>
           </div>
