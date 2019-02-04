@@ -9,6 +9,7 @@ import { forEach, get, isNull } from 'lodash';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { PreviewService } from './preview/preview.service';
 import { MetaService } from 'src/app/shared/services/meta.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-message',
@@ -23,12 +24,14 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageSubscription: Subscription;
   messageForm = new FormGroup({});
   isLoaded = false;
+  isApproving = false;
   constructor(
     private msgService: MessagesService,
     private route: ActivatedRoute,
     private dataService: DataService,
     public modalService: NgxSmartModalService,
     private previewService: PreviewService,
+    private auth: AuthService,
     private meta: MetaService
   ) {}
 
@@ -63,6 +66,14 @@ export class MessageComponent implements OnInit, OnDestroy {
     }
 
     return `${name.japanese} (${name.english})`;
+  }
+
+  toggleApprove() {
+    const { proofRead, _id } = this.message;
+    this.isApproving = true;
+    this.dataService.updateMessage(_id, { proofRead: !proofRead }, () => {
+      this.isApproving = false;
+    });
   }
 
   async onSubmit() {

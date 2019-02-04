@@ -7,6 +7,7 @@ export class Message {
   lines: ILine[];
   nameIds: number[];
   names: Name[];
+  proofRead: boolean;
   percentDone: number;
   timeUpdated: Date;
   nextMessageId: string;

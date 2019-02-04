@@ -55,3 +55,12 @@
     }
   }
 }
+
+.hide-label {
+  color: #e8e8e8;
+  height: 30px;
+  pointer-events: none;
+  @media only screen and (max-width: 720px) {
+    display: none;
+  }
+}

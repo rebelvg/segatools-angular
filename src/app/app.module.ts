@@ -25,6 +25,7 @@ import { LoginComponent } from './login/login.component';
 import { InfoboxComponent } from './shared/infobox/infobox.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { ReplaceComponent } from './replace/replace.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AdminComponent } from './admin/admin.component';
     LoginComponent,
     InfoboxComponent,
     ProfileComponent,
-    AdminComponent
+    AdminComponent,
+    ReplaceComponent
   ],
   imports: [
     BrowserModule,

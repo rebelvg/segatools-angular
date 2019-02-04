@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { omitBy, isNil, isEmpty } from 'lodash';
+import { omitBy, isNil, pickBy } from 'lodash';
 import { MessagesQuery } from '../shared/models/messagesQuery.models';
 import { convertField } from '../shared/helpers';
 import qs from 'query-string';
@@ -86,9 +86,7 @@ export class SearchComponent implements OnInit {
     if (!this.searchForm.valid) {
       return;
     }
-
-    const values = omitBy(this.searchForm.value, isEmpty);
-
+    const values = pickBy(this.searchForm.value, data => Boolean(data));
     const queryParams = omitBy(
       {
         ...values,

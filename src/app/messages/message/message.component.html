@@ -1,9 +1,23 @@
 <form [formGroup]="messageForm" (ngSubmit)="onSubmit()" class="ui form">
   <div class="edit-grid" *ngIf="isLoaded">
     <div class=" ui segment header-segment">
-      <div class="ui header">
-        {{ message.fileName }}
-        <div class="ui sub header">{{ message.lines.length }} lines</div>
+      <div class="top">
+        <div class="ui header" *ngIf="!isApproving; else loader">
+          {{ message.fileName }}
+          <label class="label ui" [ngClass]="{ green: !!message.proofRead, red: !message.proofRead }">
+            {{ message.proofRead ? 'Approved' : 'Not Approved' }}</label
+          >
+          <div class="ui sub header">{{ message.lines.length }} lines</div>
+        </div>
+        <button
+          type="button"
+          *ngIf="!isApproving && !!auth.isRole('admin')"
+          (click)="toggleApprove()"
+          class="ui button"
+          [ngClass]="{ green: !message.proofRead, red: !!message.proofRead }"
+        >
+          {{ !message.proofRead ? 'Approve' : 'Reject' }}
+        </button>
       </div>
       <select class="chapter-select" formControlName="chapterName">
         <option *ngFor="let item of chapters" [ngValue]="item">{{ item }}</option>
@@ -53,4 +67,10 @@
 
 <ng-template #divider>
   <div class="ui divider"></div>
+</ng-template>
+
+<ng-template #loader>
+  <div class="ui active inverted dimmer">
+    <div class="ui loader"></div>
+  </div>
 </ng-template>

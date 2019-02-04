@@ -52,8 +52,11 @@
           <input hidden name="japanese" [(ngModel)]="name.japanese" />
 
           <div class="ui three column stackable grid ">
-            <div class="four wide column game-text name-japanese ">{{ name.japanese }}</div>
+            <div class="four wide column game-text name-japanese ">
+              {{ name.japanese }}
+            </div>
             <div class="ten wide column">
+              <div class="ui top attached label">{{ name._id }}</div>
               <div class="ui input">
                 <input
                   name="english"
@@ -65,6 +68,7 @@
               </div>
             </div>
             <div class="two wide column">
+              <div class="ui top attached label hide-label"></div>
               <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
             </div>
           </div>

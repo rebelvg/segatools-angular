@@ -70,8 +70,8 @@ export class DataService {
         console.log(response.messagesUpdated);
 
         this.notifier.notify('success', `Messages saved successfully. Messages updated: ${response.messagesUpdated}`);
-
         cb();
+        this.fetchMessage(id);
       }, this.handleErrorResponse);
   }
 
