@@ -1,54 +1,93 @@
-<ng-container *ngIf="init">
+<div class="ui segment">
+  <form class="form ui" (ngSubmit)="onSearch(searchForm)" #searchForm="ngForm">
+    <div class="ui icon fluid input">
+      <input type="text" name="search" placeholder="Find" [ngModel]="search" />
+      <i class="inverted circular search link icon" *ngIf="!isEnglish" (click)="onSearch(searchForm)"></i>
+    </div>
+    <div class="ui fluid field mt" *ngIf="isEnglish">
+      <input type="text" name="replace" placeholder="Replace with" ngModel />
+    </div>
+    <div *ngIf="isEnglish">
+      <button type="button" class="button ui primary labeled icon " (click)="onSearch(searchForm)">
+        <i class="inverted search icon"> </i>Find
+      </button>
+      <button type="button" class="button ui red labeled icon" (click)="onReplace(searchForm)">
+        <i class="inverted clone icon"></i>
+        Replace
+      </button>
+    </div>
+  </form>
+</div>
+
+<ng-container *ngIf="init && !loading">
   <div class="messages-pagination">
     <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
   </div>
 </ng-container>
 
-<div
-  class="ui segment"
-  *ngFor="
-    let line of (lines
-      | paginate
-        : {
-            id: 'server',
-            itemsPerPage: paginator.data.limit,
-            currentPage: paginator.data.page,
-            totalItems: paginator.data.total
-          });
-    let i = index
-  "
->
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ui form">
-    <input hidden name="japanese" [(ngModel)]="line.text.japanese" />
+<ng-container *ngIf="!loading; else loader">
+  <div
+    class="ui segment"
+    *ngFor="
+      let line of (lines
+        | paginate
+          : {
+              id: 'server',
+              itemsPerPage: paginator.data.limit,
+              currentPage: paginator.data.page,
+              totalItems: paginator.data.total
+            });
+      let i = index
+    "
+  >
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ui form">
+      <input hidden name="japanese" [(ngModel)]="line.text.japanese" />
 
-    <div class="ui three column stackable grid ">
-      <div class="seven wide column ">
-        <div class="msg-header">
-          <h4 class="header">Japanese</h4>
-          <div>
-            <div class="ui label blue">{{ line.count }}</div>
+      <div class="ui three column stackable grid ">
+        <div class="seven wide column ">
+          <div class="msg-header">
+            <h4 class="header">Japanese</h4>
+            <div>
+              <div class="ui label blue">{{ line.count }}</div>
+            </div>
+          </div>
+          <div class="game-text line-japanese ">
+            {{ line.text.japanese }}
           </div>
         </div>
-        <div class="game-text line-japanese ">
-          {{ line.text.japanese }}
+
+        <div class="seven wide column field">
+          <div class="msg-header">
+            <h4 class="header">English</h4>
+            <span class="mini ui button primary icon" (click)="onPreview(f)"><i class="ui icon eye"> </i> </span>
+          </div>
+          <textarea rows="4" name="english" [(ngModel)]="line.text.english"></textarea>
+        </div>
+        <div class="two wide column">
+          <button class="ui button primary  labeled name-button fluid icon">
+            <i class="save outline icon"></i>Save
+          </button>
+
+          <div class="ui dropdown mt floating  labeled  button fluid icon" suiDropdown>
+            <i class="dropdown icon"></i>
+            <div class="text">Usage</div>
+
+            <div class="menu" suiDropdownMenu>
+              <div class="scrolling menu">
+                <a *ngFor="let message of line.messages" [routerLink]="['/messages', message]" class="item">
+                  <div class="ui black empty circular label"></div>
+                  {{ message }}
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </form>
+  </div>
+</ng-container>
 
-      <div class="seven wide column field">
-        <div class="msg-header">
-          <h4 class="header">English</h4>
-          <span class="mini ui button primary icon" (click)="onPreview(f)"><i class="ui icon eye"> </i> </span>
-        </div>
-        <textarea rows="4" name="english" [(ngModel)]="line.text.english"></textarea>
-      </div>
-      <div class="two wide column">
-        <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
-      </div>
-    </div>
-  </form>
-</div>
-
-<ng-container *ngIf="init">
+<ng-container *ngIf="init && !loading">
   <div class="messages-pagination">
     <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
   </div>
@@ -62,3 +101,17 @@
     </div>
   </div>
 </ng-template>
+
+<sui-modal *ngIf="modalOpenned" [isClosable]="true" #modal>
+  <div class="header">Confirmation Modal</div>
+  <div class="content">
+    <p>
+      Do you really want to change <strong>{{ search }}</strong> to <strong>{{ replace }}</strong
+      >?
+    </p>
+  </div>
+  <div class="actions">
+    <button class="ui red button" (click)="modal.deny()">Cancel</button>
+    <button class="ui green button" (click)="onModalConfirm(); modal.approve('done')" autofocus>OK</button>
+  </div>
+</sui-modal>

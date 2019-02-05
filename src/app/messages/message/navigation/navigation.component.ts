@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
   @Input() next: string;
+  @Input() isChanged: boolean;
   @Input() prev: string;
   constructor(private router: Router) {}
 

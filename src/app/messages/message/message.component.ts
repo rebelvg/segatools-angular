@@ -25,6 +25,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageForm = new FormGroup({});
   isLoaded = false;
   isApproving = false;
+  isChanged = false;
   constructor(
     private msgService: MessagesService,
     private route: ActivatedRoute,
@@ -45,6 +46,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.meta.chaptersUpdated.subscribe(chapters => {
       this.chapters = chapters;
     });
+
     this.messageSubscription = this.msgService.singleMessageUpdated.subscribe(message => {
       this.isLoaded = true;
       this.message = message;
@@ -76,27 +78,36 @@ export class MessageComponent implements OnInit, OnDestroy {
     });
   }
 
-  async onSubmit() {
+  checkForUpdatedLines(returnUpdated = false) {
     const { value } = this.messageForm;
-
-    const data = {
-      chapterName: undefined,
-      updatedLines: []
-    };
-
-    if (this.message.chapterName !== value.chapterName) {
-      data.chapterName = value.chapterName;
-    }
+    const updatedLines = [];
+    let isChanged = false;
 
     forEach(this.message.lines, (line, index) => {
       if (line.text.japanese !== null && get(value.lines, [index, 'english']) !== line.text.english) {
-        data.updatedLines.push({
+        isChanged = true;
+        updatedLines.push({
           japanese: line.text.japanese,
           english: get(value.lines, [index, 'english'])
         });
       }
     });
 
+    return returnUpdated ? updatedLines : isChanged;
+  }
+
+  async onSubmit() {
+    const { value } = this.messageForm;
+
+    const data = {
+      chapterName: undefined,
+      updatedLines: this.checkForUpdatedLines(true)
+    };
+
+    if (this.message.chapterName !== value.chapterName) {
+      data.chapterName = value.chapterName;
+    }
+    console.log(data);
     this.dataService.updateMessage(this.message._id, data);
   }
 
@@ -119,6 +130,10 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.messageForm = new FormGroup({
       chapterName: new FormControl(this.message.chapterName),
       lines
+    });
+    console.log(this.messageForm.pristine);
+    this.messageForm.valueChanges.subscribe(changes => {
+      this.isChanged = <boolean>this.checkForUpdatedLines();
     });
   }
 

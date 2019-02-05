@@ -32,7 +32,11 @@ export class Pagination {
     this.data.pages = params.pages ? +params.pages : this.data.pages;
   }
 
-  setPaginatorData(params: Paginator) {
+  setPage(page) {
+    this.data.page = page;
+  }
+
+  setPaginatorData(params: any) {
     this.data = <Paginator>pick(params, keys(this.data));
   }
 }

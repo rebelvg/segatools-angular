@@ -78,7 +78,6 @@ export class SearchComponent implements OnInit {
       search: new FormArray(search),
       names: new FormArray(names)
     });
-
     this.formInit = true;
   }
 

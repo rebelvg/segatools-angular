@@ -4,7 +4,7 @@
       <i class="left chevron icon"></i>
       Previous
     </button>
-    <button class="ui button">
+    <button class="ui button" [ngClass]="{ disabled: !isChanged }">
       <i class="save outline icon"></i>
       Save
     </button>

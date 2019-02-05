@@ -130,6 +130,22 @@ export class DataService {
     }, this.handleErrorResponse);
   }
 
+  public fetchEnglishLines(data: {}) {
+    const params = new HttpParams({
+      fromObject: { ...data }
+    });
+
+    this.http
+      .get('/api/lines/english', {
+        observe: 'body',
+        responseType: 'json',
+        params
+      })
+      .subscribe((response: LinesResponse) => {
+        this.uniqueService.setMessages(response);
+      }, this.handleErrorResponse);
+  }
+
   public fetchUniqueLines(data: {}) {
     const params = new HttpParams({
       fromObject: { ...data }

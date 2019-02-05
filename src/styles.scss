@@ -29,6 +29,8 @@ body {
 }
 
 .ngx-pagination {
+  text-align: center;
+  padding: 0px;
   @media only screen and (max-width: 720px) {
     display: flex !important;
     padding: 0px !important;
@@ -122,5 +124,14 @@ body {
 .progress-block {
   .placeholder {
     max-width: 100% !important;
+  }
+}
+
+.page.ui.dimmer {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  .modal {
+    position: relative !important;
   }
 }

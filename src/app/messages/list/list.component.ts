@@ -69,7 +69,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     const params = this.query.stringify({ ...this.paginator.getQuery(), ...this.query.params, page: page });
 
     const url = `/messages?${params}`;
-
+    this.loading = true;
     this.router.navigateByUrl(url);
   }
 }

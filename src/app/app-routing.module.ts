@@ -25,7 +25,8 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'unique', component: UniqueComponent }
+  { path: 'unique/japanese', component: UniqueComponent },
+  { path: 'unique/english', component: UniqueComponent }
 ];
 
 @NgModule({

@@ -31,7 +31,12 @@
         {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
       </a>
     </div>
-    <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
+    <app-navigation
+      [isChanged]="isChanged"
+      class="navigation"
+      [next]="message.nextMessageId"
+      [prev]="message.prevMessageId"
+    ></app-navigation>
     <div class="edit-form" formArrayName="lines">
       <ng-container *ngFor="let line of getControls(); let i = index" [formGroupName]="i">
         <div class="ui segment" *ngIf="message.lines[i].text.japanese; else divider">
@@ -60,7 +65,12 @@
         </div>
       </ng-container>
     </div>
-    <app-navigation class="navigation" [next]="message.nextMessageId" [prev]="message.prevMessageId"></app-navigation>
+    <app-navigation
+      class="navigation"
+      [isChanged]="isChanged"
+      [next]="message.nextMessageId"
+      [prev]="message.prevMessageId"
+    ></app-navigation>
   </div>
 </form>
 <app-preview></app-preview>
