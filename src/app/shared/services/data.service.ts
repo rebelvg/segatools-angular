@@ -13,11 +13,13 @@ import { LinesResponse } from '../models/linesResponse.model';
 import { AuthService } from './auth.service';
 import { AdminService } from 'src/app/admin/admin.service';
 import { User } from '../models/user.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  public refetcher = new Subject();
   constructor(
     private messagesService: MessagesService,
     private authService: AuthService,
@@ -162,17 +164,24 @@ export class DataService {
       }, this.handleErrorResponse);
   }
 
-  public updateUniqueLine(id: string, data: {}) {
-    if (!id) {
-      return;
-    }
-
+  public updateUniqueLine(data: {}) {
     const token = this.authService.getToken();
 
     const headers = new HttpHeaders().set('token', token);
 
-    this.http.post(`/api/lines/${id}`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
-      this.notifier.notify('success', `Messages saved succesfully. Messages updated: ${response.messagesUpdated}`);
+    this.http.post(`/api/lines/update`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
+      this.notifier.notify('success', `Unique Lines were updated`);
+    }, this.handleErrorResponse);
+  }
+
+  public replaceLine(data: {}, isEnglish: boolean) {
+    const token = this.authService.getToken();
+
+    const headers = new HttpHeaders().set('token', token);
+
+    this.http.post(`/api/lines/replace`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
+      this.notifier.notify('success', `Text was replaced`);
+      this.refetcher.next();
     }, this.handleErrorResponse);
   }
 

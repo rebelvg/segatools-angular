@@ -46,6 +46,12 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
       this.fetchMessages();
     });
 
+    this.dataService.refetcher.subscribe(() => {
+      this.search = this.replace;
+      this.replace = '';
+      this.fetchMessages();
+    });
+
     this.linesSubscription = this.uniqueService.uniqueLinesUpdated.subscribe(response => {
       setTimeout(() => {
         this.init = true;
@@ -58,17 +64,20 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit(form) {
+    const { value } = form;
+    const data = { updatedLines: [{ japanese: value.japanese, english: value.english }] };
+    this.dataService.updateUniqueLine(data);
     return;
   }
 
   onReplace(form) {
     this.replace = form.value.replace;
-    this.modalOpen();
+    this.toggleModal(true);
     return;
   }
 
-  modalOpen() {
-    this.modalOpenned = true;
+  toggleModal(isOpen) {
+    this.modalOpenned = isOpen;
   }
 
   onModalConfirm() {
@@ -77,7 +86,8 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
       replace: this.replace
     };
 
-    console.log(data);
+    this.toggleModal(false);
+    this.dataService.replaceLine(data, this.isEnglish);
   }
 
   onPreview(form) {

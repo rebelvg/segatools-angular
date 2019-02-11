@@ -5,13 +5,18 @@
       <i class="inverted circular search link icon" *ngIf="!isEnglish" (click)="onSearch(searchForm)"></i>
     </div>
     <div class="ui fluid field mt" *ngIf="isEnglish">
-      <input type="text" name="replace" placeholder="Replace with" ngModel />
+      <input type="text" name="replace" placeholder="Replace with" [ngModel]="replace" />
     </div>
     <div *ngIf="isEnglish">
       <button type="button" class="button ui primary labeled icon " (click)="onSearch(searchForm)">
         <i class="inverted search icon"> </i>Find
       </button>
-      <button type="button" class="button ui red labeled icon" (click)="onReplace(searchForm)">
+      <button
+        type="button"
+        class="button ui red labeled icon"
+        (click)="onReplace(searchForm)"
+        [ngClass]="{ disabled: !this.search }"
+      >
         <i class="inverted clone icon"></i>
         Replace
       </button>
@@ -102,7 +107,7 @@
   </div>
 </ng-template>
 
-<sui-modal *ngIf="modalOpenned" [isClosable]="true" #modal>
+<sui-modal *ngIf="modalOpenned" #modal>
   <div class="header">Confirmation Modal</div>
   <div class="content">
     <p>
@@ -111,7 +116,8 @@
     </p>
   </div>
   <div class="actions">
-    <button class="ui red button" (click)="modal.deny()">Cancel</button>
-    <button class="ui green button" (click)="onModalConfirm(); modal.approve('done')" autofocus>OK</button>
+    <button class="ui red button" (click)="toggleModal(false)">Cancel</button>
+    <button class="ui green button" (click)="onModalConfirm()" autofocus>OK</button>
   </div>
 </sui-modal>
+<app-preview></app-preview>
