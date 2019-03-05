@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { omitBy, isNil, pickBy } from 'lodash';
@@ -12,6 +12,7 @@ import { MetaService } from '../shared/services/meta.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  @Input() loading: boolean;
   searchForm = new FormGroup({});
   formInit = false;
   chapters = [];
@@ -66,15 +67,24 @@ export class SearchComponent implements OnInit {
 
     console.log(params);
 
+    let hideBy = '';
+    if (params.hideChanged) {
+      hideBy = 'hideChanged';
+    }
+    if (params.hideCompleted) {
+      hideBy = 'hideCompleted';
+    }
+    if (params.hideNotCompleted) {
+      hideBy = 'hideNotCompleted';
+    }
+
     this.searchForm = new FormGroup({
       fileName: new FormControl(params.fileName),
       chapterName: new FormControl(params.chapterName || ''),
       sortBy: new FormControl(params.sortBy || ''),
       sortOrder: new FormControl(params.sortOrder || ''),
       speakersCount: new FormControl(params.speakersCount),
-      hideChanged: new FormControl(params.hideChanged),
-      hideCompleted: new FormControl(params.hideCompleted),
-      hideNotCompleted: new FormControl(params.hideNotCompleted),
+      hideBy: new FormControl(hideBy),
       search: new FormArray(search),
       names: new FormArray(names)
     });
@@ -86,6 +96,12 @@ export class SearchComponent implements OnInit {
       return;
     }
     const values = pickBy(this.searchForm.value, data => Boolean(data));
+
+    if (values.hideBy) {
+      values[values.hideBy] = true;
+      values.hideBy = null;
+    }
+
     const queryParams = omitBy(
       {
         ...values,

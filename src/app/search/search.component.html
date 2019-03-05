@@ -1,4 +1,4 @@
-<form class="ui form small" [formGroup]="searchForm" (ngSubmit)="onSubmit()" *ngIf="formInit">
+<form class="ui form small" [formGroup]="searchForm" (ngSubmit)="onSubmit()" *ngIf="formInit && !loading; else loader">
   <div class="ui column st-grid two">
     <div class="segment ui column">
       <h4 class="ui header">Search Options</h4>
@@ -31,25 +31,13 @@
         <input type="number" name="speakerCount" placeholder="Number of Speakers" formControlName="speakersCount" />
       </div>
       <div class="field">
-        <div class="ui checkbox ">
-          <input type="checkbox" formControlName="hideChanged" />
-          <label>Hide In-Progress or Completed</label>
-        </div>
+        <select name="hideBy" placeholder="Hide By" formControlName="hideBy">
+          <option value="">Show All</option>
+          <option value="hideChanged">Hide In-Progress or Completed</option>
+          <option value="hideCompleted">Hide Completed</option>
+          <option value="hideNotCompleted">Hide 0% or In-Progress</option>
+        </select>
       </div>
-
-      <div class="field">
-        <div class="ui checkbox ">
-          <input type="checkbox" formControlName="hideCompleted" />
-          <label>Hide Completed</label>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox ">
-          <input type="checkbox" formControlName="hideNotCompleted" />
-          <label>Hide 0% or In-Progress</label>
-        </div>
-      </div>
-
       <div class="mt">
         <button class="button ui primary" [ngClass]="{ disabled: this.searchForm.invalid }">
           Search

@@ -1,4 +1,4 @@
-<app-search></app-search>
+<app-search [loading]="loading"></app-search>
 <div *ngIf="!loading" class="header ui">Found {{ paginator.data.total }} messages</div>
 <ng-container *ngIf="init && paginator.data.total">
   <div class="messages-pagination">

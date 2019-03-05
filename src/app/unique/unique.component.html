@@ -53,7 +53,12 @@
           <div class="msg-header">
             <h4 class="header">Japanese</h4>
             <div>
-              <div class="ui label blue">{{ line.count }}</div>
+              <a
+                class="ui label blue"
+                [routerLink]="['/messages']"
+                [queryParams]="{ 'searchStrict[]': line.text.japanese }"
+                >Show Usage</a
+              >
             </div>
           </div>
           <div class="game-text line-japanese ">
