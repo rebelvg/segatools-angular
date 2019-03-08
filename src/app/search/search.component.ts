@@ -68,6 +68,7 @@ export class SearchComponent implements OnInit {
     console.log(params);
 
     let hideBy = '';
+
     if (params.hideChanged) {
       hideBy = 'hideChanged';
     }
@@ -88,6 +89,7 @@ export class SearchComponent implements OnInit {
       search: new FormArray(search),
       names: new FormArray(names)
     });
+
     this.formInit = true;
   }
 

@@ -31,15 +31,16 @@
     </div>
     <div class="options-filter">
       <div></div>
-      <div class="options-length">{{ names.length }} found</div>
+      <div class="options-length"></div>
       <div class="options-submit">
-        <button class="ui button primary">Filter</button>
+        <button class="ui button primary">Search</button>
       </div>
     </div>
   </form>
 </div>
 
 <ng-container *ngIf="!loading; else loader">
+  <div *ngIf="!loading" class="header ui">Found {{ names.length }} names</div>
   <div>
     <div class="names-pagination" *ngIf="names.length">
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
