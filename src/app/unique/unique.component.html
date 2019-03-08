@@ -25,6 +25,7 @@
 </div>
 
 <ng-container *ngIf="init && !loading">
+  <div *ngIf="!loading" class="header ui">Found {{ paginator.data.total }} lines</div>
   <div class="messages-pagination">
     <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
   </div>
