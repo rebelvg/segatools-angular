@@ -53,14 +53,7 @@
         <div class="seven wide column ">
           <div class="msg-header">
             <h4 class="header">Japanese</h4>
-            <div>
-              <a
-                class="ui label blue"
-                [routerLink]="['/messages']"
-                [queryParams]="{ 'searchStrict[]': line.text.japanese }"
-                >{{ line.count }}</a
-              >
-            </div>
+            <div class="ui label blue">{{ line.count }}</div>
           </div>
           <div class="game-text line-japanese ">
             {{ line.text.japanese }}
