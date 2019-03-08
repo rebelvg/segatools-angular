@@ -57,7 +57,7 @@
                 class="ui label blue"
                 [routerLink]="['/messages']"
                 [queryParams]="{ 'searchStrict[]': line.text.japanese }"
-                >Show Usage</a
+                >{{ line.count }}</a
               >
             </div>
           </div>
@@ -78,18 +78,13 @@
             <i class="save outline icon"></i>Save
           </button>
 
-          <div class="ui dropdown mt floating  labeled  button fluid icon" suiDropdown>
-            <i class="dropdown icon"></i>
-            <div class="text">Usage</div>
-
-            <div class="menu" suiDropdownMenu>
-              <div class="scrolling menu">
-                <a *ngFor="let message of line.messages" [routerLink]="['/messages', message]" class="item">
-                  <div class="ui black empty circular label"></div>
-                  {{ message }}
-                </a>
-              </div>
-            </div>
+          <div>
+            <a
+              class="ui mt floating button fluid icon"
+              [routerLink]="['/messages']"
+              [queryParams]="{ 'searchStrict[]': line.text.japanese }"
+              >Show Usage</a
+            >
           </div>
         </div>
       </div>
