@@ -65,7 +65,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit(form) {
     const { value } = form;
-    const data = { updatedLines: [{ japanese: value.japanese, english: value.english }] };
+    const data = { updatedLines: [{ japanese: value.japanese, english: value.english || null }] };
     this.dataService.updateUniqueLine(data);
     return;
   }

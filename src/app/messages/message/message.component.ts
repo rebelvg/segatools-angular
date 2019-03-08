@@ -5,7 +5,7 @@ import { Message } from 'src/app/shared/models/message.model';
 import { DataService } from 'src/app/shared/services/data.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
-import { forEach, get, isNull } from 'lodash';
+import { forEach, get, isNull, set } from 'lodash';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { PreviewService } from './preview/preview.service';
 import { MetaService } from 'src/app/shared/services/meta.service';
@@ -84,12 +84,17 @@ export class MessageComponent implements OnInit, OnDestroy {
     let isChanged = false;
 
     forEach(this.message.lines, (line, index) => {
+      if (!get(value.lines, [index, 'english'])) {
+        set(value.lines, [index, 'english'], null);
+      }
+
       if (line.text.japanese !== null && get(value.lines, [index, 'english']) !== line.text.english) {
-        isChanged = true;
         updatedLines.push({
           japanese: line.text.japanese,
           english: get(value.lines, [index, 'english'])
         });
+
+        isChanged = true;
       }
     });
 
@@ -107,6 +112,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     if (this.message.chapterName !== value.chapterName) {
       data.chapterName = value.chapterName;
     }
+
     console.log(data);
     this.dataService.updateMessage(this.message._id, data);
   }
