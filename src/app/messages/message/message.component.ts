@@ -81,7 +81,12 @@ export class MessageComponent implements OnInit, OnDestroy {
   checkForUpdatedLines(returnUpdated = false) {
     const { value } = this.messageForm;
     const updatedLines = [];
+
     let isChanged = false;
+
+    if (this.message.chapterName !== value.chapterName) {
+      isChanged = true;
+    }
 
     forEach(this.message.lines, (line, index) => {
       if (!get(value.lines, [index, 'english'])) {
