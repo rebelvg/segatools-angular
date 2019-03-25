@@ -168,9 +168,8 @@ export class DataService {
     const token = this.authService.getToken();
 
     const headers = new HttpHeaders().set('token', token);
-
     this.http.post(`/api/lines/update`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
-      this.notifier.notify('success', `Unique Lines were updated`);
+      this.notifier.notify('success', `Unique Lines were updated: ${response.messagesUpdated}`);
     }, this.handleErrorResponse);
   }
 

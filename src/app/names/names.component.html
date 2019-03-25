@@ -5,13 +5,12 @@
       <input name="search" formControlName="search" />
     </div>
     <div class="filters">
-      <div class="ui checkbox options-checkbox">
-        <input type="checkbox" formControlName="hideCompleted" />
-        <label>Hide Completed</label>
-      </div>
-      <div class="ui checkbox options-checkbox">
-        <input type="checkbox" formControlName="hideNotCompleted" />
-        <label>Hide 0% Progress</label>
+      <div class="field">
+        <select name="hideBy" placeholder="Hide By" formControlName="hideBy">
+          <option value="">Show All</option>
+          <option value="hideCompleted">Hide Completed</option>
+          <option value="hideNotCompleted">Hide 0% or In-Progress</option>
+        </select>
       </div>
       <div class="field">
         <select class="sortBy" formControlName="sortBy">

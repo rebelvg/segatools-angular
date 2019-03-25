@@ -46,10 +46,18 @@ export class NamesComponent implements OnInit, OnDestroy {
   }
 
   initForm(params) {
+    let hideBy = '';
+
+    if (params.hideCompleted) {
+      hideBy = 'hideCompleted';
+    }
+    if (params.hideNotCompleted) {
+      hideBy = 'hideNotCompleted';
+    }
+
     this.searchForm = new FormGroup({
       search: new FormControl(params.search || ''),
-      hideCompleted: new FormControl(params.hideCompleted || false),
-      hideNotCompleted: new FormControl(params.hideNotCompleted || false),
+      hideBy: new FormControl(hideBy),
       sortBy: new FormControl(params.sortBy || ''),
       sortOrder: new FormControl(params.sortOrder || '')
     });
@@ -57,7 +65,13 @@ export class NamesComponent implements OnInit, OnDestroy {
 
   onSearch() {
     const { value } = this.searchForm;
+    if (value.hideBy) {
+      value[value.hideBy] = true;
+      value.hideBy = null;
+    }
+
     const queryParams = qs.stringify(pickBy(value, data => Boolean(data)));
+
     this.router.navigateByUrl(`/names?${queryParams}`);
   }
 

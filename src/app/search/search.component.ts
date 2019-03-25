@@ -97,7 +97,8 @@ export class SearchComponent implements OnInit {
     if (!this.searchForm.valid) {
       return;
     }
-    const values = pickBy(this.searchForm.value, data => Boolean(data));
+
+    const values = pickBy(this.searchForm.value, data => Boolean(data) || data === 0);
 
     if (values.hideBy) {
       values[values.hideBy] = true;

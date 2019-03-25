@@ -44,6 +44,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
       this.search = params.search;
       this.paginator.setPagination();
       this.fetchMessages();
+      console.log('happening');
     });
 
     this.dataService.refetcher.subscribe(() => {
@@ -129,7 +130,9 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
     const params = pickBy({ ...this.paginator.getQuery(), search: this.search }, v => !!v);
     const queryParams = qs.stringify(params);
     const url = this.isEnglish ? '/unique/english' : '/unique/japanese';
+
     this.router.navigateByUrl(`${url}?${queryParams}`);
+    this.fetchMessages();
   }
 
   onPageChange(page) {
