@@ -11,7 +11,7 @@
         </div>
         <button
           type="button"
-          *ngIf="!isApproving && !!auth.isRole('admin')"
+          *ngIf="!isApproving && !!auth.isRole('editor')"
           (click)="toggleApprove()"
           class="ui button"
           [ngClass]="{ green: !message.proofRead, red: !!message.proofRead }"
