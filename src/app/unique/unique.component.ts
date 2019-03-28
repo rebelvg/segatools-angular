@@ -44,7 +44,6 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
       this.search = params.search;
       this.paginator.setPagination();
       this.fetchMessages();
-      console.log('happening');
     });
 
     this.dataService.refetcher.subscribe(() => {
