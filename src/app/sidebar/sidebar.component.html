@@ -9,11 +9,16 @@
       <div class="navlink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a routerLink="/"><i class="ui icon home"></i> Home</a>
       </div>
-      <ng-template [ngIf]="!auth.isAuthenticated()">
+      <div *ngIf="!auth.isAuthenticated(); else elseBlock">
         <div class="navlink" routerLinkActive="active">
           <a routerLink="/login"><i class="ui icon lock"></i> Login</a>
         </div>
-      </ng-template>
+      </div>
+      <ng-template #elseBlock>
+        <div class="navlink" routerLinkActive="active">
+          <a routerLink="/logout"><i class="ui icon lock"></i> Logout</a>
+        </div></ng-template
+      >
       <ng-template [ngIf]="!!auth.hasUserData()">
         <div class="navlink" routerLinkActive="active">
           <a routerLink="/profile"><i class="ui icon user"></i> Profile</a>

@@ -12,6 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'names', component: NamesComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'unique/japanese', component: UniqueComponent },
   { path: 'unique/english', component: UniqueComponent }

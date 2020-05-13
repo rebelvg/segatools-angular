@@ -25,6 +25,7 @@ import { LoginComponent } from './login/login.component';
 import { InfoboxComponent } from './shared/infobox/infobox.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AdminComponent } from './admin/admin.component';
     UniqueComponent,
     SearchComponent,
     LoginComponent,
+    LogoutComponent,
     InfoboxComponent,
     ProfileComponent,
     AdminComponent

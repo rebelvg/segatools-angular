@@ -10,13 +10,14 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
   private user: User;
-  private token: string;
+  private token: string = null;
 
   tokenUpdated = new Subject<string>();
   userUpdated = new Subject<{}>();
 
   constructor(private http: HttpClient, private notify: NotifierService) {
     const token = localStorage.getItem('token');
+
     if (token) {
       this.token = token;
     }
@@ -54,7 +55,9 @@ export class AuthService {
 
   fetchUser() {
     console.log('fetch user');
+
     const headers = new HttpHeaders().set('token', this.token);
+
     this.http
       .get('/api/users', {
         observe: 'body',
@@ -74,6 +77,7 @@ export class AuthService {
 
   getUser() {
     console.log('get user');
+
     return this.user;
   }
 }
