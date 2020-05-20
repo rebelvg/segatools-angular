@@ -13,13 +13,8 @@ export class LoginComponent implements OnInit {
   async ngOnInit() {
     this.route.queryParams.subscribe(query => {
       const queryToken = query.token;
-      const token = this.auth.getToken();
 
-      if (token) {
-        return this.redirectToMain();
-      }
-
-      if (queryToken && !token) {
+      if (queryToken) {
         this.auth.setToken(queryToken);
 
         return this.redirectToMain();

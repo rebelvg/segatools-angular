@@ -37,6 +37,10 @@ export class AuthService {
     this.tokenUpdated.next(token);
   }
 
+  setUser(user) {
+    this.user = user;
+  }
+
   isCurrentUser(id) {
     if (!this.hasUserData()) {
       return false;
