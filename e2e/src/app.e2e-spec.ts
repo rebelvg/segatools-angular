@@ -9,6 +9,6 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to Segatools-react!');
+    expect(page.getTitleText()).toEqual('Welcome to segatools-angular!');
   });
 });

@@ -1,7 +1,7 @@
 {
-  "name": "segatools-react",
+  "name": "segatools-angular",
   "version": "1.0.0",
-  "description": "Segatools React",
+  "description": "Segatools Angular",
   "scripts": {
     "prepush": "yarn run prettier",
     "prettier": "prettier --list-different \"**/*.{ts,js,json,html,css,scss,md}\"",

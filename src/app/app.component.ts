@@ -8,7 +8,7 @@ import { AuthService } from './shared/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Segatools-react';
+  title = 'segatools-angular';
   constructor(private meta: MetaService, private auth: AuthService) {}
 
   ngOnInit() {
