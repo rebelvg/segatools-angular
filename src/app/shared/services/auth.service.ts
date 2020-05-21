@@ -73,9 +73,7 @@ export class AuthService {
           this.user = response.user;
           this.userUpdated.next(this.user);
         },
-        () => {
-          this.setToken('');
-        }
+        () => {}
       );
   }
 
