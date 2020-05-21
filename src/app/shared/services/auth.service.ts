@@ -37,8 +37,18 @@ export class AuthService {
     this.tokenUpdated.next(token);
   }
 
+  unsetToken() {
+    this.token = null;
+    localStorage.removeItem('token');
+    this.tokenUpdated.next(null);
+  }
+
   setUser(user) {
     this.user = user;
+  }
+
+  unsetUser() {
+    this.user = null;
   }
 
   isCurrentUser(id) {
@@ -73,7 +83,9 @@ export class AuthService {
           this.user = response.user;
           this.userUpdated.next(this.user);
         },
-        () => {}
+        error => {
+          console.log(error);
+        }
       );
   }
 

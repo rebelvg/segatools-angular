@@ -13,8 +13,8 @@ export class LogoutComponent implements OnInit {
   async ngOnInit() {
     localStorage.removeItem('token');
 
-    this.auth.setToken(null);
-    this.auth.setUser(null);
+    this.auth.unsetToken();
+    this.auth.unsetUser();
 
     this.router.navigate(['/']);
   }
