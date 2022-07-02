@@ -32,6 +32,7 @@
     "ngx-smart-modal": "^7.1.1",
     "query-string": "^6.2.0",
     "rxjs": "~6.3.3",
+    "sass": "^1.53.0",
     "semantic-ui-css": "^2.4.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -53,7 +54,6 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "node-sass": "^4.14.1",
     "prettier": "^1.16.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
