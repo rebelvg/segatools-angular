@@ -15,7 +15,7 @@ export class MetaService {
     return this.chapters;
   }
   fetchChapters() {
-    this.http.get('https://segatools-api.azurewebsites.net/api/chapters').subscribe((response: []) => {
+    this.http.get('https://segatools-api.azurewebsites.net/chapters').subscribe((response: []) => {
       this.chapters = response;
       this.chaptersUpdated.next(response);
     });

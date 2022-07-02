@@ -30,6 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   redirectToLogin() {
-    location.href = 'https://segatools-api.azurewebsites.net/api/users/auth/google';
+    location.href = 'https://segatools-api.azurewebsites.net/users/auth/google';
   }
 }
