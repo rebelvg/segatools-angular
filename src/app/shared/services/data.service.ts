@@ -47,7 +47,7 @@ export class DataService {
     });
 
     this.http
-      .get('/api/messages', {
+      .get('https://segatools-api.azurewebsites.net/api/messages', {
         observe: 'body',
         responseType: 'json',
         params
@@ -67,7 +67,7 @@ export class DataService {
     const headers = new HttpHeaders().set('token', token);
 
     return this.http
-      .post(`/api/messages/${id}`, data, { headers })
+      .post(`https://segatools-api.azurewebsites.net/api/messages/${id}`, data, { headers })
       .subscribe((response: { messagesUpdated: number }) => {
         console.log(response.messagesUpdated);
 
@@ -82,7 +82,7 @@ export class DataService {
       return;
     }
 
-    this.http.get(`/api/messages/${id}`).subscribe(response => {
+    this.http.get(`https://segatools-api.azurewebsites.net/api/messages/${id}`).subscribe(response => {
       this.messagesService.setMessage(response);
     }, this.handleErrorResponse);
   }
@@ -93,7 +93,7 @@ export class DataService {
     });
 
     this.http
-      .get('/api/names', {
+      .get('https://segatools-api.azurewebsites.net/api/names', {
         observe: 'body',
         responseType: 'json',
         params
@@ -105,7 +105,7 @@ export class DataService {
 
   public fetchStats() {
     this.http
-      .get('/api/stats', {
+      .get('https://segatools-api.azurewebsites.net/api/stats', {
         observe: 'body',
         responseType: 'json'
       })
@@ -124,12 +124,14 @@ export class DataService {
 
     const headers = new HttpHeaders().set('token', token);
 
-    this.http.post(`/api/names/${id}`, data, { headers }).subscribe((response: { name: Name }) => {
-      this.notifier.notify(
-        'success',
-        `Name #${response.name.nameId} updated successfully! ${response.name.japanese}(${response.name.english})`
-      );
-    }, this.handleErrorResponse);
+    this.http
+      .post(`https://segatools-api.azurewebsites.net/api/names/${id}`, data, { headers })
+      .subscribe((response: { name: Name }) => {
+        this.notifier.notify(
+          'success',
+          `Name #${response.name.nameId} updated successfully! ${response.name.japanese}(${response.name.english})`
+        );
+      }, this.handleErrorResponse);
   }
 
   public fetchEnglishLines(data: {}) {
@@ -138,7 +140,7 @@ export class DataService {
     });
 
     this.http
-      .get('/api/lines/english', {
+      .get('https://segatools-api.azurewebsites.net/api/lines/english', {
         observe: 'body',
         responseType: 'json',
         params
@@ -154,7 +156,7 @@ export class DataService {
     });
 
     this.http
-      .get('/api/lines', {
+      .get('https://segatools-api.azurewebsites.net/api/lines', {
         observe: 'body',
         responseType: 'json',
         params
@@ -168,9 +170,11 @@ export class DataService {
     const token = this.authService.getToken();
 
     const headers = new HttpHeaders().set('token', token);
-    this.http.post(`/api/lines/update`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
-      this.notifier.notify('success', `Unique Lines were updated: ${response.messagesUpdated}`);
-    }, this.handleErrorResponse);
+    this.http
+      .post(`https://segatools-api.azurewebsites.net/api/lines/update`, data, { headers })
+      .subscribe((response: { messagesUpdated: number }) => {
+        this.notifier.notify('success', `Unique Lines were updated: ${response.messagesUpdated}`);
+      }, this.handleErrorResponse);
   }
 
   public replaceLine(data: {}, isEnglish: boolean) {
@@ -178,10 +182,12 @@ export class DataService {
 
     const headers = new HttpHeaders().set('token', token);
 
-    this.http.post(`/api/lines/replace`, data, { headers }).subscribe((response: { messagesUpdated: number }) => {
-      this.notifier.notify('success', `Text was replaced`);
-      this.refetcher.next();
-    }, this.handleErrorResponse);
+    this.http
+      .post(`https://segatools-api.azurewebsites.net/api/lines/replace`, data, { headers })
+      .subscribe((response: { messagesUpdated: number }) => {
+        this.notifier.notify('success', `Text was replaced`);
+        this.refetcher.next();
+      }, this.handleErrorResponse);
   }
 
   public fetchUsers() {
@@ -190,7 +196,7 @@ export class DataService {
     const headers = new HttpHeaders().set('token', token);
 
     this.http
-      .get('/api/admin/users', {
+      .get('https://segatools-api.azurewebsites.net/api/admin/users', {
         observe: 'body',
         responseType: 'json',
         headers
@@ -209,8 +215,10 @@ export class DataService {
 
     const headers = new HttpHeaders().set('token', token);
 
-    this.http.post(`/api/admin/users/${id}`, data, { headers }).subscribe(response => {
-      this.notifier.notify('success', `User updated`);
-    }, this.handleErrorResponse);
+    this.http
+      .post(`https://segatools-api.azurewebsites.net/api/admin/users/${id}`, data, { headers })
+      .subscribe(response => {
+        this.notifier.notify('success', `User updated`);
+      }, this.handleErrorResponse);
   }
 }

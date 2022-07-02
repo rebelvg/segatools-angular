@@ -73,7 +73,7 @@ export class AuthService {
     const headers = new HttpHeaders().set('token', this.token);
 
     this.http
-      .get('/api/users', {
+      .get('https://segatools-api.azurewebsites.net/api/users', {
         observe: 'body',
         responseType: 'json',
         headers
