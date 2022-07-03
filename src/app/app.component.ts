@@ -5,7 +5,7 @@ import { AuthService } from './shared/services/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'segatools-angular';
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     const token = this.auth.getToken();
     this.getUser(token);
 
-    this.auth.tokenUpdated.subscribe(updatedToken => {
+    this.auth.tokenUpdated.subscribe((updatedToken) => {
       this.getUser(updatedToken);
     });
   }

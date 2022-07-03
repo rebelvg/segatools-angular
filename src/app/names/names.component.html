@@ -21,7 +21,11 @@
         </select>
       </div>
       <div class="field">
-        <select class="sortOrder" formControlName="sortOrder" placeholder="Sort Type">
+        <select
+          class="sortOrder"
+          formControlName="sortOrder"
+          placeholder="Sort Type"
+        >
           <option value="">Sort Type</option>
           <option value="1">Ascending</option>
           <option value="-1">Descending</option>
@@ -45,14 +49,19 @@
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
     <ng-container *ngIf="names.length; else nothing">
-      <div class="ui segment raised" *ngFor="let name of (names | paginate: { itemsPerPage: 10, currentPage: page })">
+      <div
+        class="ui segment raised"
+        *ngFor="
+          let name of names | paginate: { itemsPerPage: 10, currentPage: page }
+        "
+      >
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
           <input hidden name="nameId" [(ngModel)]="name.nameId" />
           <input hidden name="_id" [(ngModel)]="name._id" />
           <input hidden name="japanese" [(ngModel)]="name.japanese" />
 
-          <div class="ui three column stackable grid ">
-            <div class="four wide column game-text name-japanese ">
+          <div class="ui three column stackable grid">
+            <div class="four wide column game-text name-japanese">
               {{ name.japanese }}
             </div>
             <div class="ten wide column">
@@ -69,7 +78,9 @@
               </div>
             </div>
             <div class="two wide column">
-              <button class="ui button primary name-button"><i class="save outline icon"></i>Save</button>
+              <button class="ui button primary name-button">
+                <i class="save outline icon"></i>Save
+              </button>
             </div>
           </div>
         </form>

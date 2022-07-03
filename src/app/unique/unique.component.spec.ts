@@ -8,7 +8,7 @@ describe('UniqueComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UniqueComponent]
+      declarations: [UniqueComponent],
     }).compileComponents();
   }));
 

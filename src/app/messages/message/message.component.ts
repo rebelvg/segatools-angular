@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
-  styleUrls: ['./message.component.scss']
+  styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent implements OnInit, OnDestroy {
   message: Message;
@@ -33,25 +33,27 @@ export class MessageComponent implements OnInit, OnDestroy {
     public modalService: NgxSmartModalService,
     private previewService: PreviewService,
     private auth: AuthService,
-    private meta: MetaService
+    private meta: MetaService,
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (params.id) {
         this.dataService.fetchMessage(params.id);
       }
     });
     this.chapters = this.meta.getChapters();
-    this.meta.chaptersUpdated.subscribe(chapters => {
+    this.meta.chaptersUpdated.subscribe((chapters) => {
       this.chapters = chapters;
     });
 
-    this.messageSubscription = this.msgService.singleMessageUpdated.subscribe(message => {
-      this.isLoaded = true;
-      this.message = message;
-      this.initForm();
-    });
+    this.messageSubscription = this.msgService.singleMessageUpdated.subscribe(
+      (message) => {
+        this.isLoaded = true;
+        this.message = message;
+        this.initForm();
+      },
+    );
   }
 
   getName(nameId) {
@@ -61,7 +63,7 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     const { names } = this.message;
 
-    const name = names.find(nameItem => nameItem.nameId === nameId);
+    const name = names.find((nameItem) => nameItem.nameId === nameId);
 
     if (!name) {
       return 'EMPTY NAME';
@@ -93,10 +95,13 @@ export class MessageComponent implements OnInit, OnDestroy {
         set(value.lines, [index, 'english'], null);
       }
 
-      if (line.text.japanese !== null && get(value.lines, [index, 'english']) !== line.text.english) {
+      if (
+        line.text.japanese !== null &&
+        get(value.lines, [index, 'english']) !== line.text.english
+      ) {
         updatedLines.push({
           japanese: line.text.japanese,
-          english: get(value.lines, [index, 'english'])
+          english: get(value.lines, [index, 'english']),
         });
 
         isChanged = true;
@@ -111,7 +116,7 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     const data = {
       chapterName: undefined,
-      updatedLines: this.checkForUpdatedLines(true)
+      updatedLines: this.checkForUpdatedLines(true),
     };
 
     if (this.message.chapterName !== value.chapterName) {
@@ -128,22 +133,22 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   initForm() {
     const lines = new FormArray([]);
-    forEach(this.message.lines, line => {
+    forEach(this.message.lines, (line) => {
       lines.push(
         new FormGroup({
           english: new FormControl(line.text.english),
           japanese: new FormControl(line.text.japanese),
-          count: new FormControl(line.count)
-        })
+          count: new FormControl(line.count),
+        }),
       );
     });
 
     this.messageForm = new FormGroup({
       chapterName: new FormControl(this.message.chapterName),
-      lines
+      lines,
     });
     console.log(this.messageForm.pristine);
-    this.messageForm.valueChanges.subscribe(changes => {
+    this.messageForm.valueChanges.subscribe((changes) => {
       this.isChanged = <boolean>this.checkForUpdatedLines();
     });
   }

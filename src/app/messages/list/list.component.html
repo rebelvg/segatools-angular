@@ -1,8 +1,13 @@
 <app-search [loading]="loading"></app-search>
-<div *ngIf="!loading" class="header ui">Found {{ paginator.data.total }} messages</div>
+<div *ngIf="!loading" class="header ui">
+  Found {{ paginator.data.total }} messages
+</div>
 <ng-container *ngIf="init && paginator.data.total">
   <div class="messages-pagination">
-    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+    <pagination-controls
+      id="server"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
   </div>
 </ng-container>
 
@@ -15,14 +20,14 @@
   </div>
   <app-item
     *ngFor="
-      let message of (messages
+      let message of messages
         | paginate
           : {
               id: 'server',
               itemsPerPage: paginator.data.limit,
               currentPage: paginator.data.page,
               totalItems: paginator.data.total
-            })
+            }
     "
     [message]="message"
   >
@@ -31,7 +36,10 @@
 
 <ng-container *ngIf="init && paginator.data.total">
   <div class="messages-pagination">
-    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+    <pagination-controls
+      id="server"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
   </div>
 </ng-container>
 

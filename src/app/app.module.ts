@@ -46,7 +46,7 @@ import { LogoutComponent } from './logout/logout.component';
     LogoutComponent,
     InfoboxComponent,
     ProfileComponent,
-    AdminComponent
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,9 +57,9 @@ import { LogoutComponent } from './logout/logout.component';
     FormsModule,
     ReactiveFormsModule,
     NotifierModule,
-    NgxSmartModalModule.forRoot()
+    NgxSmartModalModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

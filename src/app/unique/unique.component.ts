@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { pickBy } from 'lodash';
@@ -13,7 +19,7 @@ import { PreviewService } from '../messages/message/preview/preview.service';
 @Component({
   selector: 'app-unique',
   templateUrl: './unique.component.html',
-  styleUrls: ['./unique.component.scss']
+  styleUrls: ['./unique.component.scss'],
 })
 export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
   linesSubscription: Subscription;
@@ -34,11 +40,11 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
     private dataService: DataService,
     private cdRef: ChangeDetectorRef,
     public modalService: NgxSmartModalService,
-    private previewService: PreviewService
+    private previewService: PreviewService,
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.isEnglish = location.pathname.includes('unique/english');
       console.log(params);
       this.search = params.search;
@@ -52,20 +58,26 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
       this.fetchMessages();
     });
 
-    this.linesSubscription = this.uniqueService.uniqueLinesUpdated.subscribe(response => {
-      setTimeout(() => {
-        this.init = true;
-        this.lines = response.lines;
-        this.loading = false;
+    this.linesSubscription = this.uniqueService.uniqueLinesUpdated.subscribe(
+      (response) => {
+        setTimeout(() => {
+          this.init = true;
+          this.lines = response.lines;
+          this.loading = false;
 
-        this.paginator.setPaginatorData(response);
-      }, 0);
-    });
+          this.paginator.setPaginatorData(response);
+        }, 0);
+      },
+    );
   }
 
   onSubmit(form) {
     const { value } = form;
-    const data = { updatedLines: [{ japanese: value.japanese, english: value.english || null }] };
+    const data = {
+      updatedLines: [
+        { japanese: value.japanese, english: value.english || null },
+      ],
+    };
     this.dataService.updateUniqueLine(data);
     return;
   }
@@ -83,7 +95,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
   onModalConfirm() {
     const data = {
       find: this.search,
-      replace: this.replace
+      replace: this.replace,
     };
 
     this.toggleModal(false);
@@ -101,7 +113,10 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   fetchMessages() {
-    const params = pickBy({ ...this.paginator.getQuery(), search: this.search }, v => !!v);
+    const params = pickBy(
+      { ...this.paginator.getQuery(), search: this.search },
+      (v) => !!v,
+    );
     if (!this.isEnglish) {
       this.dataService.fetchUniqueLines(params);
     } else {
@@ -111,7 +126,7 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSearch(form) {
     const {
-      value: { search }
+      value: { search },
     } = form;
     this.search = search;
     this.navigate();
@@ -126,7 +141,10 @@ export class UniqueComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   navigate() {
-    const params = pickBy({ ...this.paginator.getQuery(), search: this.search }, v => !!v);
+    const params = pickBy(
+      { ...this.paginator.getQuery(), search: this.search },
+      (v) => !!v,
+    );
     const queryParams = qs.stringify(params);
     const url = this.isEnglish ? '/unique/english' : '/unique/japanese';
 

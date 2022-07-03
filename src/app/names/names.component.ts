@@ -11,7 +11,7 @@ import qs from 'query-string';
 @Component({
   selector: 'app-names',
   templateUrl: './names.component.html',
-  styleUrls: ['./names.component.scss']
+  styleUrls: ['./names.component.scss'],
 })
 export class NamesComponent implements OnInit, OnDestroy {
   names = <Name[]>[];
@@ -25,7 +25,7 @@ export class NamesComponent implements OnInit, OnDestroy {
     private nameService: NamesService,
     private dataService: DataService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class NamesComponent implements OnInit, OnDestroy {
       this.fetchData();
     });
 
-    this.subscription = this.nameService.listUpdated.subscribe(response => {
+    this.subscription = this.nameService.listUpdated.subscribe((response) => {
       this.loading = false;
       this.names = response.names;
     });
@@ -59,7 +59,7 @@ export class NamesComponent implements OnInit, OnDestroy {
       search: new FormControl(params.search || ''),
       hideBy: new FormControl(hideBy),
       sortBy: new FormControl(params.sortBy || ''),
-      sortOrder: new FormControl(params.sortOrder || '')
+      sortOrder: new FormControl(params.sortOrder || ''),
     });
   }
 
@@ -70,7 +70,7 @@ export class NamesComponent implements OnInit, OnDestroy {
       value.hideBy = null;
     }
 
-    const queryParams = qs.stringify(pickBy(value, data => Boolean(data)));
+    const queryParams = qs.stringify(pickBy(value, (data) => Boolean(data)));
 
     this.router.navigateByUrl(`/names?${queryParams}`);
   }

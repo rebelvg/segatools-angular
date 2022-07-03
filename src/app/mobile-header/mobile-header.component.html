@@ -8,7 +8,12 @@
     </div>
   </div>
   <div class="menu-st" [ngClass]="{ open: isOpen }">
-    <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <div
+      class="navlink"
+      (click)="onToggleOpen()"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       <a routerLink="/"><i class="ui icon home"></i> Home</a>
     </div>
     <div class="navlink" (click)="onToggleOpen()" routerLinkActive="active">

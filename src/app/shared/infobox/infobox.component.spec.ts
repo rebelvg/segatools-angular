@@ -8,7 +8,7 @@ describe('InfoboxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InfoboxComponent]
+      declarations: [InfoboxComponent],
     }).compileComponents();
   }));
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MetaService {
   chaptersUpdated = new Subject<[]>();
@@ -15,9 +16,11 @@ export class MetaService {
     return this.chapters;
   }
   fetchChapters() {
-    this.http.get('https://segatools-api.azurewebsites.net/chapters').subscribe((response: []) => {
-      this.chapters = response;
-      this.chaptersUpdated.next(response);
-    });
+    this.http
+      .get(`${environment.API_BASE_URL}/chapters`)
+      .subscribe((response: []) => {
+        this.chapters = response;
+        this.chaptersUpdated.next(response);
+      });
   }
 }

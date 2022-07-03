@@ -19,7 +19,10 @@ const routes: Routes = [
   {
     path: 'messages',
     component: MessagesComponent,
-    children: [{ path: '', component: ListComponent }, { path: ':id', component: MessageComponent }]
+    children: [
+      { path: '', component: ListComponent },
+      { path: ':id', component: MessageComponent },
+    ],
   },
 
   { path: 'names', component: NamesComponent },
@@ -28,11 +31,11 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'unique/japanese', component: UniqueComponent },
-  { path: 'unique/english', component: UniqueComponent }
+  { path: 'unique/english', component: UniqueComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   async ngOnInit() {
-    this.route.queryParams.subscribe(query => {
+    this.route.queryParams.subscribe((query) => {
       const queryToken = query.token;
 
       if (queryToken) {
@@ -30,6 +35,6 @@ export class LoginComponent implements OnInit {
   }
 
   redirectToLogin() {
-    location.href = 'https://segatools-api.azurewebsites.net/users/auth/google';
+    location.href = `${environment.API_BASE_URL}/users/auth/google`;
   }
 }

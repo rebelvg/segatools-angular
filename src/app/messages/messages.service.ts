@@ -4,7 +4,7 @@ import { MessagesResponse } from '../shared/models/messagesResponse.model';
 import { Message } from '../shared/models/message.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessagesService {
   listUpdated = new Subject<MessagesResponse>();

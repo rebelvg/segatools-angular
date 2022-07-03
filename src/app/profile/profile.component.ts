@@ -5,11 +5,12 @@ import { User } from '../shared/models/user.model';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   user: User;
-  constructor(private auth: AuthService) {}
+
+  constructor(public auth: AuthService) {}
 
   ngOnInit() {
     this.user = <User>this.auth.getUser();

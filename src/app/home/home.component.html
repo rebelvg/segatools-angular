@@ -5,7 +5,9 @@
       <i class="circular question icon"></i>
       <div class="mt">WHAT IS THIS?</div>
     </h4>
-    <div class="mt">A <strong>non-profit</strong> fan translation patch for Yakuza Kenzan.</div>
+    <div class="mt">
+      A <strong>non-profit</strong> fan translation patch for Yakuza Kenzan.
+    </div>
     <div class="mt">
       <i class="envelope outline icon"></i>Contact email:
       <a href="mailto:yakuzapatcher@gmail.com">yakuzapatcher(at)gmail.com</a>
@@ -32,7 +34,13 @@
         [maxValue]="stats.messages.totalUnique"
       >
       </app-infobox>
-      <app-infobox icon="question" number="3" class="infobox" label="Files Count" [value]="stats.messages.filesCount">
+      <app-infobox
+        icon="question"
+        number="3"
+        class="infobox"
+        label="Files Count"
+        [value]="stats.messages.filesCount"
+      >
       </app-infobox>
     </div>
     <div class="names-progress">
@@ -45,7 +53,13 @@
         [maxValue]="stats.names.total"
       >
       </app-infobox>
-      <app-infobox icon="question" class="infobox" label="Files Count" [value]="stats.names.filesCount"> </app-infobox>
+      <app-infobox
+        icon="question"
+        class="infobox"
+        label="Files Count"
+        [value]="stats.names.filesCount"
+      >
+      </app-infobox>
     </div>
   </div>
 </div>

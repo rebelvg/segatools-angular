@@ -11,6 +11,6 @@ export const convertField = (field: string, arr: []) => {
       item.strict
         ? { ...acc, [`${field}Strict`]: [...acc[`${field}Strict`], item.value] }
         : { ...acc, [field]: [...acc[field], item.value] },
-    { [field]: [], [`${field}Strict`]: [] }
+    { [field]: [], [`${field}Strict`]: [] },
   );
 };

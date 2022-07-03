@@ -1,10 +1,13 @@
 <form [formGroup]="messageForm" (ngSubmit)="onSubmit()" class="ui form">
   <div class="edit-grid" *ngIf="isLoaded">
-    <div class=" ui segment header-segment">
+    <div class="ui segment header-segment">
       <div class="top">
         <div class="ui header" *ngIf="!isApproving; else loader">
           {{ message.fileName }}
-          <label class="label ui" [ngClass]="{ green: !!message.proofRead, red: !message.proofRead }">
+          <label
+            class="label ui"
+            [ngClass]="{ green: !!message.proofRead, red: !message.proofRead }"
+          >
             {{ message.proofRead ? 'Approved' : 'Not Approved' }}</label
           >
           <div class="ui sub header">{{ message.lines.length }} lines</div>
@@ -20,7 +23,9 @@
         </button>
       </div>
       <select class="chapter-select" formControlName="chapterName">
-        <option *ngFor="let item of chapters" [ngValue]="item">{{ item }}</option>
+        <option *ngFor="let item of chapters" [ngValue]="item">
+          {{ item }}
+        </option>
       </select>
       <a
         class="ui label"
@@ -28,7 +33,8 @@
         [queryParams]="{ nameId: name.nameId }"
         *ngFor="let name of message.names"
       >
-        {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
+        {{ name.japanese }}
+        <span *ngIf="!!name.english">({{ name.english }})</span>
       </a>
     </div>
     <app-navigation
@@ -38,15 +44,26 @@
       [prev]="message.prevMessageId"
     ></app-navigation>
     <div class="edit-form" formArrayName="lines">
-      <ng-container *ngFor="let line of getControls(); let i = index" [formGroupName]="i">
-        <div class="ui segment" *ngIf="message.lines[i].text.japanese; else divider">
+      <ng-container
+        *ngFor="let line of getControls(); let i = index"
+        [formGroupName]="i"
+      >
+        <div
+          class="ui segment"
+          *ngIf="message.lines[i].text.japanese; else divider"
+        >
           <div class="ui two column stackable grid">
             <div class="column">
               <div class="japanese-msg-header">
                 <h4 class="header">Japanese</h4>
                 <div>
-                  <div class="ui label blue">Used: {{ message.lines[i].count }}</div>
-                  <div class="ui label"><i class="comment icon"></i> {{ getName(message.lines[i].speakerId) }}</div>
+                  <div class="ui label blue">
+                    Used: {{ message.lines[i].count }}
+                  </div>
+                  <div class="ui label">
+                    <i class="comment icon"></i>
+                    {{ getName(message.lines[i].speakerId) }}
+                  </div>
                 </div>
               </div>
               <pre class="game-text">
@@ -57,7 +74,9 @@
             <div class="column field">
               <div class="english-msg-header">
                 <h4>English</h4>
-                <span class="mini ui button primary icon" (click)="onPreview(i)"><i class="ui icon eye"> </i> </span>
+                <span class="mini ui button primary icon" (click)="onPreview(i)"
+                  ><i class="ui icon eye"> </i>
+                </span>
               </div>
               <textarea formControlName="english" rows="4"></textarea>
             </div>

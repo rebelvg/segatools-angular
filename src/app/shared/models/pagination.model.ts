@@ -13,7 +13,7 @@ export class Pagination {
     page: 1,
     limit: 20,
     pages: null,
-    total: null
+    total: null,
   };
 
   constructor(page = 1, limit = 20) {

@@ -6,19 +6,24 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+  styleUrls: ['./preview.component.scss'],
 })
 export class PreviewComponent implements OnInit {
   @ViewChild('canvas') canvas: ElementRef;
   messageListener: Subscription;
   message: string;
 
-  constructor(public modalService: NgxSmartModalService, private previewService: PreviewService) {}
+  constructor(
+    public modalService: NgxSmartModalService,
+    private previewService: PreviewService,
+  ) {}
 
   ngOnInit() {
-    this.messageListener = this.previewService.messageSet.subscribe(message => {
-      this.message = message;
-    });
+    this.messageListener = this.previewService.messageSet.subscribe(
+      (message) => {
+        this.message = message;
+      },
+    );
   }
 
   initCanvas() {
@@ -47,7 +52,7 @@ export class PreviewComponent implements OnInit {
     image.onload = () => {
       canvasContext.drawImage(image, 0, 0);
       let currentY = startY;
-      lines.forEach(line => {
+      lines.forEach((line) => {
         canvasContext.fillText(line, startX, currentY);
         currentY += 34;
       });

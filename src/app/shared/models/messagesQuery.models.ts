@@ -31,7 +31,7 @@ export class MessagesQuery {
     percentDone: { isNumber: true },
     hideChanged: {},
     hideCompleted: {},
-    hideNotCompleted: {}
+    hideNotCompleted: {},
   };
 
   constructor() {
@@ -53,25 +53,25 @@ export class MessagesQuery {
     const fieldArray = this.params[`${field}Strict`] || [];
     console.log(fieldArray, fieldArrayStrict);
     return [
-      ...fieldArrayStrict.map(item => ({
+      ...fieldArrayStrict.map((item) => ({
         value: item,
-        strict: false
+        strict: false,
       })),
-      ...fieldArray.map(item => ({
+      ...fieldArray.map((item) => ({
         value: item,
-        strict: true
-      }))
+        strict: true,
+      })),
     ];
   }
 
-  stringify = params => qs.stringify(params, { arrayFormat: 'bracket' });
+  stringify = (params) => qs.stringify(params, { arrayFormat: 'bracket' });
 
   getFormParams() {
     console.log(this.params);
     const params = <IMessageQuery>{ ...this.params };
     console.log(params);
 
-    const getField = field => (!isNil(params[field]) ? params[field] : null);
+    const getField = (field) => (!isNil(params[field]) ? params[field] : null);
 
     const searchArray = this.flatStrictData('search');
 
@@ -87,7 +87,7 @@ export class MessagesQuery {
       names: nameArray,
       hideChanged: getField('hideChanged'),
       hideCompleted: getField('hideCompleted'),
-      hideNotCompleted: getField('hideNotCompleted')
+      hideNotCompleted: getField('hideNotCompleted'),
     };
 
     return formParams;

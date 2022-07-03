@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { omit } from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +17,7 @@ import { MessagesQuery } from 'src/app/shared/models/messagesQuery.models';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   private messageSubscription: Subscription;
@@ -26,7 +32,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -36,15 +42,17 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.fetchMessages();
     });
 
-    this.messageSubscription = this.msgService.listUpdated.subscribe(response => {
-      setTimeout(() => {
-        this.init = true;
-        this.messages = response.messages;
-        this.loading = false;
+    this.messageSubscription = this.msgService.listUpdated.subscribe(
+      (response) => {
+        setTimeout(() => {
+          this.init = true;
+          this.messages = response.messages;
+          this.loading = false;
 
-        this.paginator.setPaginatorData(response);
-      }, 0);
-    });
+          this.paginator.setPaginatorData(response);
+        }, 0);
+      },
+    );
   }
 
   ngAfterViewInit() {
@@ -66,7 +74,11 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   onPageChange(page) {
     this.loading = true;
 
-    const params = this.query.stringify({ ...this.paginator.getQuery(), ...this.query.params, page: page });
+    const params = this.query.stringify({
+      ...this.paginator.getQuery(),
+      ...this.query.params,
+      page: page,
+    });
 
     const url = `/messages?${params}`;
     this.loading = true;

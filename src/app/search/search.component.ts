@@ -9,18 +9,24 @@ import { MetaService } from '../shared/services/meta.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
   @Input() loading: boolean;
   searchForm = new FormGroup({});
   formInit = false;
   chapters = [];
-  constructor(private router: Router, private route: ActivatedRoute, private meta: MetaService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private meta: MetaService,
+  ) {}
 
   ngOnInit() {
     this.chapters = this.meta.getChapters();
-    this.meta.chaptersUpdated.subscribe(chapters => (this.chapters = chapters));
+    this.meta.chaptersUpdated.subscribe(
+      (chapters) => (this.chapters = chapters),
+    );
     this.route.queryParams.subscribe(() => {
       const formattedParams = new MessagesQuery();
       this.initForm(formattedParams.getFormParams());
@@ -35,8 +41,8 @@ export class SearchComponent implements OnInit {
     (<FormArray>this.searchForm.get(type)).push(
       new FormGroup({
         value: new FormControl(null, Validators.required),
-        strict: new FormControl(false)
-      })
+        strict: new FormControl(false),
+      }),
     );
   }
 
@@ -45,24 +51,26 @@ export class SearchComponent implements OnInit {
   }
 
   isError(type) {
-    return !this.searchForm.get(type).valid && this.searchForm.get(type).touched;
+    return (
+      !this.searchForm.get(type).valid && this.searchForm.get(type).touched
+    );
   }
 
   initForm(params) {
     const search = params.search.map(
-      item =>
+      (item) =>
         new FormGroup({
           value: new FormControl(item.value, Validators.required),
-          strict: new FormControl(item.strict)
-        })
+          strict: new FormControl(item.strict),
+        }),
     );
 
     const names = params.names.map(
-      item =>
+      (item) =>
         new FormGroup({
           value: new FormControl(item.value, Validators.required),
-          strict: new FormControl(item.strict)
-        })
+          strict: new FormControl(item.strict),
+        }),
     );
 
     console.log(params);
@@ -87,7 +95,7 @@ export class SearchComponent implements OnInit {
       speakersCount: new FormControl(params.speakersCount),
       hideBy: new FormControl(hideBy),
       search: new FormArray(search),
-      names: new FormArray(names)
+      names: new FormArray(names),
     });
 
     this.formInit = true;
@@ -98,7 +106,10 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    const values = pickBy(this.searchForm.value, data => Boolean(data) || data === 0);
+    const values = pickBy(
+      this.searchForm.value,
+      (data) => Boolean(data) || data === 0,
+    );
 
     if (values.hideBy) {
       values[values.hideBy] = true;
@@ -109,14 +120,16 @@ export class SearchComponent implements OnInit {
       {
         ...values,
         ...convertField('search', values.search),
-        ...convertField('names', values.names)
+        ...convertField('names', values.names),
       },
-      isNil
+      isNil,
     );
 
     console.log(queryParams);
 
-    const url = `/messages?${qs.stringify(queryParams, { arrayFormat: 'bracket' })}`;
+    const url = `/messages?${qs.stringify(queryParams, {
+      arrayFormat: 'bracket',
+    })}`;
 
     this.router.navigateByUrl(url);
   }

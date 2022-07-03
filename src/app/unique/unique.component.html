@@ -2,13 +2,26 @@
   <form class="form ui" (ngSubmit)="onSearch(searchForm)" #searchForm="ngForm">
     <div class="ui icon fluid input">
       <input type="text" name="search" placeholder="Find" [ngModel]="search" />
-      <i class="inverted circular search link icon" *ngIf="!isEnglish" (click)="onSearch(searchForm)"></i>
+      <i
+        class="inverted circular search link icon"
+        *ngIf="!isEnglish"
+        (click)="onSearch(searchForm)"
+      ></i>
     </div>
     <div class="ui fluid field mt" *ngIf="isEnglish">
-      <input type="text" name="replace" placeholder="Replace with" [ngModel]="replace" />
+      <input
+        type="text"
+        name="replace"
+        placeholder="Replace with"
+        [ngModel]="replace"
+      />
     </div>
     <div *ngIf="isEnglish">
-      <button type="button" class="button ui primary labeled icon " (click)="onSearch(searchForm)">
+      <button
+        type="button"
+        class="button ui primary labeled icon"
+        (click)="onSearch(searchForm)"
+      >
         <i class="inverted search icon"> </i>Find
       </button>
       <button
@@ -25,9 +38,14 @@
 </div>
 
 <ng-container *ngIf="init && !loading">
-  <div *ngIf="!loading" class="header ui">Found {{ paginator.data.total }} lines</div>
+  <div *ngIf="!loading" class="header ui">
+    Found {{ paginator.data.total }} lines
+  </div>
   <div class="messages-pagination">
-    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+    <pagination-controls
+      id="server"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
   </div>
 </ng-container>
 
@@ -35,27 +53,27 @@
   <div
     class="ui segment"
     *ngFor="
-      let line of (lines
+      let line of lines
         | paginate
           : {
               id: 'server',
               itemsPerPage: paginator.data.limit,
               currentPage: paginator.data.page,
               totalItems: paginator.data.total
-            });
+            };
       let i = index
     "
   >
     <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ui form">
       <input hidden name="japanese" [(ngModel)]="line.text.japanese" />
 
-      <div class="ui three column stackable grid ">
-        <div class="seven wide column ">
+      <div class="ui three column stackable grid">
+        <div class="seven wide column">
           <div class="msg-header">
             <h4 class="header">Japanese</h4>
             <div class="ui label blue">Used: {{ line.count }}</div>
           </div>
-          <div class="game-text line-japanese ">
+          <div class="game-text line-japanese">
             {{ line.text.japanese }}
           </div>
         </div>
@@ -63,12 +81,18 @@
         <div class="seven wide column field">
           <div class="msg-header">
             <h4 class="header">English</h4>
-            <span class="mini ui button primary icon" (click)="onPreview(f)"><i class="ui icon eye"> </i> </span>
+            <span class="mini ui button primary icon" (click)="onPreview(f)"
+              ><i class="ui icon eye"> </i>
+            </span>
           </div>
-          <textarea rows="4" name="english" [(ngModel)]="line.text.english"></textarea>
+          <textarea
+            rows="4"
+            name="english"
+            [(ngModel)]="line.text.english"
+          ></textarea>
         </div>
         <div class="two wide column">
-          <button class="ui button primary  labeled name-button fluid icon">
+          <button class="ui button primary labeled name-button fluid icon">
             <i class="save outline icon"></i>Save
           </button>
 
@@ -88,7 +112,10 @@
 
 <ng-container *ngIf="init && !loading">
   <div class="messages-pagination">
-    <pagination-controls id="server" (pageChange)="onPageChange($event)"></pagination-controls>
+    <pagination-controls
+      id="server"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
   </div>
 </ng-container>
 
@@ -105,13 +132,16 @@
   <div class="header">Confirmation Modal</div>
   <div class="content">
     <p>
-      Do you really want to change <strong>{{ search }}</strong> to <strong>{{ replace }}</strong
+      Do you really want to change <strong>{{ search }}</strong> to
+      <strong>{{ replace }}</strong
       >?
     </p>
   </div>
   <div class="actions">
     <button class="ui red button" (click)="toggleModal(false)">Cancel</button>
-    <button class="ui green button" (click)="onModalConfirm()" autofocus>OK</button>
+    <button class="ui green button" (click)="onModalConfirm()" autofocus>
+      OK
+    </button>
   </div>
 </sui-modal>
 <app-preview></app-preview>

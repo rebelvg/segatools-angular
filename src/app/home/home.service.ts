@@ -3,7 +3,7 @@ import { StatsResponse } from '../shared/models/statsResponse.model';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
   public statsUpdated = new Subject<StatsResponse>();

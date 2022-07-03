@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { LinesResponse } from '../shared/models/linesResponse.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UniqueService {
   uniqueLines: LinesResponse;

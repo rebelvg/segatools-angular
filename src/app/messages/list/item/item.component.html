@@ -26,7 +26,8 @@
       [queryParams]="{ nameId: name.nameId }"
       *ngFor="let name of message.names"
     >
-      {{ name.japanese }} <span *ngIf="!!name.english">({{ name.english }})</span>
+      {{ name.japanese }}
+      <span *ngIf="!!name.english">({{ name.english }})</span>
     </a>
   </div>
 </div>

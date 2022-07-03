@@ -3,7 +3,7 @@ import { User } from '../shared/models/user.model';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
   usersUpdated = new Subject<User[]>();

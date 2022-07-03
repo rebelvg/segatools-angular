@@ -1,6 +1,11 @@
 <div class="navigation">
-  <div class="ui buttons ">
-    <button (click)="onPrev()" [ngClass]="{ disabled: !this.prev }" type="button" class="ui labeled icon button blue">
+  <div class="ui buttons">
+    <button
+      (click)="onPrev()"
+      [ngClass]="{ disabled: !this.prev }"
+      type="button"
+      class="ui labeled icon button blue"
+    >
       <i class="left chevron icon"></i>
       Previous
     </button>

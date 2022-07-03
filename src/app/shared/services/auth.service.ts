@@ -4,9 +4,10 @@ import { Subject } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
 import { isEmpty, get } from 'lodash';
 import { User } from '../models/user.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private user: User;
@@ -73,19 +74,19 @@ export class AuthService {
     const headers = new HttpHeaders().set('token', this.token);
 
     this.http
-      .get('https://segatools-api.azurewebsites.net/users', {
+      .get(`${environment.API_BASE_URL}/users`, {
         observe: 'body',
         responseType: 'json',
-        headers
+        headers,
       })
       .subscribe(
         (response: { user: User }) => {
           this.user = response.user;
           this.userUpdated.next(this.user);
         },
-        error => {
+        (error) => {
           console.log(error);
-        }
+        },
       );
   }
 

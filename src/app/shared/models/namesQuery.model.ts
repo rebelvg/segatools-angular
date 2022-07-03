@@ -10,7 +10,7 @@ interface INamesQuery {
 }
 export class NamesQuery {
   params = <INamesQuery>{
-    hideCompleted: true
+    hideCompleted: true,
   };
 
   constructor() {

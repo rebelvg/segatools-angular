@@ -7,17 +7,20 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   stats: StatsResponse;
   init = false;
   subscription: Subscription;
-  constructor(private homeService: HomeService, private dataService: DataService) {}
+  constructor(
+    private homeService: HomeService,
+    private dataService: DataService,
+  ) {}
 
   ngOnInit() {
     this.dataService.fetchStats();
-    this.subscription = this.homeService.statsUpdated.subscribe(stats => {
+    this.subscription = this.homeService.statsUpdated.subscribe((stats) => {
       this.stats = stats;
       this.init = true;
     });
