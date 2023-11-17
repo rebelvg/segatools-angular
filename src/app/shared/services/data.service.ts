@@ -13,10 +13,9 @@ import { LinesResponse } from '../models/linesResponse.model';
 import { AuthService } from './auth.service';
 import { AdminService } from 'src/app/admin/admin.service';
 import { User } from '../models/user.model';
-import { Subject, Observable, of} from 'rxjs';
-import { delay } from "rxjs/operators"
+import { Subject, Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-
 
 @Injectable({
   providedIn: 'root',
@@ -84,11 +83,10 @@ export class DataService {
   }
 
   public translateViaGPT(message: string, index: any) {
-
     const token = this.authService.getToken();
 
     const headers = new HttpHeaders().set('token', token);
-    
+
     return this.http
       .post(
         `${environment.API_BASE_URL}/translateGTP`,
