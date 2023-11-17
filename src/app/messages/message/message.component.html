@@ -74,11 +74,28 @@
             <div class="column field">
               <div class="english-msg-header">
                 <h4>English</h4>
-                <span class="mini ui button primary icon" (click)="onPreview(i)"
-                  ><i class="ui icon eye"> </i>
-                </span>
+                <div>
+                  <span
+                    title="ChatGPT Jap -> Eng"
+                    alt="ChatGPT Jap -> Eng"
+                    class="mini ui button primary icon"
+                    (click)="onChatGTP(i)"
+                    ><i class="ui icon mixcloud"> </i>
+                  </span>
+                  <span
+                    class="mini ui button primary icon"
+                    title="Preview"
+                    alt="Preview"
+                    (click)="onPreview(i)"
+                    ><i class="ui icon eye"> </i>
+                  </span>
+                </div>
               </div>
-              <textarea formControlName="english" rows="4"></textarea>
+              <textarea
+                [ngClass]="{ changed: changedLines[i] }"
+                formControlName="english"
+                rows="4"
+              ></textarea>
             </div>
           </div>
         </div>

@@ -13,8 +13,10 @@ import { LinesResponse } from '../models/linesResponse.model';
 import { AuthService } from './auth.service';
 import { AdminService } from 'src/app/admin/admin.service';
 import { User } from '../models/user.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable, of} from 'rxjs';
+import { delay } from "rxjs/operators"
 import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
@@ -72,14 +74,32 @@ export class DataService {
         headers,
       })
       .subscribe((response: { messagesUpdated: number }) => {
-        console.log(response.messagesUpdated);
-
         this.notifier.notify(
           'success',
           `Messages saved successfully. Messages updated: ${response.messagesUpdated}`,
         );
         cb();
         this.fetchMessage(id);
+      }, this.handleErrorResponse);
+  }
+
+  public translateViaGPT(message: string, index: any) {
+
+    const token = this.authService.getToken();
+
+    const headers = new HttpHeaders().set('token', token);
+    
+    return this.http
+      .post(
+        `${environment.API_BASE_URL}/translateGTP`,
+        { message },
+        {
+          headers,
+        },
+      )
+      .subscribe((response: { message }) => {
+        console.log(message);
+        this.messagesService.updateLineByIndex(index, { english: message });
       }, this.handleErrorResponse);
   }
 
@@ -118,7 +138,6 @@ export class DataService {
         responseType: 'json',
       })
       .subscribe((response: StatsResponse) => {
-        console.log(response);
         this.homeService.setStats(response);
       }, this.handleErrorResponse);
   }

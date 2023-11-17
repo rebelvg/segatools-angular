@@ -9,6 +9,7 @@ import { Message } from '../shared/models/message.model';
 export class MessagesService {
   listUpdated = new Subject<MessagesResponse>();
   singleMessageUpdated = new Subject<Message>();
+  lineUpdated = new Subject();
   private list: MessagesResponse;
   private single: Message;
 
@@ -27,5 +28,9 @@ export class MessagesService {
   setMessage(response) {
     this.single = response;
     this.singleMessageUpdated.next(response);
+  }
+
+  updateLineByIndex(index: any, data: {}) {
+    this.lineUpdated.next({ index, data })
   }
 }

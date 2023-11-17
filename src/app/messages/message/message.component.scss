@@ -7,9 +7,11 @@
 .header-segment {
   margin-bottom: 0em;
 }
+
 .chapter-select {
   margin: 1em 0px;
 }
+
 .navigation {
   display: flex;
   align-items: center;
@@ -20,6 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   span {
     margin-bottom: 1rem;
     margin-left: 20px;
@@ -30,6 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .header {
     margin: 0px !important;
   }
@@ -39,7 +43,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .header {
     margin-bottom: 0em !important;
   }
+}
+
+textarea.changed {
+  border: 1px solid #B03060;
 }

@@ -22,10 +22,12 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   previewMessage: string;
   messageSubscription: Subscription;
+  lineSubscription: Subscription;
   messageForm = new FormGroup({});
   isLoaded = false;
   isApproving = false;
   isChanged = false;
+  changedLines = [];
   constructor(
     private msgService: MessagesService,
     private route: ActivatedRoute,
@@ -44,14 +46,23 @@ export class MessageComponent implements OnInit, OnDestroy {
     });
     this.chapters = this.meta.getChapters();
     this.meta.chaptersUpdated.subscribe((chapters) => {
-      this.chapters = chapters;
+      console.log(chapters)
     });
 
     this.messageSubscription = this.msgService.singleMessageUpdated.subscribe(
       (message) => {
+        console.log(message)
         this.isLoaded = true;
         this.message = message;
         this.initForm();
+      },
+    );
+
+    this.lineSubscription = this.msgService.lineUpdated.subscribe(
+      ({index, data}) => {
+        // @ts-ignore
+        const formControl = this.messageForm.controls.lines.controls[index];
+        formControl.setValue({...formControl.value, ...data})
       },
     );
   }
@@ -94,11 +105,12 @@ export class MessageComponent implements OnInit, OnDestroy {
       if (!get(value.lines, [index, 'english'])) {
         set(value.lines, [index, 'english'], null);
       }
-
+      this.changedLines[index] = false;
       if (
         line.text.japanese !== null &&
         get(value.lines, [index, 'english']) !== line.text.english
       ) {
+        this.changedLines[index] = true;
         updatedLines.push({
           japanese: line.text.japanese,
           english: get(value.lines, [index, 'english']),
@@ -157,6 +169,11 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.previewMessage = this.messageForm.value.lines[index].english;
     this.previewService.setMessage(this.previewMessage);
     this.modalService.open('myModal');
+  }
+
+  onChatGTP(index) {
+    const message = this.messageForm.value.lines[index].japanese;
+    this.dataService.translateViaGPT(message, index);
   }
 
   ngOnDestroy() {
